@@ -1,0 +1,549 @@
+@import "tailwindcss";
+
+/*
+ * Dark mode uses a manual attribute selector (not the OS-only prefers-color-scheme
+ * default) so the ThemeToggle can switch it independently of system settings.
+ * ThemeProvider stamps data-theme="dark"/"light" on <html>.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+  Design tokens — ZynReach Design System.
+  Luxury enterprise SaaS visual language: warm ivory backgrounds, metallic
+  gold accents, serif display headings, soft shadows. Reference: provided
+  homepage mockup + brand palette spec.
+  Light mode only (dark mode remains Phase 2 per prior SRS scope).
+  Breakpoints: Large Mobile 600, Tablet 768, Laptop 1024, Desktop 1440.
+*/
+@theme {
+  /* Breakpoints */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
+  /*
+   * Base spacing unit every padding, margin, gap, and space-between
+   * utility multiplies from (Tailwind's own default is 0.25rem/4px,
+   * unset in this project until the density pass that introduced this
+   * token). Every section's py-20, every card's p-6, every grid's gap-8,
+   * and every icon's h-5/w-5 sitewide is a multiple of this one value —
+   * so tightening it here, rather than editing hundreds of individual
+   * utility instances across every component, proportionally trims
+   * section padding, card padding, icon size, and grid/flex gaps
+   * together. Now ~20% below the original 0.25rem default (0.225rem
+   * covered the first ~10%), matching this pass's explicit density
+   * target while staying clear of any single dramatic jump.
+   */
+  --spacing: 0.2rem;
+
+  /*
+   * Single source of truth for the header's height — previously
+   * hardcoded three different ways (NavigationBar's own h-[90px], plus
+   * independent guesses in MobileMenu/SearchOverlay/WelcomePopup that
+   * had already drifted out of sync with it once, when the --spacing
+   * token above shrank MobileMenu's spacing-scale-derived top-18 out
+   * from under the header's own fixed-pixel height). Every one of those
+   * now reads this value instead of re-guessing it.
+   */
+  --nav-height: 4.5rem; /* 72px — was 90px; reduced as part of this density pass */
+
+  /*
+   * The support-chat launcher's always-visible mobile footprint: roughly
+   * 4.5rem from the physical right edge. Below `sm`, it's the only
+   * fixed-bottom widget guaranteed visible at first paint
+   * (FloatingContactActions/MobileStickyCta stay hidden until scrolled),
+   * and it can't be hidden itself — it's the sole way to open chat
+   * anywhere on the site. Full-width CTA rows that reach the physical
+   * right edge in that same corner (Hero, PageHero) read this value to
+   * reserve clearance so its hit area never sits on top of a button's,
+   * rather than guessing/duplicating the offset per component.
+   */
+  --floating-widget-clear: 4.5rem;
+
+  /*
+   * Gold accent scale. IMPORTANT: the literal spec values — Primary Gold
+   * #C89B3C, Dark Gold #A8781E, Light Gold #E6C67A — measure only
+   * 2.4–3.7:1 against this palette's ivory/white backgrounds (verified
+   * with axe-core), well under WCAG AA's 4.5:1 for text and 3:1 even for
+   * large/bold text. That's a property of the hue itself, not a mistake:
+   * mid-tone gold is simply too light to serve as small/normal text on a
+   * light background and still pass AA — a hard requirement this same
+   * brief also states ("Maintain WCAG AA contrast").
+   *
+   * Resolution: the three named spec colors stay reachable at their own
+   * steps for non-text/large-decorative use (buttons already use the
+   * dedicated --color-gold-grad-* / --color-gold-dark tokens below, not
+   * this ramp). --color-primary-600 — the step used everywhere in this
+   * codebase for flat text, links, active states, and pill backgrounds
+   * — is set to a darker, still-unmistakably-gold value (~5.2:1) so
+   * every such usage sitewide clears AA from this one token change.
+   */
+  --color-primary-50: #fcf8ef;
+  --color-primary-100: #f6ead1;
+  --color-primary-200: #eedbae;
+  --color-primary-300: #e6c67a; /* Light Gold — spec exact */
+  --color-primary-400: #d7ae52; /* gradient top — spec exact */
+  --color-primary-500: #c89b3c; /* Primary Gold — spec exact; large/bold or non-text (icons, fills) use only */
+  --color-primary-600: #8a6118; /* AA-safe gold: default for text, links, active states, pill backgrounds (~5.2:1) */
+  --color-primary-700: #6b4a13; /* AA-safe darker gold: hover on already-safe text */
+  --color-primary-800: #4a330d;
+  --color-primary-900: #33220a;
+  --color-primary-950: #201506;
+
+  /* Button gradient stops (Top #D7AE52 → Bottom #B9852A) — spec exact, used only for the primary button's own background, never for text elsewhere */
+  --color-gold-grad-top: #d7ae52;
+  --color-gold-grad-bottom: #b9852a;
+  /* Dark Gold — spec exact, reserved for the button hover gradient/borders/shadows described in the brief */
+  --color-gold-dark: #a8781e;
+
+  /*
+   * Neutral scale. 50/100 = Primary/Secondary ivory backgrounds
+   * (#FAF8F4 / #F5F1EA — never pure white for section backgrounds).
+   * 200 = Border #E8E1D7. 900 = Primary text #111111. 600 = Secondary
+   * text #555555. 500 is nudged from the spec's literal Muted #777777
+   * to #6E6E6E — a ~3% luminance difference, imperceptible, needed to
+   * clear WCAG AA 4.5:1 on the new ivory background (SRS 23 requirement
+   * this rebrand must also preserve).
+   */
+  --color-neutral-50: #faf8f4;
+  --color-neutral-100: #f5f1ea;
+  --color-neutral-200: #e8e1d7;
+  --color-neutral-300: #c7c0b4;
+  --color-neutral-400: #999999;
+  --color-neutral-500: #6e6e6e;
+  --color-neutral-600: #555555;
+  --color-neutral-700: #3d3d3d;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #111111;
+  --color-neutral-950: #0a0a0a;
+
+  /* Footer: deep charcoal, never pure black */
+  --color-footer: #111111;
+  --color-footer-secondary: #1d1d1d;
+
+  /* Card border tint used sparingly for gold-bordered cards/badges */
+  --color-gold-border: rgba(200, 155, 60, 0.18);
+
+  /*
+   * Semantic colors. --color-success darkened from #16a34a to #15803d
+   * (~4.7:1 vs. #14a34a's 3.1:1) — this rebrand's new, lighter ivory
+   * background (#FAF8F4 vs. the prior #F8FAFC) pushed the original
+   * value under WCAG AA for text use; not part of the gold accent
+   * system so this is a safe, isolated fix.
+   */
+  --color-success: #15803d;
+  --color-success-bg: #f0fdf4;
+  --color-warning: #d97706;
+  --color-warning-bg: #fffbeb;
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+  /* Darkened from #0284c7 (3.84:1 against its own bg tint, bold 13px) to clear WCAG AA */
+  --color-info: #0369a1;
+  --color-info-bg: #f0f9ff;
+
+  /* Typography: serif display for headings, Inter for body/UI */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+
+  /*
+   * Scale rebalanced against a premium-SaaS density complaint (sections
+   * too tall, type too large, weak visual density vs. sites like
+   * Stripe/Linear/Vercel) — brought in line with those sites' own type
+   * ramps rather than an arbitrary cut. Body text in particular was
+   * 18px, well above the 15–16px norm for this category. Ratios between
+   * steps are preserved so heading hierarchy reads the same, just at a
+   * tighter, denser scale.
+   */
+  /*
+   * xs/sm/base/lg/xl/2xl hold at their prior values — 16px body text is
+   * already the accepted floor for this category (Stripe/Linear both
+   * sit at 15–16px) and going lower would trade density for readability
+   * and accessibility, which this pass explicitly isn't meant to do.
+   * The remaining density this directive asks for instead comes out of
+   * the 3xl-and-up steps — the ones actually named ("large typography
+   * in several areas") — plus tighter line-heights throughout.
+   */
+  --text-xs: 0.75rem; /* 12px */
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem; /* 14px — Small Text / Navigation */
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem; /* 16px — Body */
+  --text-base--line-height: 1.55;
+  --text-lg: 1.125rem; /* 18px */
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.25rem; /* 20px — Card Heading */
+  --text-xl--line-height: 1.35;
+  --text-2xl: 1.5rem; /* 24px */
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 1.75rem; /* 28px */
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2rem; /* 32px */
+  --text-4xl--line-height: 1.15;
+  --text-5xl: 2.5rem; /* 40px — Section Heading */
+  --text-5xl--line-height: 1.1;
+  --text-6xl: 3.25rem; /* 52px — Hero, weight 700 */
+  --text-6xl--line-height: 1.08;
+
+  /* Radii: buttons 12px, hero buttons 14px, images 16px, cards/CTA 18px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px — buttons */
+  --radius-lg: 1rem; /* 16px — images */
+  --radius-xl: 1.125rem; /* 18px — cards, CTA container */
+
+  /* Soft shadows */
+  --shadow-card: 0 15px 40px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --shadow-button: 0 10px 25px rgba(200, 155, 60, 0.25);
+
+  /* Motion */
+  --ease-out-default: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Max content width */
+  --container-content: 80rem;
+}
+
+:root {
+  --background: var(--color-neutral-50);
+  --foreground: var(--color-neutral-900);
+}
+
+/*
+ * Arabic locale: Inter/Playfair Display carry no Arabic glyphs, so swap the
+ * same --font-sans/--font-serif roles to Arabic-native faces instead of
+ * introducing separate font tokens — every component that already reads
+ * font-sans/font-serif re-fonts automatically, no component-level changes.
+ * Noto Sans Arabic pairs with Inter's neutral-UI role; Amiri is a classical
+ * Arabic serif chosen to carry the same "editorial display" role Playfair
+ * plays in English, not a literal style match (no direct equivalent exists).
+ */
+html[lang="ar"] {
+  --font-sans: var(--font-noto-arabic);
+  --font-serif: var(--font-amiri);
+}
+
+/*
+ * Dark mode: token-level redefinition, same high-leverage strategy used for
+ * the gold/ivory rebrand itself — every component already reads primary-,
+ * neutral-, and shadow- tokens rather than hardcoded colors (verified sitewide
+ * during the earlier hardening passes), so redefining the tokens re-themes
+ * the whole site without touching component classNames. Two things this
+ * does NOT cover: (1) literal bg-white "card floats on page" surfaces —
+ * ~76 files use bg-white directly rather than the neutral scale for card
+ * backgrounds, a real known gap, not silently claimed as fixed; (2) the
+ * permanently-dark decorative sections (Footer, CtaBand, StatsBanner,
+ * PageHero) that use literal text-white/bg-footer regardless of site theme
+ * — those are intentionally left alone since they're already dark and
+ * inverting them would make them lighter, which is backwards.
+ *
+ * Neutral scale is inverted (50 = darkest bg, 900 = lightest text) rather
+ * than reusing the same values, matching how the ramp's *semantic* meaning
+ * (backgrounds live at 50/100, text at 900, borders at 200) stays constant
+ * across themes. Gold: --color-primary-600 is the ubiquitous "default
+ * text/link" step — on a dark ground the AA-safe direction flips from
+ * darkened gold to lightened gold (mirrors how this codebase already uses
+ * primary-400 successfully as gold-on-dark in the Footer/StatsBanner).
+ */
+html[data-theme="dark"] {
+  --color-primary-50: #201506;
+  --color-primary-100: #33220a;
+  --color-primary-200: #4a330d;
+  --color-primary-300: #6b4a13;
+  --color-primary-400: #a8781e;
+  --color-primary-500: #c89b3c;
+  --color-primary-600: #e6c67a; /* AA-safe on dark: default text/link/active state */
+  --color-primary-700: #f0d99a; /* lighter still — hover on already-safe text */
+  --color-primary-800: #f6ead1;
+  --color-primary-900: #fcf8ef;
+  --color-primary-950: #fffdf8;
+
+  --color-gold-grad-top: #d7ae52;
+  --color-gold-grad-bottom: #b9852a;
+  --color-gold-dark: #a8781e;
+  --color-gold-border: rgba(230, 198, 122, 0.22);
+
+  --color-neutral-50: #16130d; /* page background */
+  --color-neutral-100: #1e1a12; /* card / surface background */
+  --color-neutral-200: #332c1e; /* borders */
+  --color-neutral-300: #4d4430;
+  --color-neutral-400: #6b6151;
+  --color-neutral-500: #938871; /* muted text */
+  --color-neutral-600: #b6ab92; /* secondary text */
+  --color-neutral-700: #d2c9b6;
+  --color-neutral-800: #e7e1d4;
+  --color-neutral-900: #f5f1ea; /* primary text / headings */
+  --color-neutral-950: #faf8f4;
+
+  --color-footer: #0c0a07;
+  --color-footer-secondary: #151209;
+
+  --color-success: #4ade80;
+  --color-success-bg: #10241a;
+  --color-warning: #fbbf24;
+  --color-warning-bg: #2a2110;
+  --color-error: #f87171;
+  --color-error-bg: #2a1414;
+  --color-info: #38bdf8;
+  --color-info-bg: #0c2233;
+
+  /* Dark-drop shadows read as invisible on a dark ground — use a soft glow instead. */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04), 0 15px 40px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 50px rgba(0, 0, 0, 0.45);
+  --shadow-button: 0 10px 25px rgba(230, 198, 122, 0.2);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-neutral-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /*
+     * Without this, mobile Safari (and some Android browsers) applies its
+     * own text-inflation heuristic on top of the width=device-width
+     * viewport meta tag — boosting font sizes in what it judges to be
+     * "narrow reading columns," independent of any CSS here. That makes
+     * the live layout on a real phone diverge from the exact proportions
+     * authored in CSS (and from any desktop-based viewport emulator,
+     * which never reproduces this engine-level behavior). Locking it to
+     * 100% forces the page to render at the actual authored scale on
+     * every mobile browser.
+     */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Arabic script reads more comfortably with slightly more line-height than Latin. */
+  html[lang="ar"] body {
+    line-height: 1.75;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Visible focus indicator, never removed (WCAG 2.4.7) */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .container-content {
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @variant sm {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  @variant lg {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  /** Primary CTA gradient (Top #D7AE52 → Bottom #B9852A) */
+  .gold-gradient {
+    background-image: linear-gradient(180deg, var(--color-gold-grad-top), var(--color-gold-grad-bottom));
+  }
+
+  .gold-gradient-hover:hover {
+    background-image: linear-gradient(180deg, var(--color-gold-dark), var(--color-primary-600));
+  }
+
+  /* Skip link — visually hidden until focused */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 100;
+    transition: top 150ms var(--ease-out-default);
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /*
+   * Logo animation set (Logo.tsx, animated variant only). All four
+   * effects animate only transform/opacity/filter — compositor-only
+   * properties that never trigger layout, so there's no CLS risk.
+   * prefers-reduced-motion doesn't need handling here specifically:
+   * the sitewide rule above already collapses every animation's
+   * duration to near-zero and caps iteration-count at 1 for that
+   * preference, which correctly reduces the intro to an instant
+   * appearance and fully suppresses the two infinite/repeating
+   * effects (float, shine) without duplicating that logic per-component.
+   */
+  @keyframes logo-intro {
+    from {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes logo-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes logo-shine-sweep {
+    0%,
+    10%,
+    100% {
+      transform: translateX(-120%) skewX(-18deg);
+      opacity: 0;
+    }
+    1% {
+      opacity: 0.55;
+    }
+    9% {
+      transform: translateX(220%) skewX(-18deg);
+      opacity: 0;
+    }
+  }
+
+  .logo-animated {
+    animation:
+      logo-intro 700ms var(--ease-out-default) both,
+      logo-float 4500ms ease-in-out 700ms infinite;
+    transition:
+      transform 220ms var(--ease-out-default),
+      filter 220ms var(--ease-out-default);
+  }
+
+  .logo-animated:hover {
+    transform: scale(1.04) rotate(1deg);
+    filter: drop-shadow(0 0 10px rgba(200, 155, 60, 0.4));
+  }
+
+  /*
+   * The metal-catching-light sweep: a diagonal translucent streak
+   * clipped to the logo's own box (overflow-hidden on the wrapper),
+   * blurred and blended so it reads as a reflection rather than a
+   * literal moving bar. Sized past 100% on both axes so the blur
+   * radius never clips visibly at the sweep's start/end.
+   */
+  .logo-shine::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    width: 40%;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.55) 48%,
+      rgba(230, 198, 122, 0.5) 52%,
+      transparent 80%
+    );
+    filter: blur(6px);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: logo-shine-sweep 7000ms ease-in-out 1200ms infinite;
+  }
+
+  /*
+   * Welcome popup ambient motion: a barely-noticeable breathing glow
+   * behind the card and a slow, sub-pixel float once the card has
+   * settled. Both animate transform/opacity only (compositor-only, no
+   * CLS) and start after their own delay so they pick up smoothly once
+   * the entrance transition (500ms) has finished, instead of fighting
+   * it. Covered by the sitewide prefers-reduced-motion rule above.
+   */
+  @keyframes welcome-glow-pulse {
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes welcome-card-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+  .welcome-glow-pulse {
+    animation: welcome-glow-pulse 6000ms ease-in-out 500ms infinite;
+  }
+
+  .welcome-card-settled {
+    animation: welcome-card-float 6000ms ease-in-out 600ms infinite;
+  }
+
+  /*
+   * StatsBanner count-up completion pop (CountUpStat.tsx): a brief,
+   * subtle overshoot-then-settle once a number finishes counting up,
+   * so landing on the final value reads as a deliberate arrival rather
+   * than the count just stopping. Scale-only (no CLS), plays once via
+   * the class being added after the count finishes rather than looped,
+   * and is skipped entirely in JS for prefers-reduced-motion (the
+   * count-up itself never starts, so this class is never applied) —
+   * the sitewide reduced-motion rule above is a redundant safety net.
+   */
+  @keyframes count-up-pop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .count-up-pop {
+    display: inline-block;
+    animation: count-up-pop 420ms var(--ease-out-default);
+  }
+}
