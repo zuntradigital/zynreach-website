@@ -41,7 +41,7 @@ export default async function CapabilityPage({ params }: CapabilityPageProps) {
 
   const breadcrumbs = await breadcrumbJsonLd(locale, [
     { label: "Home", href: "/" },
-    { label: "Platform", href: "/platform" },
+    { label: "Product", href: "/platform" },
     { label: content.navLabel, href: `/platform/${content.slug}` },
   ]);
 

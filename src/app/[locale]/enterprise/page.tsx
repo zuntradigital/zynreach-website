@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ShieldCheck, Clock, UserCheck, Settings, KeyRound, Lock, FileClock } from "lucide-react";
+import { ShieldCheck, Clock, UserCheck, Settings, KeyRound, Lock, FileClock, Building2, Fingerprint, Globe2, Webhook, BarChart3, Gauge } from "lucide-react";
 import { NavigationBar } from "@/components/layout/NavigationBar";
 import { MobileStickyCta } from "@/components/layout/MobileStickyCta";
 import { Footer } from "@/components/layout/Footer";
@@ -35,7 +35,7 @@ export async function generateMetadata({
 }
 
 const pillarIcons = [ShieldCheck, Clock, UserCheck, Settings];
-const featureIcons = [KeyRound, Lock, FileClock];
+const featureIcons = [KeyRound, Lock, FileClock, Building2, Fingerprint, Globe2, Webhook, BarChart3, Gauge];
 
 export default async function EnterprisePage({
   params,
@@ -69,7 +69,7 @@ export default async function EnterprisePage({
   return (
     <>
       <JsonLd id="breadcrumbs-jsonld" data={breadcrumbs} />
-      <JsonLd id="organization-jsonld" data={organizationJsonLd()} />
+      <JsonLd id="organization-jsonld" data={await organizationJsonLd()} />
       <NavigationBar />
       <main id="main-content" className="flex-1">
         <PageHero

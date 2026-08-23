@@ -5,9 +5,28 @@ import { routeLead } from "@/lib/services/lead-router";
 interface LeadCaptureRequestBody {
   name?: string;
   workEmail?: string;
+  company?: string;
+  jobTitle?: string;
+  companySize?: string;
   source?: string;
   consent?: boolean;
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_medium?: string;
+  utm_term?: string;
+  utm_content?: string;
+  landing_page?: string;
+  referrer?: string;
+  device?: string;
 }
+
+// Same context-string classification LeadCaptureStrip.tsx already uses
+// client-side (for its own conversion-tracking event) — replicated here
+// so the admin Leads Inbox can actually tell a Newsletter Signup apart
+// from a Gated Content Download instead of both landing under the
+// identical formId "lead-capture-strip" with no way to filter between
+// them (both used to be true before this classification existed).
+const DOWNLOAD_SOURCE_PATTERN = /guide|webinar|whitepaper|documentation|security-whitepaper|compliance-documentation/;
 
 /**
  * SRS Section 27: inline lead-capture strip endpoint used on Solutions
@@ -39,11 +58,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ errors }, { status: 400 });
   }
 
+  const isDownload = DOWNLOAD_SOURCE_PATTERN.test(body.source ?? "");
+
   const result = await routeLead({
-    formId: "lead-capture-strip",
+    formId: isDownload ? "gated-content-download" : "newsletter-signup",
     segment: "self-serve",
-    fields: { name, workEmail, consent: "true" },
-    utmSource: body.source,
+    fields: {
+      name,
+      workEmail,
+      consent: "true",
+      sourceContext: body.source ?? "",
+      ...(body.company?.trim() ? { company: body.company.trim() } : {}),
+      ...(body.jobTitle?.trim() ? { jobTitle: body.jobTitle.trim() } : {}),
+      ...(body.companySize?.trim() ? { companySize: body.companySize.trim() } : {}),
+    },
+    utmSource: body.utm_source,
+    utmCampaign: body.utm_campaign,
+    utmMedium: body.utm_medium,
+    utmTerm: body.utm_term,
+    utmContent: body.utm_content,
+    landingPage: body.landing_page,
+    referrer: body.referrer,
+    device: body.device,
   });
 
   return NextResponse.json(result, { status: 200 });

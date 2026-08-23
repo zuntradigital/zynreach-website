@@ -546,4 +546,68 @@ html[data-theme="dark"] {
     display: inline-block;
     animation: count-up-pop 420ms var(--ease-out-default);
   }
+
+  /*
+   * Home Hero dashboard mockup ambient motion (HeroVisual.tsx): a slow
+   * vertical float for the whole mockup, a soft golden glow behind it
+   * that breathes in scale + opacity, and a light on-load stagger for the
+   * six inner tiles. All three animate transform/opacity only
+   * (compositor-only, no CLS) and are covered by the sitewide
+   * prefers-reduced-motion rule above — no per-animation motion-safe
+   * gating needed. The panel itself is never rotated/tilted (no static
+   * rotate class, no mouse-driven tilt) — it always reads as straight.
+   */
+  @keyframes hero-dashboard-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .hero-dashboard-float {
+    animation: hero-dashboard-float 6500ms ease-in-out infinite;
+  }
+
+  @keyframes hero-dashboard-glow-pulse {
+    0%,
+    100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .hero-dashboard-glow {
+    animation: hero-dashboard-glow-pulse 5000ms ease-in-out infinite;
+  }
+
+  /*
+   * On-load stagger for the six dashboard tiles: each tile fades and
+   * rises in slightly, offset by a per-tile animation-delay set inline
+   * from the tile's index (see HeroVisual.tsx) rather than :nth-child
+   * here, since the delay math (base delay + index * step) is simpler to
+   * keep next to the array it's derived from. `both` holds the 0%
+   * (invisible) state before the delay elapses and the 100% (settled)
+   * state after, so tiles never flash at full opacity before their turn.
+   */
+  @keyframes hero-dashboard-tile-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-dashboard-tile {
+    animation: hero-dashboard-tile-in 550ms var(--ease-out-default) both;
+  }
 }

@@ -3,12 +3,16 @@
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { industryToLinkKey, productAreaToLinkKey } from "@/lib/nav-i18n";
+
+export interface FilterOption {
+  value: string;
+  label: string;
+}
 
 interface StoryFilterBarProps {
-  industries: string[];
-  productAreas: string[];
-  companySizes: string[];
+  industries: FilterOption[];
+  productAreas: FilterOption[];
+  companySizes: FilterOption[];
 }
 
 const ALL = "";
@@ -16,14 +20,13 @@ const ALL = "";
 interface FilterSelectProps {
   label: string;
   param: string;
-  options: string[];
+  options: FilterOption[];
   value: string;
   allLabel: string;
-  optionLabel: (option: string) => string;
   onChange: (param: string, value: string) => void;
 }
 
-function FilterSelect({ label, param, options, value, allLabel, optionLabel, onChange }: FilterSelectProps) {
+function FilterSelect({ label, param, options, value, allLabel, onChange }: FilterSelectProps) {
   return (
     <div>
       <label htmlFor={`filter-${param}`} className="block text-xs font-medium text-neutral-500">
@@ -37,8 +40,8 @@ function FilterSelect({ label, param, options, value, allLabel, optionLabel, onC
       >
         <option value={ALL}>{allLabel}</option>
         {options.map((option) => (
-          <option key={option} value={option}>
-            {optionLabel(option)}
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
@@ -46,10 +49,9 @@ function FilterSelect({ label, param, options, value, allLabel, optionLabel, onC
   );
 }
 
-/** SRS 7.18: filter combinations update the URL query string (shareable/bookmarkable). */
+/** Knowledge Center §7.3: Industry/Product Area/Company Size filters, kept in the URL query string so results stay shareable/bookmarkable. Options arrive already display-resolved from the caller — this component does no translation lookups of its own, so it works identically for CMS-backed and static-fallback data. */
 export function StoryFilterBar({ industries, productAreas, companySizes }: StoryFilterBarProps) {
-  const t = useTranslations("customersPage.filters");
-  const tLinks = useTranslations("common.links");
+  const t = useTranslations("customerStoriesPage.filters");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -66,33 +68,9 @@ export function StoryFilterBar({ industries, productAreas, companySizes }: Story
 
   return (
     <div className="flex flex-wrap gap-4">
-      <FilterSelect
-        label={t("industry")}
-        param="industry"
-        options={industries}
-        value={searchParams.get("industry") ?? ALL}
-        allLabel={t("all")}
-        optionLabel={(option) => (industryToLinkKey[option] ? tLinks(industryToLinkKey[option] as Parameters<typeof tLinks>[0]) : option)}
-        onChange={updateParam}
-      />
-      <FilterSelect
-        label={t("product")}
-        param="product"
-        options={productAreas}
-        value={searchParams.get("product") ?? ALL}
-        allLabel={t("all")}
-        optionLabel={(option) => (productAreaToLinkKey[option] ? tLinks(productAreaToLinkKey[option] as Parameters<typeof tLinks>[0]) : option)}
-        onChange={updateParam}
-      />
-      <FilterSelect
-        label={t("size")}
-        param="size"
-        options={companySizes}
-        value={searchParams.get("size") ?? ALL}
-        allLabel={t("all")}
-        optionLabel={(option) => option}
-        onChange={updateParam}
-      />
+      <FilterSelect label={t("industry")} param="industry" options={industries} value={searchParams.get("industry") ?? ALL} allLabel={t("all")} onChange={updateParam} />
+      <FilterSelect label={t("product")} param="product" options={productAreas} value={searchParams.get("product") ?? ALL} allLabel={t("all")} onChange={updateParam} />
+      <FilterSelect label={t("size")} param="size" options={companySizes} value={searchParams.get("size") ?? ALL} allLabel={t("all")} onChange={updateParam} />
     </div>
   );
 }

@@ -26,13 +26,13 @@ const gradientBySlug: Record<string, string> = {
 export function CaseStudies() {
   const t = useTranslations("home.caseStudies");
   const tc = useTranslations("common.cta");
-  const tStories = useTranslations("customersPage.stories");
+  const tStories = useTranslations("customerStoriesPage.stories");
   return (
     <section className="bg-neutral-50 py-16">
       <div className="container-content">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading eyebrow={t("eyebrow")} headline={t("headline")} />
-          <Link href="/customers" className="flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700">
+          <Link href="/customer-stories" className="flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700">
             {tc("viewAllCaseStudies")}
             <ArrowRight aria-hidden="true" className="h-4 w-4 rtl:rotate-180" />
           </Link>
@@ -42,7 +42,7 @@ export function CaseStudies() {
           {featured.map((story) => (
             <li key={story.slug} className="group">
               <Link
-                href={`/customers/${story.slug}`}
+                href={`/customer-stories/${story.slug}`}
                 className="flex h-full flex-col overflow-hidden rounded-xl shadow-card transition-shadow duration-300 hover:shadow-card-hover"
               >
                 <div className="relative aspect-[16/9] shrink-0 overflow-hidden">

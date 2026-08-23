@@ -8,13 +8,12 @@ import { legalPages } from "@/lib/content/legal";
 import { jobListings } from "@/lib/content/careers";
 import { blogPosts } from "@/lib/content/blog";
 import { customerStories } from "@/lib/content/customer-stories";
-import { docArticles } from "@/lib/content/docs";
-import { apiEndpoints } from "@/lib/content/api-reference";
 import { guides, webinars } from "@/lib/content/resources";
 import { integrations } from "@/lib/content/integrations";
 import { getPublishedBlog } from "@/lib/services/blog-content";
 import { getPublishedResources } from "@/lib/services/resources-content";
 import { getPublishedCareers } from "@/lib/services/careers-content";
+import { getPublishedCustomerStories } from "@/lib/services/customer-stories-content";
 
 /**
  * SRS Section 15: XML sitemap, covering every indexable route. Blog/
@@ -23,11 +22,17 @@ import { getPublishedCareers } from "@/lib/services/careers-content";
  * if System B isn't reachable, same contract as every other System B read.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [liveBlog, liveResources, liveCareers] = await Promise.all([getPublishedBlog("en"), getPublishedResources("en"), getPublishedCareers("en")]);
+  const [liveBlog, liveResources, liveCareers, liveCustomerStories] = await Promise.all([
+    getPublishedBlog("en"),
+    getPublishedResources("en"),
+    getPublishedCareers("en"),
+    getPublishedCustomerStories("en"),
+  ]);
   const blogSlugs = liveBlog ? liveBlog.posts.map((p) => p.slug) : blogPosts.map((p) => p.slug);
   const guideSlugs = liveResources ? liveResources.guides.map((g) => g.slug) : guides.map((g) => g.slug);
   const webinarSlugs = liveResources ? liveResources.webinars.map((w) => w.slug) : webinars.map((w) => w.slug);
   const jobIds = liveCareers ? liveCareers.jobListings.map((j) => j.id) : jobListings.map((j) => j.id);
+  const customerStorySlugs = liveCustomerStories ? liveCustomerStories.map((s) => s.slug) : customerStories.map((s) => s.slug);
   const staticRoutes = [
     "",
     "/platform",
@@ -43,11 +48,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/demo",
     "/trial",
     "/blog",
-    "/customers",
-    "/resources",
-    "/resources/guides",
-    "/resources/webinars",
-    "/docs/api",
+    "/customer-stories",
+    "/knowledge-center",
+    "/guides-templates",
+    "/webinars",
     "/faq",
     "/status",
     "/changelog",
@@ -62,11 +66,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...legalPages.map((page) => `/legal/${page.slug}`),
     ...jobIds.map((id) => `/careers/${id}`),
     ...blogSlugs.map((slug) => `/blog/${slug}`),
-    ...customerStories.map((story) => `/customers/${story.slug}`),
-    ...docArticles.map((doc) => `/docs/${doc.slug}`),
-    ...apiEndpoints.map((endpoint) => `/docs/api/${endpoint.slug}`),
-    ...guideSlugs.map((slug) => `/resources/guides/${slug}`),
-    ...webinarSlugs.map((slug) => `/resources/webinars/${slug}`),
+    ...customerStorySlugs.map((slug) => `/customer-stories/${slug}`),
+    ...guideSlugs.map((slug) => `/guides-templates/${slug}`),
+    ...webinarSlugs.map((slug) => `/webinars/${slug}`),
     ...integrations.map((integration) => `/integrations/${integration.slug}`),
   ];
 

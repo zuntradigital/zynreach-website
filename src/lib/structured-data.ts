@@ -3,6 +3,25 @@ import { site } from "@/lib/content/site";
 import type { FaqItem, PricingPlan, BlogPost } from "@/types/content";
 import type { JobListing } from "@/lib/content/careers";
 import { localizedUrl } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/services/site-settings";
+
+/**
+ * Dashboard-managed contact/social values (SRS §22) override the hardcoded
+ * defaults when set, same merge-with-fallback pattern as Footer.tsx and the
+ * Contact page. Geo-coordinates, the maps URL, and the structured street
+ * address have no equivalent field in the admin's Settings module yet, so
+ * those stay hardcoded.
+ */
+async function resolvedContactAndSocial() {
+  const remote = await getSiteSettings();
+  return {
+    email: remote?.settings.contact.supportEmail || site.contact.email,
+    phone: remote?.settings.contact.phone || site.contact.phone,
+    linkedin: remote?.settings.social.linkedinUrl || site.social.linkedin,
+    x: remote?.settings.social.twitterUrl || site.social.x,
+    youtube: remote?.settings.social.youtubeUrl || site.social.youtube,
+  };
+}
 
 /** Single canonical postal address, shared by Organization and LocalBusiness schema below. */
 function postalAddressJsonLd() {
@@ -16,20 +35,21 @@ function postalAddressJsonLd() {
   };
 }
 
-export function organizationJsonLd() {
+export async function organizationJsonLd() {
+  const { email, phone, linkedin, x, youtube } = await resolvedContactAndSocial();
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: site.name,
     url: site.url,
     logo: `${site.url}/logo.png`,
-    sameAs: [site.social.linkedin, site.social.x, site.social.youtube],
+    sameAs: [linkedin, x, youtube],
     address: postalAddressJsonLd(),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: site.contact.email,
-      telephone: site.contact.phone,
+      email,
+      telephone: phone,
       url: `${site.url}/contact`,
     },
   };
@@ -40,7 +60,8 @@ export function organizationJsonLd() {
  * same verified coordinates and Maps URL as every clickable address and the
  * embedded map on the Contact page, so there is one canonical location sitewide.
  */
-export function localBusinessJsonLd() {
+export async function localBusinessJsonLd() {
+  const { email, phone } = await resolvedContactAndSocial();
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -48,8 +69,8 @@ export function localBusinessJsonLd() {
     url: site.url,
     logo: `${site.url}/logo.png`,
     image: `${site.url}/logo.png`,
-    email: site.contact.email,
-    telephone: site.contact.phone,
+    email,
+    telephone: phone,
     address: postalAddressJsonLd(),
     geo: {
       "@type": "GeoCoordinates",
@@ -94,16 +115,15 @@ export interface BreadcrumbEntry {
  */
 const STATIC_BREADCRUMB_LABEL_KEYS: Record<string, string> = {
   Home: "links.home",
-  Platform: "nav.platform",
+  Product: "nav.platform",
   Solutions: "nav.solutions",
   Industries: "nav.industries",
   Pricing: "nav.pricing",
-  Resources: "nav.resources",
+  "Knowledge Center": "nav.knowledgeCenter",
+  Company: "nav.company",
   Integrations: "megaMenu.integrations",
   Blog: "links.blog",
   "Customer Stories": "links.customerStories",
-  Documentation: "links.documentation",
-  "API Reference": "links.apiReference",
   "Guides & Templates": "links.guidesTemplates",
   Webinars: "links.webinars",
   FAQ: "links.faq",
@@ -198,7 +218,7 @@ export function jobPostingJsonLd(job: JobListing) {
  * own, so it works identically whether `post` came from System B or the
  * hardcoded fallback.
  */
-export function articleJsonLd(post: Pick<BlogPost, "title" | "excerpt" | "publishedDate" | "updatedDate" | "slug">, authorName?: string) {
+export function articleJsonLd(post: Pick<BlogPost, "title" | "excerpt" | "publishedDate" | "updatedDate" | "slug" | "image">, authorName?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -209,6 +229,7 @@ export function articleJsonLd(post: Pick<BlogPost, "title" | "excerpt" | "publis
     author: { "@type": "Organization", name: authorName ?? site.name },
     publisher: { "@type": "Organization", name: site.name, url: site.url },
     url: `${site.url}/blog/${post.slug}`,
+    ...(post.image ? { image: post.image } : {}),
   };
 }
 

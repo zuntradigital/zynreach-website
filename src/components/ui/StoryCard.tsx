@@ -1,34 +1,41 @@
-import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import type { CustomerStory } from "@/types/content";
-import { industryToLinkKey, productAreaToLinkKey } from "@/lib/nav-i18n";
 
-interface StoryCardProps {
-  story: CustomerStory;
+export interface ResolvedStoryCard {
+  slug: string;
+  customerName: string;
+  metricValue: string;
+  metricLabel: string;
+  industryLabel: string;
+  productAreaLabels: string[];
 }
 
-export async function StoryCard({ story }: StoryCardProps) {
-  const t = await getTranslations(`customersPage.stories.${story.slug}`);
-  const tPage = await getTranslations("customersPage");
-  const tLinks = await getTranslations("common.links");
+interface StoryCardProps {
+  story: ResolvedStoryCard;
+}
 
+/**
+ * Fully pre-resolved by the caller (list/detail pages) — this component
+ * does no translation lookups of its own, so it renders identically for
+ * CMS-backed stories (already-resolved live text) and the static
+ * illustrative fallback (resolved via translation keys by the page before
+ * this component ever sees it).
+ */
+export function StoryCard({ story }: StoryCardProps) {
   return (
     <Link
-      href={`/customers/${story.slug}`}
+      href={`/customer-stories/${story.slug}`}
       className="flex h-full flex-col rounded-xl border border-neutral-200 bg-white dark:bg-neutral-100 p-6 transition-all hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-card-hover"
     >
-      <p className="text-sm font-semibold text-neutral-500">
-        {t("customerName")} {tPage("illustrativeSuffix")}
-      </p>
-      <p className="mt-2 text-3xl font-bold text-primary-600">{story.headlineMetric.value}</p>
-      <p className="text-sm text-neutral-600">{t("headlineMetricLabel")}</p>
+      <p className="text-sm font-semibold text-neutral-500">{story.customerName}</p>
+      <p className="mt-2 text-3xl font-bold text-primary-600">{story.metricValue}</p>
+      <p className="text-sm text-neutral-600">{story.metricLabel}</p>
       <div className="mt-4 flex flex-wrap gap-2 border-t border-neutral-100 pt-4 text-xs text-neutral-500">
-        <span className="rounded-full bg-neutral-100 px-2.5 py-1">
-          {industryToLinkKey[story.industry] ? tLinks(industryToLinkKey[story.industry] as Parameters<typeof tLinks>[0]) : story.industry}
-        </span>
-        <span className="rounded-full bg-neutral-100 px-2.5 py-1">
-          {productAreaToLinkKey[story.productArea] ? tLinks(productAreaToLinkKey[story.productArea] as Parameters<typeof tLinks>[0]) : story.productArea}
-        </span>
+        <span className="rounded-full bg-neutral-100 px-2.5 py-1">{story.industryLabel}</span>
+        {story.productAreaLabels.map((label) => (
+          <span key={label} className="rounded-full bg-neutral-100 px-2.5 py-1">
+            {label}
+          </span>
+        ))}
       </div>
     </Link>
   );

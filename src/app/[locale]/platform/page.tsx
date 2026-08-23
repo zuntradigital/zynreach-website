@@ -46,7 +46,7 @@ export default async function PlatformPage({
 
   const breadcrumbs = await breadcrumbJsonLd(locale, [
     { label: "Home", href: "/" },
-    { label: "Platform", href: "/platform" },
+    { label: "Product", href: "/platform" },
   ]);
 
   const testimonial = {
@@ -60,7 +60,7 @@ export default async function PlatformPage({
   return (
     <>
       <JsonLd id="breadcrumbs-jsonld" data={breadcrumbs} />
-      <JsonLd id="organization-jsonld" data={organizationJsonLd()} />
+      <JsonLd id="organization-jsonld" data={await organizationJsonLd()} />
       <NavigationBar />
       <main id="main-content" className="flex-1">
         <PageHero

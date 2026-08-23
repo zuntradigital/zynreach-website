@@ -1,16 +1,20 @@
 {
   "metadata": {
-    "homeTitle": "ZynReach — AI-Powered CRM, Marketing & Automation Platform",
-    "homeDescription": "Unify CRM, marketing automation, and AI assistants in one platform. See why growing teams switch to ZynReach."
+    "homeTitle": "ZynReach — AI-Powered Enterprise Growth & Operations Platform",
+    "homeDescription": "Unify CRM, marketing, AI automation, operations, and business intelligence in one enterprise platform. See why growing teams switch to ZynReach."
   },
   "common": {
     "skipLink": "Skip to main content",
     "nav": {
-      "platform": "Platform",
+      "platform": "Product",
       "solutions": "Solutions",
       "industries": "Industries",
       "pricing": "Pricing",
-      "resources": "Resources",
+      "enterprise": "Enterprise",
+      "security": "Security",
+      "customers": "Customers",
+      "knowledgeCenter": "Knowledge Center",
+      "developers": "Developers",
       "company": "Company",
       "legal": "Legal",
       "login": "Login",
@@ -23,14 +27,22 @@
     "megaMenu": {
       "capabilities": "Capabilities",
       "integrations": "Integrations",
-      "byTeam": "By team",
+      "growthRevenue": "Growth & Revenue",
+      "aiAutomation": "AI & Automation",
+      "operations": "Operations",
+      "intelligence": "Intelligence",
+      "customerCommerce": "Customer & Commerce",
+      "enterprisePlatform": "Enterprise Platform",
+      "byTeam": "By Team",
       "byCompanySize": "By company size",
-      "learn": "Learn",
+      "byBusinessSize": "By Business Size",
+      "byBusinessNeed": "By Business Need",
+      "explore": "Explore",
       "build": "Build",
       "productTour": "Product tour",
       "seeUnifiedPlatform": "See the unified platform in 90 seconds",
-      "resourcesHub": "Resources hub",
-      "browseEverything": "Browse everything in one place"
+      "knowledgeCenterEyebrow": "Knowledge Center",
+      "exploreKnowledgeCenter": "Explore insights, guides, and webinars"
     },
     "links": {
       "aiAssistants": "AI Assistants",
@@ -39,12 +51,52 @@
       "leadGeneration": "Lead Generation",
       "workflowAutomation": "Workflow Automation",
       "analytics": "Analytics",
+      "salesPipeline": "Sales Pipeline",
+      "campaigns": "Campaigns",
+      "contact360": "Contact 360",
+      "businessData": "Business Data",
+      "aiWorkspace": "AI Workspace",
+      "aiAgents": "AI Agents",
+      "aiInsights": "AI Insights",
+      "automationCenter": "Automation Center",
+      "reports": "Reports",
+      "businessIntelligence": "Business Intelligence",
+      "executiveDashboards": "Executive Dashboards",
+      "scheduledReports": "Scheduled Reports",
+      "projectManagement": "Project Management",
+      "taskManagement": "Task Management",
+      "hrManagement": "HR Management",
+      "attendanceLeave": "Attendance & Leave",
+      "teamsDepartments": "Teams & Departments",
+      "financeAccounting": "Finance & Accounting",
+      "documentCenter": "Document Center",
+      "customerPortal": "Customer Portal",
+      "subscriptionBilling": "Subscription & Billing",
+      "notifications": "Notifications",
+      "marketplace": "Marketplace",
+      "pluginSdk": "Plugin SDK",
+      "organizationManagement": "Organization Management",
+      "branchManagement": "Branch Management",
+      "audit": "Audit",
       "viewAllIntegrations": "View all integrations",
       "forSalesTeams": "For Sales Teams",
       "forMarketingTeams": "For Marketing Teams",
       "forAgencies": "For Agencies",
       "forStartupsSmbs": "For Startups & SMBs",
       "forEnterprise": "For Enterprise",
+      "forGrowingBusinesses": "For Growing Businesses",
+      "forMidMarket": "For Mid-Market",
+      "forOperationsTeams": "For Operations Teams",
+      "forHrTeams": "For HR Teams",
+      "forFinanceTeams": "For Finance Teams",
+      "forManagementExecutives": "For Management & Executives",
+      "forCustomerSuccessTeams": "For Customer Success Teams",
+      "growth": "Growth",
+      "automation": "Automation",
+      "customerManagement": "Customer Management",
+      "operationsNeed": "Operations",
+      "intelligence": "Intelligence",
+      "enterpriseGovernance": "Enterprise Governance",
       "healthcare": "Healthcare",
       "education": "Education",
       "realEstate": "Real Estate",
@@ -54,8 +106,10 @@
       "customerStories": "Customer Stories",
       "documentation": "Documentation",
       "apiReference": "API Reference",
+      "developerGuides": "Developer Guides",
       "guidesTemplates": "Guides & Templates",
       "webinars": "Webinars",
+      "sdks": "SDKs",
       "faq": "FAQ",
       "changelog": "Changelog",
       "status": "Status",
@@ -124,6 +178,9 @@
       "analytics": "Analytics",
       "savePreferences": "Save preferences"
     },
+    "announcementBanner": {
+      "dismiss": "Dismiss announcement"
+    },
     "form": {
       "name": "Name",
       "email": "Email",
@@ -164,6 +221,16 @@
     "floatingActions": {
       "whatsappLabel": "Chat with us on WhatsApp",
       "callLabel": "Call {name}"
+    },
+    "chatWidget": {
+      "launcherLabel": "Chat with our team",
+      "title": "Chat with our team",
+      "subtitle": "We usually reply within a few minutes.",
+      "placeholder": "Type your message…",
+      "send": "Send",
+      "close": "Close chat",
+      "emptyState": "Send a message to start the conversation.",
+      "unavailable": "Chat is temporarily unavailable. Please try WhatsApp or call us instead."
     },
     "welcomePopup": {
       "eyebrow": "Welcome to ZynReach",
@@ -264,8 +331,44 @@
       "companySize": "Company Size",
       "phone": "Phone",
       "country": "Country",
-      "goal": "What are you hoping to solve?",
-      "goalPlaceholder": "Optional",
+      "industry": "Industry",
+      "role": "Your Role",
+      "primaryNeed": "Primary Need",
+      "message": "What are you hoping to solve?",
+      "messagePlaceholder": "Optional",
+      "industryOptions": {
+        "healthcare": "Healthcare",
+        "education": "Education",
+        "real-estate": "Real Estate",
+        "automotive": "Automotive",
+        "manufacturing": "Manufacturing",
+        "technology": "Technology & Software",
+        "financial-services": "Financial Services",
+        "retail-ecommerce": "Retail & E-commerce",
+        "professional-services": "Professional Services",
+        "hospitality-travel": "Hospitality & Travel",
+        "nonprofit": "Nonprofit",
+        "other": "Other"
+      },
+      "roleOptions": {
+        "founder-executive": "Founder / Executive (CEO, COO, etc.)",
+        "sales": "Sales",
+        "marketing": "Marketing",
+        "operations": "Operations",
+        "hr": "HR",
+        "finance": "Finance",
+        "it-engineering": "IT / Engineering",
+        "customer-success-support": "Customer Success / Support",
+        "other": "Other"
+      },
+      "primaryNeedOptions": {
+        "growth-revenue": "Growth & Revenue (CRM, marketing, sales)",
+        "ai-automation": "AI & Automation",
+        "operations": "Operations (projects, tasks, HR, finance)",
+        "intelligence": "Analytics & Business Intelligence",
+        "enterprise": "Enterprise (security, compliance, scale)",
+        "other": "Other"
+      },
       "companySizeOptions": {
         "1-10": "1–10 employees",
         "11-50": "11–50 employees",
@@ -320,7 +423,8 @@
         "companyNameRequired": "Company name is required.",
         "companySizeRequired": "Select a company size.",
         "countryRequired": "Select a country.",
-        "phoneInvalid": "Enter a valid phone number."
+        "phoneInvalid": "Enter a valid phone number.",
+        "industryRequired": "Select an industry."
       }
     }
   },
@@ -349,10 +453,21 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "AI-native revenue operations",
-      "headlinePrefix": "One platform for",
-      "headlineHighlight": "AI-powered revenue growth",
-      "subhead": "ZynReach unifies CRM, marketing automation, lead generation, workflow automation, and analytics — with AI built into every workflow, not bolted on."
+      "eyebrow": "AI-powered enterprise growth & operations",
+      "headlinePrefix": "One Platform to",
+      "headlineHighlight": "Grow, Automate, and Run Your Business.",
+      "subhead": "ZynReach brings AI-powered growth, customer management, automation, operations, and business intelligence together in one unified enterprise platform.",
+      "visual": {
+        "ariaLabel": "Mockup of the ZynReach product showing Dashboard, CRM, AI, Automation, Analytics, and Operations panels",
+        "tiles": {
+          "dashboard": "Dashboard",
+          "crm": "CRM",
+          "ai": "AI",
+          "automation": "Automation",
+          "analytics": "Analytics",
+          "operations": "Operations"
+        }
+      }
     },
     "trustFeatures": {
       "aiPowered": {
@@ -769,6 +884,1491 @@
           "statusQuo": "Reporting means exporting spreadsheets from four dashboards and reconciling them by hand.",
           "withZynReach": "One dashboard shows the real, current state of pipeline and campaign performance."
         }
+      },
+      "sales-pipeline": {
+        "hero": {
+          "headline": "Work every deal, stage by stage",
+          "subhead": "The execution layer on top of CRM — deals, tasks, and follow-ups organized so reps always know the next move, and managers always know what's actually converting."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Visual deal stages",
+            "description": "A drag-and-drop pipeline board shows every deal's stage at a glance, so reps and managers see the same picture without a status meeting.",
+            "proofLabel": "of every deal in motion",
+            "proofStat": "1 view"
+          },
+          {
+            "headline": "Task & follow-up discipline",
+            "description": "Every deal carries its next-step task automatically, so nothing goes quiet waiting on someone to remember to follow up.",
+            "proofLabel": "deals without a next step",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Conversion tracking built in",
+            "description": "Stage-to-stage conversion rates update automatically, showing exactly where deals stall before the quarter is over.",
+            "proofLabel": "stage-to-stage conversion lift",
+            "proofStat": "+18%"
+          },
+          {
+            "headline": "Deal aging alerts",
+            "description": "Deals that sit too long in a stage get flagged automatically, so at-risk pipeline surfaces before it's too late to save.",
+            "proofLabel": "faster stalled-deal detection",
+            "proofStat": "3 days"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Add a deal",
+            "description": "Deals enter the pipeline from a lead, a form, or a manual add."
+          },
+          {
+            "headline": "Assign owner and stage",
+            "description": "Every deal gets a clear owner and a current stage from day one."
+          },
+          {
+            "headline": "Tasks keep it moving",
+            "description": "Follow-up tasks generate automatically so deals don't go stale."
+          },
+          {
+            "headline": "Conversion tracks itself",
+            "description": "Stage-by-stage conversion updates live as deals move forward."
+          }
+        ],
+        "comparison": {
+          "title": "Sales Pipeline vs. tracking deals by memory",
+          "statusQuo": "Deal status lives in reps' heads and inboxes — managers find out a deal stalled only when it's already too late.",
+          "withZynReach": "Every deal shows its stage, owner, and next step in one board, with stalled deals flagged automatically."
+        }
+      },
+      "campaigns": {
+        "hero": {
+          "headline": "Build and launch campaigns from one place",
+          "subhead": "Assemble a campaign once — email, in-app, and landing pages launch together, tracked against the same audience and the same goal."
+        },
+        "featureBlocks": [
+          {
+            "headline": "One builder, every channel",
+            "description": "Assemble a campaign from reusable content blocks once, then launch it across email, in-app, and landing pages together.",
+            "proofLabel": "launches everywhere",
+            "proofStat": "1 build"
+          },
+          {
+            "headline": "Channel orchestration",
+            "description": "Email, in-app messages, and landing pages launch in sync off one campaign timeline, instead of three separate tools.",
+            "proofLabel": "one launch",
+            "proofStat": "3 channels"
+          },
+          {
+            "headline": "Shared audience targeting",
+            "description": "Campaigns draw on the same segments and scoring Marketing Automation already builds, so audiences never need rebuilding per channel.",
+            "proofLabel": "audiences rebuilt per channel",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Live performance tracking",
+            "description": "See opens, clicks, conversions, and pipeline impact per campaign as it happens, not after a manual export.",
+            "proofLabel": "campaign performance tracking",
+            "proofStat": "Real-time"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define the goal and audience",
+            "description": "Pick the segment and the outcome the campaign is built for."
+          },
+          {
+            "headline": "Assemble content across channels",
+            "description": "Build email, in-app, and landing page content from one workspace."
+          },
+          {
+            "headline": "Launch on schedule or trigger",
+            "description": "Send immediately, on a schedule, or off a behavioral trigger."
+          },
+          {
+            "headline": "Track results live",
+            "description": "Performance and pipeline impact update in one dashboard as the campaign runs."
+          }
+        ],
+        "comparison": {
+          "title": "Campaigns vs. building each channel separately",
+          "statusQuo": "Each channel gets built and launched separately, with its own audience export and its own results to reconcile afterward.",
+          "withZynReach": "One campaign, one audience, one launch — results roll up automatically across every channel it touched."
+        }
+      },
+      "contact-360": {
+        "hero": {
+          "headline": "One record, every touchpoint",
+          "subhead": "Deals, emails, calls, campaigns, and support tickets — every interaction with a contact lives on a single record, so no one starts a conversation blind."
+        },
+        "featureBlocks": [
+          {
+            "headline": "One unified touchpoint timeline",
+            "description": "Every interaction — deal activity, emails, calls, campaign sends, support tickets — appears in one chronological timeline per contact.",
+            "proofLabel": "every touchpoint, in order",
+            "proofStat": "1 timeline"
+          },
+          {
+            "headline": "Cross-team visibility",
+            "description": "Sales, marketing, and support all look at the same contact record, so no team is working from a partial picture.",
+            "proofLabel": "silos between teams",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Full interaction history",
+            "description": "Nothing gets lost between tools — every touch a contact has with your business is attached automatically, not manually logged.",
+            "proofLabel": "activity captured per contact",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Instant context before any conversation",
+            "description": "Open a contact and see everything that's happened with them so far — no digging through five tabs before a call.",
+            "proofLabel": "to full contact context",
+            "proofStat": "< 5 sec"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "A contact is created or enriched",
+            "description": "Records start from a form, an import, or enrichment."
+          },
+          {
+            "headline": "Every touchpoint attaches automatically",
+            "description": "Deals, emails, calls, campaigns, and tickets link to the record."
+          },
+          {
+            "headline": "The timeline builds itself",
+            "description": "No manual logging — activity across every module lands in order."
+          },
+          {
+            "headline": "Any team opens full context instantly",
+            "description": "Sales, marketing, and support see the same complete history."
+          }
+        ],
+        "comparison": {
+          "title": "Contact 360 vs. scattered records",
+          "statusQuo": "A contact's history is split across an inbox, a support tool, and a spreadsheet — nobody sees the full picture at once.",
+          "withZynReach": "Every touchpoint lands on one record automatically, so any team can see the full relationship in seconds."
+        }
+      },
+      "business-data": {
+        "hero": {
+          "headline": "The data layer behind every list",
+          "subhead": "Discover prospects, extract verified contact and company data, and build targeted lists — the foundation Lead Generation runs on."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Prospect discovery",
+            "description": "Search and filter by firmographic and technographic criteria to find the companies and contacts that match your ideal customer profile.",
+            "proofLabel": "of searchable companies & contacts",
+            "proofStat": "Millions"
+          },
+          {
+            "headline": "Verified data extraction",
+            "description": "Pull verified emails, phone numbers, and job titles, so outreach doesn't bounce or land with the wrong person.",
+            "proofLabel": "verified data accuracy",
+            "proofStat": "95%+"
+          },
+          {
+            "headline": "Automatic enrichment",
+            "description": "Existing contacts and companies get appended with firmographic data automatically as records enter the system.",
+            "proofLabel": "to enrich a record",
+            "proofStat": "0 clicks"
+          },
+          {
+            "headline": "Targeted list building",
+            "description": "Build and export lists filtered by segment, industry, size, or intent — ready to push straight into a campaign or pipeline.",
+            "proofLabel": "to build a targeted list",
+            "proofStat": "Minutes"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define your target criteria",
+            "description": "Set firmographic, technographic, or intent filters."
+          },
+          {
+            "headline": "Search and discover matching prospects",
+            "description": "Results pull from a continuously updated data set."
+          },
+          {
+            "headline": "Data is verified and enriched",
+            "description": "Contact and company details are checked and filled in automatically."
+          },
+          {
+            "headline": "Export or push into your pipeline",
+            "description": "Send the list straight into Business Data, campaigns, or CRM."
+          }
+        ],
+        "comparison": {
+          "title": "Business Data vs. manual prospecting",
+          "statusQuo": "Lists get built by hand from scattered sources, going stale within weeks and full of unverified contact details.",
+          "withZynReach": "Verified, enriched lists build in minutes from continuously updated data — ready to work immediately."
+        }
+      },
+      "ai-workspace": {
+        "hero": {
+          "headline": "One home base for every AI tool your team uses",
+          "subhead": "AI Assistant, prompt library, knowledge base, and AI insights live in one workspace — grounded in your data, not scattered across a separate app your team has to remember to open."
+        },
+        "featureBlocks": [
+          {
+            "headline": "One AI Assistant, always available",
+            "description": "A single assistant grounded in your company's data sits inside every workflow, instead of a separate chatbot per tool.",
+            "proofLabel": "across every workflow",
+            "proofStat": "1 assistant"
+          },
+          {
+            "headline": "Shared prompt library",
+            "description": "Save prompts that work and share them across the team, so no one starts from a blank box every time.",
+            "proofLabel": "prompts rewritten from scratch",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Knowledge base grounding",
+            "description": "AI answers pull from your actual documents and data, not the open internet, so responses reflect how your business really works.",
+            "proofLabel": "grounded in your data",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "A running feed of AI insights",
+            "description": "Insights worth acting on surface automatically in the workspace as your data changes, instead of waiting to be asked.",
+            "proofLabel": "insights surfaced automatically",
+            "proofStat": "Daily"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Connect your knowledge sources",
+            "description": "Link documents, CRM data, and past conversations."
+          },
+          {
+            "headline": "Save prompts your team reuses",
+            "description": "Build a shared library instead of starting cold each time."
+          },
+          {
+            "headline": "Ask the assistant anything",
+            "description": "Every answer is grounded in your connected data."
+          },
+          {
+            "headline": "Insights surface as data changes",
+            "description": "The workspace flags what's worth your attention, automatically."
+          }
+        ],
+        "comparison": {
+          "title": "AI Workspace vs. scattered AI tools",
+          "statusQuo": "Teams juggle multiple disconnected AI tools, with useful prompts lost in chat history and no shared grounding in company data.",
+          "withZynReach": "One workspace holds the assistant, the prompt library, and the knowledge it's grounded in, together."
+        }
+      },
+      "ai-agents": {
+        "hero": {
+          "headline": "AI that takes action, not just answers",
+          "subhead": "AI Agents don't just draft a reply — they execute multi-step processes end to end: updating records, sending follow-ups, and moving work forward without waiting on a rep to do it manually."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Multi-step process execution",
+            "description": "Agents complete entire processes — not a single reply — chaining together the steps a task actually requires from start to finish.",
+            "proofLabel": "processes run end-to-end",
+            "proofStat": "Multi-step"
+          },
+          {
+            "headline": "Action-taking, not just chat",
+            "description": "Agents update records, send messages, and trigger the next step in a workflow directly — real actions, not just a suggestion to review.",
+            "proofLabel": "not just suggestions",
+            "proofStat": "Real actions"
+          },
+          {
+            "headline": "Human checkpoints where it matters",
+            "description": "Approval steps insert at the points that need a human sign-off, so autonomy and oversight coexist by design.",
+            "proofLabel": "auditable agent actions",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Works across the whole platform",
+            "description": "The same agent framework plugs into pipeline, campaigns, and automation steps — one capability, many workflows.",
+            "proofLabel": "many workflows automated",
+            "proofStat": "1 agent"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define the process an agent should run",
+            "description": "Describe the multi-step outcome you want handled."
+          },
+          {
+            "headline": "Set guardrails and approval checkpoints",
+            "description": "Choose where a human needs to sign off."
+          },
+          {
+            "headline": "The agent executes the steps automatically",
+            "description": "Records update, messages send, workflows advance."
+          },
+          {
+            "headline": "Review the audit trail of every action",
+            "description": "Every step an agent takes is logged and reviewable."
+          }
+        ],
+        "comparison": {
+          "title": "AI Agents vs. AI that only drafts",
+          "statusQuo": "AI assistants that only draft text still leave the actual work — updating records, sending it, moving the process forward — for someone to finish.",
+          "withZynReach": "AI Agents execute the process end to end, with approvals where you need them and a full audit trail after."
+        }
+      },
+      "ai-insights": {
+        "hero": {
+          "headline": "Know which deal, lead, or message to work next",
+          "subhead": "AI lead scoring, generated messaging, and context-aware recommendations point your team at what matters most — the analytical layer that tells you where to focus."
+        },
+        "featureBlocks": [
+          {
+            "headline": "AI lead and deal scoring",
+            "description": "Leads and deals are ranked continuously by real engagement signals, so effort goes where it's most likely to convert.",
+            "proofLabel": "score updates as data changes",
+            "proofStat": "Real-time"
+          },
+          {
+            "headline": "AI message generation",
+            "description": "Outreach and follow-up messages draft automatically, grounded in the actual contact and deal context.",
+            "proofLabel": "to a first message draft",
+            "proofStat": "Seconds"
+          },
+          {
+            "headline": "Intelligent recommendations",
+            "description": "A next-best-action surfaces on every deal and contact, so reps always know what to do next without guessing.",
+            "proofLabel": "recommended next step, always visible",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Context-aware assistance",
+            "description": "Insights adapt to whatever record you're viewing, pulling in the relevant history automatically instead of making you look it up.",
+            "proofLabel": "manual digging for context",
+            "proofStat": "0"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Data flows in from every module",
+            "description": "CRM, marketing, and activity data feed one model."
+          },
+          {
+            "headline": "AI scores leads and deals continuously",
+            "description": "Scores update as new engagement signals arrive."
+          },
+          {
+            "headline": "Recommendations surface in context",
+            "description": "Next-best-actions appear right on the record."
+          },
+          {
+            "headline": "Act directly from the insight",
+            "description": "Send the drafted message or move the deal forward in one click."
+          }
+        ],
+        "comparison": {
+          "title": "AI Insights vs. gut-feel prioritization",
+          "statusQuo": "Reps guess which leads and deals to prioritize based on memory and instinct, with no consistent signal to go on.",
+          "withZynReach": "Scores and recommendations tell every rep exactly where to focus, updated automatically as data changes."
+        }
+      },
+      "automation-center": {
+        "hero": {
+          "headline": "The visual builder behind every automation",
+          "subhead": "Triggers, conditions, actions, and AI Agent steps — assembled visually, monitored in real time, and extendable to any process across the platform."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Visual workflow builder",
+            "description": "Assemble triggers, conditions, and actions on a visual canvas — no engineering ticket required to build or edit an automation.",
+            "proofLabel": "to build an automation",
+            "proofStat": "0 code"
+          },
+          {
+            "headline": "Conditional branching logic",
+            "description": "Branch automations by any field, event, or outcome, so one workflow can handle every path a process actually takes.",
+            "proofLabel": "branching paths per workflow",
+            "proofStat": "Unlimited"
+          },
+          {
+            "headline": "AI Agent steps built in",
+            "description": "Drop an AI Agent into any step of an automation, so multi-step actions run alongside standard triggers and updates.",
+            "proofLabel": "to add an AI Agent step",
+            "proofStat": "1 click"
+          },
+          {
+            "headline": "Live execution monitoring",
+            "description": "Watch every run as it happens and catch a failed step immediately, instead of finding out a process silently broke weeks later.",
+            "proofLabel": "run monitoring",
+            "proofStat": "Real-time"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Pick a trigger event",
+            "description": "Start from any event across CRM, marketing, or support."
+          },
+          {
+            "headline": "Add conditions and branches",
+            "description": "Build the logic that routes the workflow correctly."
+          },
+          {
+            "headline": "Add actions, including AI Agent steps",
+            "description": "Chain updates, notifications, and agent-run steps together."
+          },
+          {
+            "headline": "Monitor every run and refine",
+            "description": "See execution history and adjust the workflow as needed."
+          }
+        ],
+        "comparison": {
+          "title": "Automation Center vs. one-off scripts",
+          "statusQuo": "Automations get built ad hoc by whoever has spare dev time, break silently, and are hard for anyone else to edit.",
+          "withZynReach": "Anyone can build, branch, and monitor an automation visually — including steps an AI Agent runs on its own."
+        }
+      },
+      "reports": {
+        "hero": {
+          "headline": "Operational reports, ready when you need them",
+          "subhead": "Build, run, and export the reports your team actually needs — pipeline detail, campaign performance, activity logs — without waiting on a dashboard rebuild."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Prebuilt operational templates",
+            "description": "Common reports — pipeline detail, activity logs, campaign performance — are ready to run without building them from scratch.",
+            "proofLabel": "report templates ready to run",
+            "proofStat": "Prebuilt"
+          },
+          {
+            "headline": "Custom report builder",
+            "description": "Filter and group any underlying dataset into a report tailored to exactly what a team or a request needs.",
+            "proofLabel": "SQL or engineering required",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Exportable, shareable formats",
+            "description": "Export to CSV, PDF, or spreadsheet-ready formats so a report can go anywhere it's needed — inbox, deck, or drive.",
+            "proofLabel": "export ready",
+            "proofStat": "3 formats"
+          },
+          {
+            "headline": "One click into scheduled delivery",
+            "description": "Any report can be handed off to Scheduled Reports for automatic recurring delivery, with no rebuilding required.",
+            "proofLabel": "to schedule delivery",
+            "proofStat": "1 click"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Pick a template or build your own",
+            "description": "Start from a prebuilt report or a custom filter set."
+          },
+          {
+            "headline": "Filter and group the data you need",
+            "description": "Narrow to the exact slice a request calls for."
+          },
+          {
+            "headline": "Run it on demand",
+            "description": "Reports generate immediately against live data."
+          },
+          {
+            "headline": "Export or schedule delivery",
+            "description": "Send it once, or hand it off for automatic recurring delivery."
+          }
+        ],
+        "comparison": {
+          "title": "Reports vs. ad hoc spreadsheet pulls",
+          "statusQuo": "Every report request means someone manually pulling and pivoting data into a spreadsheet on request.",
+          "withZynReach": "Operational reports run on demand from live data, ready to export or schedule in a few clicks."
+        }
+      },
+      "business-intelligence": {
+        "hero": {
+          "headline": "Cross-suite intelligence for leadership",
+          "subhead": "Business Intelligence rolls up CRM, marketing, and automation data into executive-level insight — cross-functional, white-label-ready, and built for decisions above any single team's metrics."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Cross-suite analytics",
+            "description": "Data from CRM, marketing, and automation blends into one model, instead of remaining siloed per-team dashboards.",
+            "proofLabel": "every module, one view",
+            "proofStat": "1 model"
+          },
+          {
+            "headline": "Executive-level insights",
+            "description": "Trends, anomalies, and shifts across the business surface automatically, framed for leadership decisions, not team-level detail.",
+            "proofLabel": "trends & anomalies",
+            "proofStat": "Auto-surfaced"
+          },
+          {
+            "headline": "White-label reporting",
+            "description": "Brand BI reports for client or board delivery, so agencies and enterprises can present insight as their own polished output.",
+            "proofLabel": "ready for client delivery",
+            "proofStat": "White-label"
+          },
+          {
+            "headline": "Whole-business rollups",
+            "description": "Revenue, pipeline, and marketing performance roll up into one view built for decisions that span every team.",
+            "proofLabel": "whole business",
+            "proofStat": "1 rollup"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Connect every module's data",
+            "description": "CRM, marketing, and automation activity feed one model."
+          },
+          {
+            "headline": "BI blends it into one cross-suite model",
+            "description": "Data unifies without manual reconciliation."
+          },
+          {
+            "headline": "Insights and anomalies surface automatically",
+            "description": "Leadership sees what changed and why."
+          },
+          {
+            "headline": "Share white-label reports with stakeholders",
+            "description": "Present branded, board- or client-ready output."
+          }
+        ],
+        "comparison": {
+          "title": "Business Intelligence vs. siloed team dashboards",
+          "statusQuo": "Each team has its own dashboard, and no one has a shared, cross-functional picture of the whole business.",
+          "withZynReach": "One BI layer sits above every team's data, surfacing the insight leadership actually needs to decide."
+        }
+      },
+      "executive-dashboards": {
+        "hero": {
+          "headline": "Dashboards built for the view from the top",
+          "subhead": "Purpose-built rollups for CEO, COO, CRO, and CFO-level visibility — the whole business on one screen, not one team's numbers dressed up."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Role-specific executive views",
+            "description": "CEO, COO, CRO, and CFO dashboards come pre-built with the rollups each role actually needs, out of the box.",
+            "proofLabel": "dashboards ready out of the box",
+            "proofStat": "4 roles"
+          },
+          {
+            "headline": "Whole-business rollups",
+            "description": "Revenue, pipeline, marketing, and support performance sit on one screen, instead of one team's metrics dressed up as the whole picture.",
+            "proofLabel": "the whole business",
+            "proofStat": "1 screen"
+          },
+          {
+            "headline": "Board-ready presentation",
+            "description": "Dashboards export as polished, board- and investor-ready visuals without a separate deck-building step.",
+            "proofLabel": "in one export",
+            "proofStat": "Board-ready"
+          },
+          {
+            "headline": "Live, not static",
+            "description": "Numbers update as the underlying data changes, so leadership is never presenting last month's snapshot as current.",
+            "proofLabel": "always current",
+            "proofStat": "Real-time"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Choose a leadership role or rollup",
+            "description": "Start from a CEO, COO, CRO, or CFO view."
+          },
+          {
+            "headline": "Dashboard assembles from live data",
+            "description": "Cross-suite data populates the rollup automatically."
+          },
+          {
+            "headline": "Review whole-business performance",
+            "description": "See revenue, pipeline, and marketing in one view."
+          },
+          {
+            "headline": "Export or present board-ready",
+            "description": "Share a polished view without a separate deck."
+          }
+        ],
+        "comparison": {
+          "title": "Executive Dashboards vs. the monthly deck",
+          "statusQuo": "Leadership waits on a manually built monthly slide deck that's already stale by the time it's presented.",
+          "withZynReach": "A live dashboard stays current at all times and exports board-ready whenever leadership needs it."
+        }
+      },
+      "scheduled-reports": {
+        "hero": {
+          "headline": "Reports that show up before you ask",
+          "subhead": "Set it once — daily, weekly, or monthly digests land in the right inbox automatically, so stakeholders never have to chase a number down."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Flexible scheduling",
+            "description": "Set any report to run daily, weekly, or monthly, matching the cadence each stakeholder actually needs.",
+            "proofLabel": "daily, weekly, monthly",
+            "proofStat": "3 cadences"
+          },
+          {
+            "headline": "Automatic generation",
+            "description": "Reports build themselves on schedule against live data, with no one needing to remember to run them.",
+            "proofLabel": "manual runs required",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Direct inbox delivery",
+            "description": "Reports land straight in a stakeholder's inbox on schedule, with no dashboard login required to see them.",
+            "proofLabel": "logins required to receive a report",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Recipient management",
+            "description": "Route different reports to different stakeholder lists, so each person gets exactly what's relevant to them.",
+            "proofLabel": "recipient lists per report",
+            "proofStat": "Unlimited"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Pick a report to schedule",
+            "description": "Choose from any operational or BI report."
+          },
+          {
+            "headline": "Set the cadence and recipients",
+            "description": "Define daily, weekly, or monthly delivery and who receives it."
+          },
+          {
+            "headline": "The report generates automatically",
+            "description": "Live data populates the report on schedule."
+          },
+          {
+            "headline": "It's delivered every time",
+            "description": "Recipients get it in their inbox without asking."
+          }
+        ],
+        "comparison": {
+          "title": "Scheduled Reports vs. someone remembering to send it",
+          "statusQuo": "Reports go out only when someone remembers to pull the data, build it, and email it around.",
+          "withZynReach": "Reports generate and deliver automatically on schedule, every time, with no one having to remember."
+        }
+      },
+      "project-management": {
+        "hero": {
+          "headline": "Projects, timelines, and budgets in one view",
+          "subhead": "Boards, milestones, and resource plans stay connected to the same data as the rest of your business — no separate project tool to reconcile."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Visual boards & timelines",
+            "description": "Plan and track work on boards and timelines that reflect real project status, not a snapshot from last week's update meeting.",
+            "proofLabel": "shared timeline across every project",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Milestone tracking",
+            "description": "Milestones stay visible to the whole team, so a slipping date gets caught before it becomes a missed launch.",
+            "proofLabel": "missed milestones from lost visibility",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Budget & resource tracking",
+            "description": "See budget burn and resource load next to the timeline, so overruns get caught while there's still time to act.",
+            "proofLabel": "fewer budget overruns caught too late",
+            "proofStat": "15%"
+          },
+          {
+            "headline": "Early risk flagging",
+            "description": "Risks are logged against the project and surfaced to the right owner, instead of surfacing for the first time in a status meeting.",
+            "proofLabel": "earlier risk visibility",
+            "proofStat": "3x"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Set up the project",
+            "description": "Define scope, timeline, and budget in one place."
+          },
+          {
+            "headline": "Plan milestones & resources",
+            "description": "Assign work and track capacity against the plan."
+          },
+          {
+            "headline": "Track progress on boards",
+            "description": "Boards and timelines reflect real status as work happens."
+          },
+          {
+            "headline": "Catch risks & drift early",
+            "description": "Budget and schedule risks surface before they become the plan's next crisis."
+          }
+        ],
+        "comparison": {
+          "title": "Project management vs. spreadsheet trackers",
+          "statusQuo": "Timelines, budgets, and resourcing live in separate spreadsheets that go stale the moment a plan changes.",
+          "withZynReach": "One live view of milestones, budget, and resourcing updates as the project actually moves."
+        }
+      },
+      "task-management": {
+        "hero": {
+          "headline": "Where daily work actually gets tracked",
+          "subhead": "Personal and team task lists, recurring work, and reminders — the day-to-day layer underneath your projects, not another project tool."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Personal & team task lists",
+            "description": "Track your own work or your team's in the same place, without forcing every task into a formal project structure.",
+            "proofLabel": "task list, whether it's just you or the whole team",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Recurring tasks",
+            "description": "Weekly reports, monthly reviews, and other repeating work get scheduled once and recur automatically.",
+            "proofLabel": "recurring tasks recreated from scratch",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Smart reminders",
+            "description": "Reminders nudge the right person before a deadline, not after it's already been missed.",
+            "proofLabel": "fewer tasks falling through the cracks",
+            "proofStat": "↓"
+          },
+          {
+            "headline": "Automatic escalations",
+            "description": "Overdue tasks escalate to a manager automatically, so nothing important quietly slips.",
+            "proofLabel": "overdue tasks routed to a manager, automatically",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Create a task",
+            "description": "Add personal or team tasks in seconds, one-off or recurring."
+          },
+          {
+            "headline": "Assign & schedule it",
+            "description": "Set an owner, due date, and recurrence if it repeats."
+          },
+          {
+            "headline": "Reminders keep it on track",
+            "description": "The right person is nudged before the deadline arrives."
+          },
+          {
+            "headline": "Escalations catch what's overdue",
+            "description": "Missed deadlines route to a manager automatically."
+          }
+        ],
+        "comparison": {
+          "title": "Task management vs. scattered to-do lists",
+          "statusQuo": "Tasks live in personal notebooks, chat threads, and sticky notes — nobody has one view of what's actually due.",
+          "withZynReach": "Every task — personal or team, one-off or recurring — lives in one list with reminders and escalation built in."
+        }
+      },
+      "hr-management": {
+        "hero": {
+          "headline": "Employee records, without a separate system to maintain",
+          "subhead": "HR Management keeps employee records, documents, and approval workflows inside the same operations platform as the rest of your business — one more capability, not a dedicated HR suite to bolt on."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Centralized employee records",
+            "description": "Employee details stay in one record that the rest of the platform can reference, instead of a standalone HR database.",
+            "proofLabel": "employee record, shared across every workflow",
+            "proofStat": "1"
+          },
+          {
+            "headline": "HR document management",
+            "description": "Contracts, policies, and employee documents are stored and organized alongside the rest of your business documents.",
+            "proofLabel": "documents chased down over email",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Configurable HR workflows",
+            "description": "Onboarding, changes, and requests move through approval workflows built the same way as any other operational process.",
+            "proofLabel": "auditable approval trail on HR requests",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Part of business operations",
+            "description": "HR sits alongside finance, tasks, and teams in one operations platform — not a separate HR product with its own login.",
+            "proofLabel": "platform, no separate HR login",
+            "proofStat": "1"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Add employees & records",
+            "description": "Employee details live in the same platform as the rest of operations."
+          },
+          {
+            "headline": "Store HR documents securely",
+            "description": "Contracts and policies stay organized and access-controlled."
+          },
+          {
+            "headline": "Route requests through workflows",
+            "description": "Onboarding and change requests move through approvals automatically."
+          },
+          {
+            "headline": "See it inside one operations view",
+            "description": "HR data connects to the same teams, departments, and permissions as everything else."
+          }
+        ],
+        "comparison": {
+          "title": "HR records vs. a separate HR system",
+          "statusQuo": "Employee records live in a dedicated HR tool that doesn't talk to the rest of the business.",
+          "withZynReach": "Employee records, documents, and HR workflows live inside the same operations platform as everything else your team runs."
+        }
+      },
+      "attendance-leave": {
+        "hero": {
+          "headline": "Attendance and leave, without the spreadsheet",
+          "subhead": "Track attendance, manage leave requests, and enforce policy automatically — approvals route to the right manager without a chase."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Attendance tracking",
+            "description": "Attendance is logged against each employee automatically, giving managers a current view without a manual roll call.",
+            "proofLabel": "attendance record per employee, always current",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Leave requests & balances",
+            "description": "Employees request leave and see their balance in the same place — no separate calculation to double-check.",
+            "proofLabel": "manual leave-balance math",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Automated approvals",
+            "description": "Leave requests route to the right manager automatically, based on your organization's structure.",
+            "proofLabel": "average approval turnaround",
+            "proofStat": "< 1 day"
+          },
+          {
+            "headline": "Configurable policies",
+            "description": "Leave and attendance policies are enforced consistently, so exceptions are visible instead of silent.",
+            "proofLabel": "policy-consistent approvals",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Set attendance & leave policies",
+            "description": "Define the rules once for the whole organization."
+          },
+          {
+            "headline": "Employees log time & request leave",
+            "description": "Requests and attendance are captured directly in the platform."
+          },
+          {
+            "headline": "Approvals route automatically",
+            "description": "Requests reach the right manager without a manual forward."
+          },
+          {
+            "headline": "Balances & records update live",
+            "description": "Attendance and leave balances stay current with every request."
+          }
+        ],
+        "comparison": {
+          "title": "Attendance & leave vs. manual tracking",
+          "statusQuo": "Leave requests move through email and spreadsheets, and balances get out of sync.",
+          "withZynReach": "Requests, approvals, and balances update automatically and stay consistent with policy."
+        }
+      },
+      "teams-departments": {
+        "hero": {
+          "headline": "Structure that mirrors how your business actually works",
+          "subhead": "Departments, teams, managers, and permissions stay in sync with your real org chart — access follows structure automatically."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Departments & teams",
+            "description": "Model your actual org structure once, and every module — from tasks to reporting — reflects it.",
+            "proofLabel": "structure, shared across every module",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Manager hierarchies",
+            "description": "Reporting lines update in one place, and approvals and visibility follow automatically.",
+            "proofLabel": "manual re-assignment when reporting lines change",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Role-based permissions",
+            "description": "Access is granted by role and team, so permissions match what someone actually does.",
+            "proofLabel": "access mapped to actual role",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Structure-aware reporting",
+            "description": "Reports roll up by department or team automatically, without a manual filter every time.",
+            "proofLabel": "view per department, automatically",
+            "proofStat": "1"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define departments & teams",
+            "description": "Set up the structure that mirrors your business."
+          },
+          {
+            "headline": "Assign managers & reporting lines",
+            "description": "Hierarchies determine approvals and visibility."
+          },
+          {
+            "headline": "Set role-based permissions",
+            "description": "Access follows role and team automatically."
+          },
+          {
+            "headline": "Structure updates flow through",
+            "description": "Changes to teams or managers propagate everywhere at once."
+          }
+        ],
+        "comparison": {
+          "title": "Org structure vs. a static chart",
+          "statusQuo": "The org chart lives in a slide deck that's out of date the moment someone changes teams.",
+          "withZynReach": "Departments, managers, and permissions stay live and consistent as your structure evolves."
+        }
+      },
+      "finance-accounting": {
+        "hero": {
+          "headline": "Financial workflows, without a separate accounting system",
+          "subhead": "Invoices, payments, expenses, and tax handling live inside the same operations platform as the rest of your business — one more capability, not a dedicated accounting suite to reconcile."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Invoicing & payments",
+            "description": "Invoices move from issue to paid in one record, without exporting to a separate accounting tool to track status.",
+            "proofLabel": "invoice record, from issue to payment",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Expense tracking",
+            "description": "Expenses are logged and categorized as they happen, instead of arriving in an inbox at month-end.",
+            "proofLabel": "expense reports lost in email",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Tax-ready records",
+            "description": "Transactions are categorized consistently as they're recorded, so tax reporting isn't a reconstruction project.",
+            "proofLabel": "of transactions categorized automatically",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Financial reporting & workflows",
+            "description": "Approvals and reporting run on the same live data, so the numbers on a report match what's actually happened.",
+            "proofLabel": "financial reporting, no month-end scramble",
+            "proofStat": "real-time"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Issue invoices & record payments",
+            "description": "Track every invoice from issue through payment."
+          },
+          {
+            "headline": "Track expenses as they happen",
+            "description": "Expenses are categorized and logged in real time."
+          },
+          {
+            "headline": "Route financial approvals",
+            "description": "Spending and payments move through configurable approval workflows."
+          },
+          {
+            "headline": "Report on the current state, anytime",
+            "description": "Financial reports reflect live data, not a month-end export."
+          }
+        ],
+        "comparison": {
+          "title": "Financial workflows vs. a separate accounting tool",
+          "statusQuo": "Invoices, expenses, and reports live in a standalone accounting system disconnected from operations.",
+          "withZynReach": "Invoicing, expenses, and financial reporting live inside the same platform running the rest of the business."
+        }
+      },
+      "document-center": {
+        "hero": {
+          "headline": "Every document, one secure home",
+          "subhead": "Centralized storage, version control, and permission-based sharing — with approvals and retention policy built in, not bolted on."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Centralized secure storage",
+            "description": "Every document lives in one organized library instead of scattered across email attachments and personal drives.",
+            "proofLabel": "document library, company-wide",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Version control",
+            "description": "Every edit is tracked automatically, so there's never a question of which file is the real 'final' version.",
+            "proofLabel": "lost versions or 'final_final' files",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Sharing & permissions",
+            "description": "Documents are shared with exactly the right people, and access can be revoked as easily as it was granted.",
+            "proofLabel": "permission-controlled sharing",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Approvals & retention policy",
+            "description": "Sensitive or regulated documents route through approval, and retention rules apply automatically over time.",
+            "proofLabel": "retention enforcement, no manual cleanup",
+            "proofStat": "auto"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Upload & organize documents",
+            "description": "Files are structured into a library your whole team can navigate."
+          },
+          {
+            "headline": "Control access by permission",
+            "description": "Sharing is scoped to exactly who needs it."
+          },
+          {
+            "headline": "Track every version automatically",
+            "description": "Edits are versioned without anyone renaming a file."
+          },
+          {
+            "headline": "Apply approval & retention policy",
+            "description": "Documents follow the rules your business sets, automatically."
+          }
+        ],
+        "comparison": {
+          "title": "Document Center vs. scattered file storage",
+          "statusQuo": "Documents are scattered across email attachments, personal drives, and shared folders with no version history.",
+          "withZynReach": "Every document lives in one secure library with version history, permissions, and retention policy built in."
+        }
+      },
+      "customer-portal": {
+        "hero": {
+          "headline": "Give your customers a portal of their own",
+          "subhead": "A branded, self-service space where your customers view account information, documents, and billing, and submit requests — without emailing your team."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Self-service account access",
+            "description": "Your customers check account status and information whenever they need to, without waiting on a reply.",
+            "proofLabel": "customer self-service, no ticket required",
+            "proofStat": "24/7"
+          },
+          {
+            "headline": "Documents & billing in one place",
+            "description": "Invoices, statements, and shared documents live in one portal your customers can access anytime.",
+            "proofLabel": "portal for account info, documents, and billing",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Request submission & tracking",
+            "description": "Customers submit requests directly and can see status, instead of following up by email to check.",
+            "proofLabel": "fewer 'what's the status' emails",
+            "proofStat": "↓"
+          },
+          {
+            "headline": "Branded to your business",
+            "description": "The portal reflects your business's identity, so it feels like an extension of your service, not a third-party tool.",
+            "proofLabel": "on-brand customer experience",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Turn on the customer portal",
+            "description": "Give customers a self-service space under your brand."
+          },
+          {
+            "headline": "Customers see account, documents & billing",
+            "description": "Information is available on demand, without a request."
+          },
+          {
+            "headline": "Customers submit requests directly",
+            "description": "Requests come in through the portal, with status visible to both sides."
+          },
+          {
+            "headline": "Your team responds in the same platform",
+            "description": "No separate tool to check for incoming customer requests."
+          }
+        ],
+        "comparison": {
+          "title": "Customer portal vs. email-based support",
+          "statusQuo": "Customers email your team for account status, invoices, and documents — and wait for a reply.",
+          "withZynReach": "Customers log into their own portal and get account info, documents, and billing on demand."
+        }
+      },
+      "subscription-billing": {
+        "hero": {
+          "headline": "The engine behind every plan, invoice, and entitlement",
+          "subhead": "Subscription & Billing is the capability that governs plans, payment methods, usage, and which suites and features are available — the infrastructure your billing runs on, not a pricing page."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Plan & subscription management",
+            "description": "Every account's plan, add-ons, and subscription status live in one record that stays current automatically.",
+            "proofLabel": "subscription record per account, always current",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Automated billing & invoicing",
+            "description": "Invoices generate and payment methods charge on schedule, without a manual billing run.",
+            "proofLabel": "manually generated invoices",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Usage-based entitlements",
+            "description": "Access to features and usage limits are checked against the live plan, not a cached snapshot.",
+            "proofLabel": "entitlement checks against plan and usage",
+            "proofStat": "real-time"
+          },
+          {
+            "headline": "Suite & feature availability",
+            "description": "Which suites and features an account can see is governed by plan, applied consistently everywhere.",
+            "proofLabel": "of access mapped to plan, automatically",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define plans & entitlements",
+            "description": "Set what each plan includes, from suites to usage limits."
+          },
+          {
+            "headline": "Attach payment methods",
+            "description": "Billing details are stored securely against the account."
+          },
+          {
+            "headline": "Usage & billing run automatically",
+            "description": "Invoices, charges, and usage tracking happen on schedule."
+          },
+          {
+            "headline": "Access adjusts in real time",
+            "description": "Upgrades, downgrades, and usage changes update entitlements immediately."
+          }
+        ],
+        "comparison": {
+          "title": "Built-in billing vs. bolted-on payment tools",
+          "statusQuo": "Plans, invoices, and access are tracked manually across a payment processor and a spreadsheet of who's entitled to what.",
+          "withZynReach": "Plans, billing, and entitlements are one system — access updates automatically as subscriptions change."
+        }
+      },
+      "notifications": {
+        "hero": {
+          "headline": "One notification center, every channel",
+          "subhead": "In-app, email, and push notifications trigger off real platform events — with preferences and history in one place, so nothing important gets missed or duplicated."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Event-based notifications",
+            "description": "Notifications trigger off real platform events — a status change, an approval, a new request — not a manual send.",
+            "proofLabel": "trigger, every channel updates",
+            "proofStat": "1"
+          },
+          {
+            "headline": "In-app, email & push",
+            "description": "Every notification can reach the channel a user actually checks, without building three separate systems.",
+            "proofLabel": "channels, one notification system",
+            "proofStat": "3"
+          },
+          {
+            "headline": "User preferences",
+            "description": "Each user controls what they're notified about and where, so alerts stay relevant instead of ignored.",
+            "proofLabel": "notification fatigue from irrelevant alerts",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Full notification history",
+            "description": "Every notification sent is logged and searchable, so 'did anyone see this' has a real answer.",
+            "proofLabel": "of notifications logged & searchable",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Define the triggering event",
+            "description": "Choose what platform activity should notify someone."
+          },
+          {
+            "headline": "Route to in-app, email, or push",
+            "description": "Delivery follows the channel that fits the notification."
+          },
+          {
+            "headline": "Respect user preferences",
+            "description": "Each recipient controls what reaches them and how."
+          },
+          {
+            "headline": "Keep a full history for reference",
+            "description": "Every notification is logged and searchable after the fact."
+          }
+        ],
+        "comparison": {
+          "title": "Unified notifications vs. channel-by-channel alerts",
+          "statusQuo": "Alerts come from different tools on different channels, with no shared history or preference control.",
+          "withZynReach": "One notification system triggers across every channel, respecting preferences and keeping full history."
+        }
+      },
+      "marketplace": {
+        "hero": {
+          "headline": "Extend ZynReach with the tools you need next",
+          "subhead": "Browse and install suites and tools from the ZynReach Marketplace — filtered to what your plan allows, configured without leaving the platform."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Suite & tool catalog",
+            "description": "Browse available suites and tools in one catalog, organized so it's easy to find what's relevant to your business.",
+            "proofLabel": "catalog for every suite and tool",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Search & filtering",
+            "description": "Filter by category or need to find a relevant tool quickly, instead of scrolling an unsorted list.",
+            "proofLabel": "to find a relevant tool",
+            "proofStat": "< 1 min"
+          },
+          {
+            "headline": "One-click installation",
+            "description": "Installing a suite or tool doesn't require a separate setup process or a new login to manage.",
+            "proofLabel": "separate setup process per tool",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Plan-aware entitlements",
+            "description": "The Marketplace only surfaces what your plan allows, so installation never runs into a billing surprise.",
+            "proofLabel": "of installs checked against your plan",
+            "proofStat": "100%"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Browse the catalog",
+            "description": "See every available suite and tool in one place."
+          },
+          {
+            "headline": "Filter by suite or need",
+            "description": "Narrow the catalog down to what's actually relevant."
+          },
+          {
+            "headline": "Install with entitlement checked",
+            "description": "The Marketplace verifies your plan automatically before install."
+          },
+          {
+            "headline": "Configure permissions & go live",
+            "description": "Set access and start using the new capability immediately."
+          }
+        ],
+        "comparison": {
+          "title": "Marketplace vs. requesting a new tool from IT",
+          "statusQuo": "Extending the platform means a request to IT, a new vendor contract, and a separate login.",
+          "withZynReach": "Browse, install, and configure new capabilities directly inside ZynReach, within your plan's entitlements."
+        }
+      },
+      "plugin-sdk": {
+        "hero": {
+          "headline": "Build for ZynReach",
+          "subhead": "A developer platform and SDK for building, testing, and publishing plugins — ship a tool once, and every ZynReach customer on the Marketplace can install it."
+        },
+        "featureBlocks": [
+          {
+            "headline": "A full plugin SDK",
+            "description": "Build against a documented SDK that covers the whole plugin lifecycle, from first commit to publishing.",
+            "proofLabel": "SDK for the whole plugin lifecycle",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Built-in testing tools",
+            "description": "Test plugins against a sandbox environment before submitting, instead of guessing how review will go.",
+            "proofLabel": "guesswork before submission",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Guided submission & review",
+            "description": "Submission follows a clear review and approval process, so developers know exactly what's expected before publishing.",
+            "proofLabel": "path from build to published",
+            "proofStat": "clear"
+          },
+          {
+            "headline": "Versioning & deprecation tools",
+            "description": "Ship updates with proper versioning, and deprecate old versions with a defined migration path.",
+            "proofLabel": "breaking changes without a migration path",
+            "proofStat": "0"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Build with the SDK",
+            "description": "Develop your plugin against a documented, versioned SDK."
+          },
+          {
+            "headline": "Test in a sandbox environment",
+            "description": "Validate behavior before it ever reaches review."
+          },
+          {
+            "headline": "Submit for review & approval",
+            "description": "Submissions follow a clear, predictable review process."
+          },
+          {
+            "headline": "Publish, version, and maintain",
+            "description": "Ship updates and manage deprecation over the plugin's lifecycle."
+          }
+        ],
+        "comparison": {
+          "title": "Plugin SDK vs. building a one-off integration",
+          "statusQuo": "Extending ZynReach for a client or internal use means a custom, one-off integration nobody else can reuse.",
+          "withZynReach": "Build once with the SDK, publish to the Marketplace, and reach every ZynReach customer on your plan tier."
+        }
+      },
+      "organization-management": {
+        "hero": {
+          "headline": "Make the platform look like your business",
+          "subhead": "Set your organization's identity — logo, colors, timezone, locale, and even a custom domain — so ZynReach feels like part of your business, not a third-party tool."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Branding & identity",
+            "description": "Set a logo and brand colors once, and they apply consistently across every page your team and customers see.",
+            "proofLabel": "brand identity, applied platform-wide",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Timezone & locale settings",
+            "description": "Dates, times, and language display correctly for every user and every region your business operates in.",
+            "proofLabel": "of timestamps shown in the right timezone",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Custom domain",
+            "description": "Run the platform on your own domain, so customer-facing links point to your business, not a third-party one.",
+            "proofLabel": "third-party domain in customer-facing links",
+            "proofStat": "0"
+          },
+          {
+            "headline": "White-label options",
+            "description": "Combine branding, domain, and locale settings for an experience that reads as fully your own, end to end.",
+            "proofLabel": "consistent brand experience end-to-end",
+            "proofStat": "1"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Set your organization identity",
+            "description": "Establish the name and identity your business operates under."
+          },
+          {
+            "headline": "Apply logo & brand colors",
+            "description": "Branding carries across every screen automatically."
+          },
+          {
+            "headline": "Configure timezone & locale",
+            "description": "Set defaults that match where your business operates."
+          },
+          {
+            "headline": "Connect a custom domain",
+            "description": "Complete a fully white-labeled experience for your users."
+          }
+        ],
+        "comparison": {
+          "title": "White-labeled platform vs. an obviously third-party tool",
+          "statusQuo": "Customers and employees see a generic, unbranded tool that clearly isn't part of your business.",
+          "withZynReach": "Your logo, colors, and domain make the platform feel like it was built for your business."
+        }
+      },
+      "branch-management": {
+        "hero": {
+          "headline": "Run every branch from one platform",
+          "subhead": "Manage branches, territories, and branch managers with permissions and reporting scoped to each location — one platform, many locations."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Multi-branch structure",
+            "description": "Model every branch or location in one platform, instead of running a separate system per site.",
+            "proofLabel": "platform, every branch or location",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Territory & assignment",
+            "description": "Leads, accounts, and work route to the right branch by territory, automatically.",
+            "proofLabel": "manual routing between branch teams",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Branch-level permissions",
+            "description": "Branch managers and staff see and act on what belongs to their branch, and nothing outside it.",
+            "proofLabel": "of access scoped to the right branch",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Branch-level reporting",
+            "description": "Headquarters sees performance across every branch, while each manager sees their own branch clearly.",
+            "proofLabel": "company view for HQ, one clear view per branch",
+            "proofStat": "1"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Set up branches & territories",
+            "description": "Define your locations and how work is divided between them."
+          },
+          {
+            "headline": "Assign branch managers & permissions",
+            "description": "Each branch gets the right owners and access scope."
+          },
+          {
+            "headline": "Route work by territory",
+            "description": "New leads and requests reach the correct branch automatically."
+          },
+          {
+            "headline": "Report at branch or company level",
+            "description": "See performance rolled up or broken out, as needed."
+          }
+        ],
+        "comparison": {
+          "title": "Branch management vs. a separate system per location",
+          "statusQuo": "Each branch or location runs its own spreadsheet, with no unified view for headquarters.",
+          "withZynReach": "Every branch operates in the same platform, with permissions, routing, and reporting scoped correctly."
+        }
+      },
+      "audit": {
+        "hero": {
+          "headline": "A complete record of who did what, when",
+          "subhead": "Every action across every module — record changes, approvals, logins, and configuration — is logged automatically to one searchable audit trail, supporting your broader compliance and security posture."
+        },
+        "featureBlocks": [
+          {
+            "headline": "Platform-wide activity logging",
+            "description": "Actions across every module are logged automatically, so there's no module left out of the picture.",
+            "proofLabel": "of tracked actions logged automatically",
+            "proofStat": "100%"
+          },
+          {
+            "headline": "Searchable audit trail",
+            "description": "One audit trail covers the whole platform, instead of a separate log per module to piece together.",
+            "proofLabel": "audit log, every module",
+            "proofStat": "1"
+          },
+          {
+            "headline": "Change history on every record",
+            "description": "Any record's history is visible directly on the record — who changed what, and when.",
+            "proofLabel": "unexplained changes to a record",
+            "proofStat": "0"
+          },
+          {
+            "headline": "Governance-ready exports",
+            "description": "Export the relevant history whenever governance, compliance, or a review process needs it.",
+            "proofLabel": "history, exportable anytime",
+            "proofStat": "audit-ready"
+          }
+        ],
+        "howItWorks": [
+          {
+            "headline": "Every action is logged automatically",
+            "description": "No configuration required — logging runs by default."
+          },
+          {
+            "headline": "Logs attach to the record & the user",
+            "description": "History stays tied to exactly what changed and who changed it."
+          },
+          {
+            "headline": "Search and filter the audit trail",
+            "description": "Find the relevant activity quickly, across any module."
+          },
+          {
+            "headline": "Export for governance or compliance",
+            "description": "Pull the history needed for a review, whenever it's needed."
+          }
+        ],
+        "comparison": {
+          "title": "Built-in audit trail vs. piecing together history",
+          "statusQuo": "Reconstructing who changed what means digging through emails, memory, and hope.",
+          "withZynReach": "Every action is logged automatically to one searchable trail, ready when governance or compliance asks."
+        }
       }
     },
     "builtForLabel": "Built for:",
@@ -798,6 +2398,45 @@
       },
       "enterprise": {
         "subhead": "Enterprise-grade security and compliance, deployed with mid-market speed across regions and business units."
+      },
+      "growing-business": {
+        "subhead": "You've outgrown spreadsheets and disconnected tools, but you're not ready for enterprise complexity — ZynReach scales with you, not against you."
+      },
+      "mid-market": {
+        "subhead": "More structure than SMB tooling offers, without the procurement cycles and complexity of enterprise software."
+      },
+      "operations": {
+        "subhead": "See every process, task, and handoff across departments — and automate the ones that shouldn't need a human."
+      },
+      "hr": {
+        "subhead": "Not a replacement for a dedicated HR system — HR data unified with the rest of the business, so people decisions use the same source of truth as everything else."
+      },
+      "finance": {
+        "subhead": "Not a replacement for a dedicated accounting product — finance unified with the CRM and operations data that actually drives the numbers."
+      },
+      "management": {
+        "subhead": "Stop reconciling reports from five systems — see pipeline, operations, finance, and team performance in one place."
+      },
+      "customer-success": {
+        "subhead": "CRM history, support tickets, and billing status in one record — so every conversation starts with full context, not a scramble."
+      },
+      "growth": {
+        "subhead": "Acquiring and converting more customers takes more than one tool — CRM, lead generation, and marketing automation working together, not in separate tabs."
+      },
+      "automation": {
+        "subhead": "Data entry, follow-ups, approvals, and handoffs — automated across the business, not just in one department's tool."
+      },
+      "customer-management": {
+        "subhead": "From first contact to post-sale support, every customer interaction lives in one record — not scattered across a CRM, a helpdesk, and a spreadsheet."
+      },
+      "operations-need": {
+        "subhead": "Projects, tasks, HR, finance, and documents don't need five separate logins — better operations starts with one connected platform."
+      },
+      "intelligence": {
+        "subhead": "Sales has a dashboard, marketing has a dashboard, finance has a dashboard — none of them agree. One business intelligence layer across every function fixes that."
+      },
+      "enterprise-governance": {
+        "subhead": "Security, permissions, audit trails, and multi-branch control — built for organizations that have to prove how the business runs, not just run it."
       }
     },
     "detail": {
@@ -816,6 +2455,11 @@
           "AI drafts follow-ups and flags risk.",
           "Real-time pipeline and forecast visibility."
         ],
+        "howItWorks": [
+          { "headline": "Connect email & calendar", "description": "Activity starts logging itself from day one." },
+          { "headline": "AI scores and flags deals", "description": "Reps see what needs attention without digging for it." },
+          { "headline": "Work one live pipeline", "description": "Forecasts reflect real engagement, not stale updates." }
+        ],
         "audienceLabel": "Sales Teams"
       },
       "marketing": {
@@ -829,6 +2473,11 @@
           "Campaigns and nurture that run themselves.",
           "AI qualification built into your CRM.",
           "Attribution across every channel, in one place."
+        ],
+        "howItWorks": [
+          { "headline": "Connect campaigns to CRM", "description": "Email, forms, and pipeline share one data model." },
+          { "headline": "Automation scores and nurtures", "description": "Leads are scored and nurtured off real behavior." },
+          { "headline": "Attribution reports itself", "description": "Reporting matches what actually happened, not an export." }
         ],
         "audienceLabel": "Marketing Teams"
       },
@@ -844,6 +2493,11 @@
           "Run client campaigns from one place.",
           "White-label reporting your clients can see."
         ],
+        "howItWorks": [
+          { "headline": "Spin up a workspace per client", "description": "Each account gets its own pipeline and campaigns." },
+          { "headline": "Run client work from one login", "description": "Manage every account without switching platforms." },
+          { "headline": "Report from one white-label dashboard", "description": "Client reporting stops meaning five separate exports." }
+        ],
         "audienceLabel": "Agencies"
       },
       "smb": {
@@ -857,6 +2511,11 @@
           "Set up in minutes, not weeks.",
           "Templates instead of a blank canvas.",
           "No-code automation, no engineer required."
+        ],
+        "howItWorks": [
+          { "headline": "Get started with templates", "description": "Skip configuration and launch in minutes." },
+          { "headline": "Automate the busywork", "description": "No-code workflows replace manual admin, no engineer needed." },
+          { "headline": "Grow without re-platforming", "description": "The same platform scales as your team does." }
         ],
         "audienceLabel": "Startups & SMBs"
       },
@@ -872,7 +2531,259 @@
           "Approval flows and audit trails built in.",
           "Executive-level reporting across business units."
         ],
+        "howItWorks": [
+          { "headline": "Deploy with security built in", "description": "Enterprise-grade controls from day one, not bolted on later." },
+          { "headline": "Standardize across regions", "description": "One system of record replaces fragmented legacy tools." },
+          { "headline": "Scale governance as you grow", "description": "Permissions, audit trails, and reporting keep pace." }
+        ],
         "audienceLabel": "Enterprise"
+      },
+      "growing-business": {
+        "hero": {
+          "headline": "Built for the stage after startup, before enterprise",
+          "subhead": "You've outgrown spreadsheets and disconnected tools, but you're not ready for enterprise complexity — ZynReach scales with you, not against you."
+        },
+        "before": "Growth outpaced your tools. Spreadsheets, ad-hoc processes, and five disconnected apps can't keep up with new headcount and new customers.",
+        "after": "One platform scales with headcount and process — no re-platforming required as you grow from 20 people to 200.",
+        "callouts": [
+          "Structure your pipeline without slowing your team down.",
+          "Codify process as you scale, without an engineer.",
+          "Visibility that keeps pace with growth."
+        ],
+        "howItWorks": [
+          { "headline": "Migrate off spreadsheets", "description": "Move pipeline and process into one structured platform." },
+          { "headline": "Automate as you add headcount", "description": "New hires ramp on process that's already codified." },
+          { "headline": "Scale without re-platforming", "description": "The same system carries you from 20 people to 200." }
+        ],
+        "audienceLabel": "Growing Businesses"
+      },
+      "mid-market": {
+        "hero": {
+          "headline": "Structure and governance without enterprise overhead",
+          "subhead": "More structure than SMB tooling offers, without the procurement cycles and complexity of enterprise software."
+        },
+        "before": "SMB tools stop scaling once you cross a few hundred employees, but full enterprise platforms mean months of procurement and implementation.",
+        "after": "Departmental structure, permissions, and reporting that match how a 200-2,000-person company actually runs — deployed in weeks, not quarters.",
+        "callouts": [
+          "Departmental structure that mirrors your org chart.",
+          "Approval flows without enterprise complexity.",
+          "Cross-team reporting that scales with you."
+        ],
+        "howItWorks": [
+          { "headline": "Set up departmental structure", "description": "Teams, permissions, and reporting mirror your org chart." },
+          { "headline": "Add approval flows", "description": "Governance without the overhead of enterprise procurement." },
+          { "headline": "Report across departments", "description": "Cross-team visibility from one connected data model." }
+        ],
+        "audienceLabel": "Mid-Market"
+      },
+      "operations": {
+        "hero": {
+          "headline": "Process visibility across every department, in one place",
+          "subhead": "See every process, task, and handoff across departments — and automate the ones that shouldn't need a human."
+        },
+        "before": "Projects live in one tool, tasks in another, and half of what's actually happening is tracked nowhere — status updates mean chasing five people.",
+        "after": "One view of every project, task, and workflow across departments, with automation handling the repetitive handoffs.",
+        "callouts": [
+          "Every project and its status, in one view.",
+          "Tasks assigned, tracked, and never lost.",
+          "Automate handoffs between departments."
+        ],
+        "howItWorks": [
+          { "headline": "Track every project and task", "description": "One view replaces status updates chased by hand." },
+          { "headline": "Automate department handoffs", "description": "Work moves between teams without a manual trigger." },
+          { "headline": "See status without chasing", "description": "Progress is visible in real time, for every process." }
+        ],
+        "audienceLabel": "Operations Teams"
+      },
+      "hr": {
+        "hero": {
+          "headline": "HR functions unified with the rest of your business",
+          "subhead": "Not a replacement for a dedicated HR system — HR data unified with the rest of the business, so people decisions use the same source of truth as everything else."
+        },
+        "before": "Employee records live in one system, attendance in a spreadsheet, and neither connects to the operational data HR decisions actually depend on.",
+        "after": "Employee records, attendance, and leave sit alongside the rest of your business data — one platform, one source of truth.",
+        "callouts": [
+          "Employee records in the same system as the rest of the business.",
+          "Attendance and leave tracked without spreadsheets.",
+          "Org structure that reflects how you're actually organized."
+        ],
+        "howItWorks": [
+          { "headline": "Centralize employee records", "description": "Profiles live alongside the rest of your business data." },
+          { "headline": "Track attendance and leave", "description": "No more reconciling a spreadsheet against payroll." },
+          { "headline": "Connect HR to the business", "description": "People decisions use the same source of truth as everything else." }
+        ],
+        "audienceLabel": "HR Teams"
+      },
+      "finance": {
+        "hero": {
+          "headline": "Finance connected to the operational data that drives it",
+          "subhead": "Not a replacement for a dedicated accounting product — finance unified with the CRM and operations data that actually drives the numbers."
+        },
+        "before": "Finance runs in a separate system from sales and operations, so every report starts with reconciling exports and chasing context nobody documented.",
+        "after": "Invoices, payments, and expenses connect directly to the deals and operations that generated them — reporting reflects the business as it actually runs.",
+        "callouts": [
+          "Invoices, payments, and expenses in one place.",
+          "Billing connected directly to the customer record.",
+          "Financial reporting tied to operational data."
+        ],
+        "howItWorks": [
+          { "headline": "Connect invoices to CRM data", "description": "Billing links directly to the deals that generated it." },
+          { "headline": "Automate reconciliation", "description": "Stop rebuilding context every report starts from scratch." },
+          { "headline": "Report on the real numbers", "description": "Financials reflect the business as it actually runs." }
+        ],
+        "audienceLabel": "Finance Teams"
+      },
+      "management": {
+        "hero": {
+          "headline": "Pipeline, operations, and finance in one view",
+          "subhead": "Stop reconciling reports from five systems — see pipeline, operations, finance, and team performance in one place."
+        },
+        "before": "Every leadership meeting starts with reconciling numbers from sales, finance, and ops tools that don't agree with each other.",
+        "after": "Executive dashboards pull from the same data every team works in — one number, everywhere, all the time.",
+        "callouts": [
+          "Cross-functional visibility in one dashboard.",
+          "Pipeline, operations, and finance, reconciled.",
+          "Reporting that doesn't require a spreadsheet."
+        ],
+        "howItWorks": [
+          { "headline": "Pull pipeline, ops, and finance together", "description": "One data model replaces five disagreeing systems." },
+          { "headline": "Build role-specific dashboards", "description": "Every leader sees the numbers relevant to their function." },
+          { "headline": "Decide from one trusted number", "description": "Meetings start with alignment, not reconciliation." }
+        ],
+        "audienceLabel": "Management & Executives"
+      },
+      "customer-success": {
+        "hero": {
+          "headline": "The full customer view your post-sale team needs",
+          "subhead": "CRM history, support tickets, and billing status in one record — so every conversation starts with full context, not a scramble."
+        },
+        "before": "CS reps piece together account history from the CRM, support tickets from a helpdesk, and billing status from finance — before every call.",
+        "after": "One customer record holds CRM history, tickets, and billing — reps walk into every conversation with full context already loaded.",
+        "callouts": [
+          "Every customer interaction, in one record.",
+          "A self-serve portal that cuts ticket volume.",
+          "Health scores and churn signals, always in view."
+        ],
+        "howItWorks": [
+          { "headline": "Unify CRM, tickets, and billing", "description": "One customer record replaces three separate lookups." },
+          { "headline": "Give reps full context", "description": "Every conversation starts with history already loaded." },
+          { "headline": "Track health and churn signals", "description": "At-risk accounts surface before they escalate." }
+        ],
+        "audienceLabel": "Customer Success"
+      },
+      "growth": {
+        "hero": {
+          "headline": "Everything that turns pipeline into revenue, connected",
+          "subhead": "Acquiring and converting more customers takes more than one tool — CRM, lead generation, and marketing automation working together, not in separate tabs."
+        },
+        "before": "Lead generation, marketing, and sales pipeline live in separate tools that don't share data — growth initiatives stall on the handoffs between them.",
+        "after": "One data model connects lead generation, campaigns, and pipeline — every growth motion feeds the same system, and the same forecast.",
+        "callouts": [
+          "AI-qualified leads feed straight into pipeline.",
+          "Campaigns that hand off to sales automatically.",
+          "Pipeline visibility from first touch to close."
+        ],
+        "howItWorks": [
+          { "headline": "Connect lead gen, marketing, and pipeline", "description": "Every growth motion feeds the same system." },
+          { "headline": "Qualify and route automatically", "description": "Leads reach the right rep before they go cold." },
+          { "headline": "Forecast from one model", "description": "Growth reporting reflects what's actually happening." }
+        ],
+        "audienceLabel": "Growth"
+      },
+      "automation": {
+        "hero": {
+          "headline": "Eliminate the manual work slowing your business down",
+          "subhead": "Data entry, follow-ups, approvals, and handoffs — automated across the business, not just in one department's tool."
+        },
+        "before": "Repetitive work — data entry, follow-up emails, approval routing — eats hours every week, in every department, with no system connecting any of it.",
+        "after": "AI and workflow automation handle the repetitive work across CRM, marketing, and operations — your team spends time on what actually needs a person.",
+        "callouts": [
+          "No-code automation across every department.",
+          "AI that drafts, flags, and follows up.",
+          "One place to build and manage every workflow."
+        ],
+        "howItWorks": [
+          { "headline": "Map the repetitive work", "description": "Identify what's eating hours across departments." },
+          { "headline": "Build no-code workflows", "description": "Automate it without an engineering ticket." },
+          { "headline": "Review and refine", "description": "Every run stays visible, so automation improves over time." }
+        ],
+        "audienceLabel": "Automation"
+      },
+      "customer-management": {
+        "hero": {
+          "headline": "One source of truth for every customer relationship",
+          "subhead": "From first contact to post-sale support, every customer interaction lives in one record — not scattered across a CRM, a helpdesk, and a spreadsheet."
+        },
+        "before": "Sales owns the CRM, support owns the helpdesk, and nobody has the full picture of a customer relationship without opening three tools.",
+        "after": "CRM, support history, and billing sit in one Contact 360 record — the full relationship, visible to whoever needs it.",
+        "callouts": [
+          "Every deal and contact in one system.",
+          "The full relationship history, in one view.",
+          "A self-serve home for your customers."
+        ],
+        "howItWorks": [
+          { "headline": "Bring CRM, support, and billing together", "description": "One Contact 360 record replaces three separate tools." },
+          { "headline": "Give every team the same view", "description": "Sales, support, and finance see the same customer history." },
+          { "headline": "Serve customers without switching tools", "description": "Every interaction happens from one connected record." }
+        ],
+        "audienceLabel": "Customer Management"
+      },
+      "operations-need": {
+        "hero": {
+          "headline": "Run the business without juggling five tools",
+          "subhead": "Projects, tasks, HR, finance, and documents don't need five separate logins — better operations starts with one connected platform."
+        },
+        "before": "Every department runs its own tool — project tracking here, HR there, documents somewhere else — and nothing talks to anything else.",
+        "after": "Projects, tasks, HR, finance, and documents run on one platform, so operational data connects instead of living in five silos.",
+        "callouts": [
+          "Projects and tasks tracked in one place.",
+          "Documents stored where the work actually happens.",
+          "Finance connected to the operations it reports on."
+        ],
+        "howItWorks": [
+          { "headline": "Move onto one platform", "description": "Projects, HR, finance, and documents share one system." },
+          { "headline": "Connect data across departments", "description": "Operational data stops living in five separate silos." },
+          { "headline": "Run operations from one system", "description": "Not five tools that don't talk to each other." }
+        ],
+        "audienceLabel": "Operations"
+      },
+      "intelligence": {
+        "hero": {
+          "headline": "Turn business data into decisions, not just dashboards",
+          "subhead": "Sales has a dashboard, marketing has a dashboard, finance has a dashboard — none of them agree. One business intelligence layer across every function fixes that."
+        },
+        "before": "Every department built its own reporting, on its own numbers — nobody trusts a cross-functional report because nobody agrees on the inputs.",
+        "after": "Analytics and business intelligence draw from the same underlying data every team works in — one set of numbers, trusted everywhere.",
+        "callouts": [
+          "Cross-functional reporting from one data model.",
+          "Decisions backed by real-time numbers.",
+          "Reports that land in the right inbox automatically."
+        ],
+        "howItWorks": [
+          { "headline": "Connect every team's data", "description": "One data model replaces five conflicting dashboards." },
+          { "headline": "Build cross-functional dashboards", "description": "Sales, marketing, and finance draw from the same numbers." },
+          { "headline": "Make decisions everyone trusts", "description": "No more debating whose report is right." }
+        ],
+        "audienceLabel": "Intelligence"
+      },
+      "enterprise-governance": {
+        "hero": {
+          "headline": "Prove and enforce how the business runs",
+          "subhead": "Security, permissions, audit trails, and multi-branch control — built for organizations that have to prove how the business runs, not just run it."
+        },
+        "before": "Access control is inconsistent across tools, audit trails are incomplete, and multi-branch operations mean reconciling permissions by hand.",
+        "after": "Centralized permissions, full audit trails, and multi-branch governance — control that scales across every team and location.",
+        "callouts": [
+          "A complete audit trail across the platform.",
+          "Permissions and roles enforced centrally.",
+          "Multi-branch and multi-team control, unified."
+        ],
+        "howItWorks": [
+          { "headline": "Centralize permissions and roles", "description": "Access control is consistent, not tool-by-tool." },
+          { "headline": "Log every action automatically", "description": "Audit trails are complete, not reconstructed after the fact." },
+          { "headline": "Prove governance across branches", "description": "Multi-branch control that scales with the organization." }
+        ],
+        "audienceLabel": "Enterprise Governance"
       }
     }
   },
@@ -1013,6 +2924,17 @@
       "announceMonthly": "Showing monthly pricing",
       "announceAnnual": "Showing annual pricing, billed yearly"
     },
+    "framing": {
+      "eyebrow": "How pricing works",
+      "headline": "Plan, entitlements, suites, tools, usage",
+      "layers": [
+        { "label": "Plan", "description": "Starter, Growth, or Enterprise — the tier your organization is on." },
+        { "label": "Entitlements", "description": "What your plan unlocks: which suites, tools, and limits apply to your account." },
+        { "label": "Suites", "description": "Grouped capabilities — like Growth & Revenue or Operations — bundled by your plan." },
+        { "label": "Tools", "description": "The individual capabilities inside each suite, like CRM or Task Management." },
+        { "label": "Usage", "description": "Seats, records, and activity tracked against your plan's included limits." }
+      ]
+    },
     "comparison": {
       "eyebrow": "Compare plans",
       "headline": "Compare all features",
@@ -1067,7 +2989,7 @@
         "priceSuffix": "custom quote",
         "featureList": [
           "Everything in Growth",
-          "SSO / SAML & advanced permissions",
+          "Two-factor authentication (TOTP) & advanced access controls",
           "Audit logs & data residency controls",
           "Dedicated CSM & onboarding",
           "Custom SLA"
@@ -1115,7 +3037,7 @@
       },
       "ssoSaml": {
         "category": "Security",
-        "feature": "SSO / SAML"
+        "feature": "Advanced access controls (RBAC/ABAC)"
       },
       "auditLogs": {
         "category": "Security",
@@ -1178,6 +3100,78 @@
         "description": "See how teams use ZynReach."
       }
     }
+  },
+  "knowledgeCenterPage": {
+    "eyebrow": "Knowledge Center",
+    "headline": "One place to learn, plan, and grow with ZynReach",
+    "subhead": "Blog articles, customer stories, downloadable guides and templates, and live and on-demand webinars for revenue teams.",
+    "searchPlaceholder": "Search the Knowledge Center",
+    "searchLabel": "Search the Knowledge Center",
+    "featuredHeading": "Featured Content",
+    "latestHeading": "Latest Content",
+    "recommendedHeading": "Recommended Content",
+    "tiles": {
+      "blog": {
+        "description": "Guides and insights on CRM, marketing, and AI."
+      },
+      "customerStories": {
+        "description": "Real results from teams running on ZynReach."
+      },
+      "guidesTemplates": {
+        "description": "Downloadable playbooks and templates."
+      },
+      "webinars": {
+        "description": "Live and on-demand sessions."
+      }
+    }
+  },
+  "developersPage": {
+    "headline": "Build on ZynReach",
+    "subhead": "Documentation, API reference, and integration guides for building on the ZynReach platform.",
+    "tiles": {
+      "documentation": {
+        "description": "Setup guides and how-to articles for every part of the platform."
+      },
+      "apiReference": {
+        "description": "Endpoints, parameters, and examples for building on ZynReach."
+      },
+      "developerGuides": {
+        "description": "Integration-focused documentation for building on the API."
+      },
+      "integrations": {
+        "description": "Connect ZynReach with the tools your team already uses."
+      }
+    }
+  },
+  "developerGuidesPage": {
+    "eyebrow": "Developer Guides",
+    "headline": "Guides for building on ZynReach",
+    "subhead": "Integration-focused Documentation articles for developers connecting to the ZynReach platform.",
+    "noArticles": "No developer guides are published yet."
+  },
+  "sdksPage": {
+    "eyebrow": "SDKs",
+    "headline": "Official client libraries",
+    "subhead": "Use the ZynReach API directly, or with an official client library in a supported language.",
+    "languages": {
+      "javascript": {
+        "name": "JavaScript",
+        "description": "Official client library for Node.js and browser environments."
+      },
+      "php": {
+        "name": "PHP",
+        "description": "Official client library for PHP applications."
+      },
+      "python": {
+        "name": "Python",
+        "description": "Official client library for Python applications."
+      },
+      "curl": {
+        "name": "cURL",
+        "description": "Call the REST API directly from the command line — no library required."
+      }
+    },
+    "docsCta": "See request and response examples in the API Reference"
   },
   "aboutPage": {
     "headline": "Building the AI-native revenue platform",
@@ -1275,6 +3269,18 @@
       {
         "headline": "Regular security testing",
         "description": "Ongoing vulnerability scanning and periodic third-party security assessments."
+      },
+      {
+        "headline": "Two-factor authentication",
+        "description": "2FA available for every account, and required for administrator and Enterprise roles."
+      },
+      {
+        "headline": "Backup & disaster recovery",
+        "description": "Regular automated backups with a documented recovery process for restoring service after an incident."
+      },
+      {
+        "headline": "Continuous monitoring",
+        "description": "Infrastructure and access activity are monitored around the clock, with alerting on anomalous behavior."
       }
     ],
     "subProcessors": [
@@ -1301,7 +3307,7 @@
     ],
     "accessControl": {
       "headline": "Enterprise-grade access control",
-      "description": "SSO and SAML-based authentication for enterprise accounts, with role-based permissions and full audit logging of access to customer data."
+      "description": "Email and password authentication with two-factor authentication (TOTP) required for administrator and Enterprise roles, role-based and attribute-based permissions (RBAC/ABAC) enforced on every action, and full audit logging of access to customer data."
     },
     "incidentResponseSummary": "ZynReach maintains a documented incident response plan with defined severity levels, on-call escalation, and customer notification timelines consistent with applicable regulatory requirements. Full details are available in the security whitepaper below.",
     "complianceFrameworks": [
@@ -1423,6 +3429,30 @@
       {
         "label": "Audit logs",
         "description": "Full audit trail of access and changes to customer data."
+      },
+      {
+        "label": "Multi-team & multi-branch",
+        "description": "Manage every team, department, and branch location from one organization."
+      },
+      {
+        "label": "Attribute-based access control",
+        "description": "Go beyond roles — grant access based on attributes like territory, department, or data sensitivity."
+      },
+      {
+        "label": "White label & custom domains",
+        "description": "Your branding, your domain — ZynReach recedes into the background."
+      },
+      {
+        "label": "Enterprise APIs",
+        "description": "Programmatic access built for high-volume, mission-critical integrations."
+      },
+      {
+        "label": "Advanced reporting & governance",
+        "description": "Cross-suite reporting and governance controls for how the business actually runs."
+      },
+      {
+        "label": "Built to scale",
+        "description": "Architecture designed for growing data volume, user counts, and business units."
       }
     ],
     "securityLink": "View our Security page →",
@@ -1447,8 +3477,15 @@
     "namePlaceholder": "Name",
     "emailLabel": "Work email",
     "emailPlaceholder": "Work email",
+    "companyLabel": "Company",
+    "companyPlaceholder": "Company",
+    "jobTitleLabel": "Job title",
+    "jobTitlePlaceholder": "Job title",
+    "companySizeLabel": "Company size",
     "nameRequired": "Name is required.",
     "emailInvalid": "Enter a valid work email address.",
+    "companyRequired": "Company is required.",
+    "jobTitleRequired": "Job title is required.",
     "consentLabel": "I agree to receive communications from ZynReach and can unsubscribe at any time.",
     "consentRequired": "Please confirm you'd like to receive communications from us.",
     "subscribe": "Subscribe",
@@ -1886,7 +3923,7 @@
         },
         {
           "question": "Do you support SSO?",
-          "answer": "Yes, SSO and SAML-based authentication are available on Enterprise plans."
+          "answer": "ZynReach uses email and password authentication with two-factor authentication (TOTP) required for administrator and Enterprise accounts, plus role-based and attribute-based access controls — see our Security page for details."
         }
       ],
       "Support": [
@@ -1971,6 +4008,12 @@
     "featuredPrefix": "Featured",
     "minRead": "{count} min read",
     "noPosts": "No posts in this category yet.",
+    "searchPlaceholder": "Search the blog",
+    "searchLabel": "Search the blog",
+    "lastUpdated": "Updated {date}",
+    "tagsLabel": "Tags",
+    "productCtaHeadline": "See ZynReach on your own data",
+    "productCtaBody": "Book a guided demo, or start a free trial and connect your first tool in minutes.",
     "subscribeHeadline": "Subscribe for new posts",
     "relatedPostsHeading": "Related posts",
     "allFilter": "All",
@@ -2251,6 +4294,9 @@
   "docsPage": {
     "sidebarAriaLabel": "Documentation",
     "paginationAriaLabel": "Documentation pagination",
+    "searchPlaceholder": "Search documentation",
+    "lastUpdated": "Last updated {date}",
+    "relatedArticlesHeading": "Related articles",
     "helpful": {
       "question": "Was this helpful?",
       "yes": "Yes, this was helpful",
@@ -2261,7 +4307,8 @@
       "Getting Started": "Getting Started",
       "CRM": "CRM",
       "AI Assistants": "AI Assistants",
-      "Developer": "Developer"
+      "Developer": "Developer",
+      "uncategorized": "More"
     },
     "articles": {
       "getting-started": {
@@ -2413,6 +4460,50 @@
     "parametersHeading": "Parameters",
     "requestExampleHeading": "Request example",
     "responseExampleHeading": "Response example",
+    "pathParametersHeading": "Path parameters",
+    "queryParametersHeading": "Query parameters",
+    "requestHeadersHeading": "Request headers",
+    "requestBodySchemaHeading": "Request body schema",
+    "responseSchemaHeading": "Response schema",
+    "statusCodesHeading": "Status codes",
+    "errorResponsesHeading": "Error responses",
+    "noEndpoints": "No API endpoints are published yet.",
+    "authenticationHeading": "Authentication",
+    "apiKeysLabel": "API Keys",
+    "apiKeysDescription": "Every request must include your API key as a Bearer token in the Authorization header.",
+    "bearerAuthLabel": "Bearer Authentication",
+    "bearerAuthDescription": "Send the token as: Authorization: Bearer YOUR_API_KEY",
+    "authExamplesHeading": "Authentication example",
+    "apiBasicsHeading": "API Basics",
+    "baseUrlLabel": "Base URL",
+    "baseUrlValue": "https://api.zynreach.com",
+    "headersLabel": "Headers",
+    "headersDescription": "Content-Type: application/json, Authorization: Bearer YOUR_API_KEY",
+    "requestFormatLabel": "Request Format",
+    "requestFormatDescription": "JSON request bodies for POST, PUT, and PATCH requests.",
+    "responseFormatLabel": "Response Format",
+    "responseFormatDescription": "JSON responses with a consistent data envelope; list endpoints include a nextCursor field.",
+    "paginationLabel": "Pagination",
+    "paginationDescription": "Cursor-based, via the cursor query parameter; responses include nextCursor when more results are available.",
+    "filteringLabel": "Filtering",
+    "filteringDescription": "Supported on list endpoints via query parameters matching the resource's fields.",
+    "sortingLabel": "Sorting",
+    "sortingDescription": "Supported via the sort query parameter, e.g. ?sort=-createdAt for newest first.",
+    "rateLimitsLabel": "Rate Limits",
+    "rateLimitsDescription": "Requests are rate-limited per API key; the current limit is returned in the X-RateLimit-Remaining response header.",
+    "errorHandlingLabel": "Error Handling",
+    "errorHandlingDescription": "Errors return a JSON body with an error object containing code and message.",
+    "resourcesHeading": "Resources",
+    "statusCodesGenericHeading": "HTTP status codes",
+    "statusCode200": "OK — the request succeeded.",
+    "statusCode201": "Created — the resource was created successfully.",
+    "statusCode400": "Bad Request — the request was malformed or missing required fields.",
+    "statusCode401": "Unauthorized — the API key is missing or invalid.",
+    "statusCode404": "Not Found — the requested resource does not exist.",
+    "statusCode429": "Too Many Requests — the rate limit was exceeded.",
+    "statusCode500": "Internal Server Error — something went wrong on our end.",
+    "sdkNote": "SDKs are available for JavaScript, PHP, Python, and cURL.",
+    "sdkNoteLink": "View SDKs",
     "table": {
       "name": "Name",
       "type": "Type",
@@ -2449,11 +4540,13 @@
       }
     }
   },
-  "customersPage": {
+  "customerStoriesPage": {
     "eyebrow": "Customer Stories",
     "headline": "Real results from real teams",
     "subhead": "See how teams use ZynReach to grow pipeline and close faster.",
     "noStories": "No stories match these filters yet.",
+    "searchPlaceholder": "Search customer stories",
+    "searchLabel": "Search customer stories",
     "illustrativeSuffix": "(illustrative)",
     "filters": {
       "industry": "Industry",
@@ -2465,6 +4558,7 @@
       "challenge": "Challenge",
       "solution": "Solution",
       "result": "Result",
+      "metrics": "Results at a glance",
       "relatedCapabilities": "Related capabilities"
     },
     "ctaBand": {
@@ -2528,31 +4622,78 @@
     "getThisAsset": "Get this {format}",
     "guideAccessPrompt": "Enter your work email to get instant access.",
     "sendMeDownload": "Send me the download",
+    "mainContentHeading": "Overview",
+    "relatedContentHeading": "Related content",
+    "targetAudienceLabel": "Target audience",
+    "difficulty": {
+      "Beginner": "Beginner",
+      "Intermediate": "Intermediate",
+      "Advanced": "Advanced"
+    },
+    "sectionHeadings": {
+      "Guide": "Guides",
+      "Template": "Templates",
+      "Checklist": "Checklists",
+      "Playbook": "Playbooks"
+    },
+    "downloadNow": "Download now",
     "watchOnDemand": "Watch on demand",
     "webinarAccessPrompt": "Enter your work email to get instant access to the recording.",
     "sendMeRecording": "Send me the recording",
+    "webinarOpenAccess": "Open access — no signup required.",
+    "featuredWebinarLabel": "Featured Webinar",
+    "searchWebinarsPlaceholder": "Search webinars",
+    "upcomingWebinarsHeading": "Upcoming Webinars",
+    "onDemandWebinarsHeading": "On-Demand Webinars",
+    "noWebinars": "No webinars match these filters yet.",
+    "webinarDetail": {
+      "onDemandBadge": "On-Demand",
+      "upcomingBadge": "Upcoming",
+      "durationMinutes": "{minutes} min",
+      "speakerLabel": "Speaker",
+      "agendaHeading": "Agenda",
+      "whatYouWillLearnHeading": "What you'll learn",
+      "keyTakeawaysHeading": "Key takeaways",
+      "registerHeading": "Register for this webinar",
+      "registerPrompt": "Enter your work email to save your spot.",
+      "registerCta": "Save my spot",
+      "relatedResourcesHeading": "Related resources",
+      "countdownLabel": "Time until this webinar starts",
+      "countdownDays": "Days",
+      "countdownHours": "Hours",
+      "countdownMinutes": "Minutes"
+    },
     "formats": {
       "Template": "Template",
       "Guide": "Guide",
-      "Whitepaper": "Whitepaper"
+      "Whitepaper": "Whitepaper",
+      "Checklist": "Checklist",
+      "Playbook": "Playbook"
     },
     "guides": {
-      "crm-migration-checklist": {
-        "title": "CRM Migration Checklist",
-        "description": "A step-by-step checklist for migrating off spreadsheets or a legacy CRM without losing data."
-      },
-      "lead-scoring-playbook": {
-        "title": "Lead Scoring Playbook",
-        "description": "A practical framework for building a lead scoring model your sales team will actually trust."
-      },
-      "revops-maturity-whitepaper": {
-        "title": "The RevOps Maturity Model",
-        "description": "A whitepaper on the four stages of revenue operations maturity, and how to know which one you're in."
-      },
-      "onboarding-email-templates": {
-        "title": "Onboarding Email Templates",
-        "description": "Five ready-to-use email templates for customer onboarding sequences."
-      }
+      "crm-implementation-guide": { "title": "CRM Implementation Guide", "description": "A practical walkthrough for rolling out a new CRM without disrupting the deals already in flight." },
+      "sales-process-guide": { "title": "Sales Process Guide", "description": "How to document a repeatable sales process your whole team can actually follow." },
+      "lead-management-guide": { "title": "Lead Management Guide", "description": "A guide to routing, qualifying, and following up on leads before they go cold." },
+      "marketing-automation-guide": { "title": "Marketing Automation Guide", "description": "What to automate first in marketing, and what still needs a human touch." },
+      "customer-retention-guide": { "title": "Customer Retention Guide", "description": "Practical tactics for spotting at-risk accounts before they churn." },
+      "team-productivity-guide": { "title": "Team Productivity Guide", "description": "How growing teams cut down on status meetings and manual busywork." },
+      "ai-adoption-guide": { "title": "AI Adoption Guide", "description": "A pragmatic starting point for introducing AI into day-to-day revenue operations." },
+      "sales-pipeline-template": { "title": "Sales Pipeline Template", "description": "A ready-to-use pipeline structure with stages, exit criteria, and probability weighting." },
+      "lead-qualification-template": { "title": "Lead Qualification Template", "description": "A scorecard for qualifying inbound leads consistently across reps." },
+      "customer-onboarding-template": { "title": "Customer Onboarding Template", "description": "A milestone-based onboarding plan you can customize per customer." },
+      "marketing-campaign-template": { "title": "Marketing Campaign Template", "description": "A campaign brief template covering audience, channels, timeline, and success metrics." },
+      "follow-up-template": { "title": "Follow-up Template", "description": "A set of follow-up message templates for the moments deals typically go quiet." },
+      "project-management-template": { "title": "Project Management Template", "description": "A lightweight project tracker for teams that don't need a heavyweight PM tool." },
+      "kpi-template": { "title": "KPI Template", "description": "A starting set of KPIs for revenue, operations, and customer teams, with target-setting guidance." },
+      "sop-template": { "title": "SOP Template", "description": "A standard operating procedure template for documenting repeatable processes." },
+      "crm-setup-checklist": { "title": "CRM Setup Checklist", "description": "Everything to configure before your team's first day on a new CRM." },
+      "sales-team-setup-checklist": { "title": "Sales Team Setup Checklist", "description": "A checklist for standing up territories, quotas, and tooling for a new sales team." },
+      "customer-onboarding-checklist": { "title": "Customer Onboarding Checklist", "description": "The steps to confirm before marking a new customer as fully onboarded." },
+      "digital-transformation-checklist": { "title": "Digital Transformation Checklist", "description": "A checklist for sequencing a digital transformation initiative without stalling day-to-day operations." },
+      "sales-playbook": { "title": "Sales Playbook", "description": "A playbook covering prospecting, discovery, and closing plays for a growing sales team." },
+      "marketing-playbook": { "title": "Marketing Playbook", "description": "Repeatable marketing plays for demand generation and lifecycle campaigns." },
+      "customer-success-playbook": { "title": "Customer Success Playbook", "description": "Playbooks for onboarding, renewal, and save conversations." },
+      "lead-conversion-playbook": { "title": "Lead Conversion Playbook", "description": "A step-by-step playbook for converting marketing-qualified leads into closed deals." }
     },
     "webinars": {
       "ai-assistants-deep-dive": {
@@ -2887,7 +5028,7 @@
     "startTyping": "Start typing to search",
     "noResults": "No results for \"{query}\". Try one of these instead:",
     "categories": {
-      "Platform": "Platform",
+      "Platform": "Product",
       "Solutions": "Solutions",
       "Industries": "Industries",
       "Pricing": "Pricing",
@@ -2920,5 +5061,11 @@
     },
     "customerStorySuffix": "customer story",
     "loading": "Loading…"
+  },
+  "maintenancePage": {
+    "metaTitle": "Under Maintenance",
+    "headline": "We'll be right back",
+    "defaultBody": "ZynReach is currently undergoing scheduled maintenance. Please check back shortly.",
+    "contactPrompt": "Need urgent help? Email us at {email}."
   }
 }

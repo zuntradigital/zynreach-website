@@ -10,8 +10,19 @@ interface DemoRequestBody {
   companySize?: string;
   phone?: string;
   country?: string;
-  goal?: string;
+  industry?: string;
+  role?: string;
+  primaryNeed?: string;
+  message?: string;
   company_website?: string; // honeypot
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_medium?: string;
+  utm_term?: string;
+  utm_content?: string;
+  landing_page?: string;
+  referrer?: string;
+  device?: string;
 }
 
 const ENTERPRISE_SIZES = new Set(["201-1000", "1000+"]);
@@ -40,6 +51,10 @@ export async function POST(request: Request) {
   const companySize = body.companySize?.trim() ?? "";
   const phone = body.phone?.trim() ?? "";
   const country = body.country?.trim() ?? "";
+  const industry = body.industry?.trim() ?? "";
+  const role = body.role?.trim() ?? "";
+  const primaryNeed = body.primaryNeed?.trim() ?? "";
+  const message = body.message?.trim() ?? "";
 
   const errors: Record<string, string> = {};
   if (!isNonEmpty(fullName)) errors.fullName = "Full name is required.";
@@ -48,6 +63,7 @@ export async function POST(request: Request) {
   if (!isNonEmpty(companySize)) errors.companySize = "Select a company size.";
   if (!isNonEmpty(country)) errors.country = "Select a country.";
   if (!isValidPhone(phone)) errors.phone = "Enter a valid phone number.";
+  if (!isNonEmpty(industry)) errors.industry = "Select an industry.";
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ errors }, { status: 400 });
@@ -58,7 +74,15 @@ export async function POST(request: Request) {
   const result = await routeLead({
     formId: "book-a-demo",
     segment,
-    fields: { fullName, workEmail, companyName, companySize, phone, country, goal: body.goal?.trim() ?? "" },
+    fields: { fullName, workEmail, companyName, companySize, phone, country, industry, role, primaryNeed, message },
+    utmSource: body.utm_source,
+    utmCampaign: body.utm_campaign,
+    utmMedium: body.utm_medium,
+    utmTerm: body.utm_term,
+    utmContent: body.utm_content,
+    landingPage: body.landing_page,
+    referrer: body.referrer,
+    device: body.device,
   });
 
   return NextResponse.json(result, { status: 200 });

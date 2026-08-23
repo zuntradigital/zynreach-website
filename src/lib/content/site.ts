@@ -1,12 +1,12 @@
 export const site = {
   name: "ZynReach",
-  tagline: "AI-Powered Revenue Operations Platform",
+  tagline: "AI-Powered Enterprise Growth & Operations Platform",
   url: "https://www.zynreach.com",
   appUrl: "https://app.zynreach.com",
   loginUrl: "https://app.zynreach.com/login",
   trialUrl: "https://app.zynreach.com/signup",
   description:
-    "Unify CRM, marketing automation, and AI assistants in one platform. See why growing teams switch to ZynReach.",
+    "Unify CRM, marketing, AI automation, operations, and business intelligence in one enterprise platform. See why growing teams switch to ZynReach.",
   social: {
     linkedin: "https://www.linkedin.com/company/zynreach",
     x: "https://x.com/zynreach",

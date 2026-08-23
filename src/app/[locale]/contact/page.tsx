@@ -13,6 +13,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, organizationJsonLd, localBusinessJsonLd } from "@/lib/structured-data";
 import { site } from "@/lib/content/site";
 import { localizedAlternates, localizedUrl, openGraphDefaults } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/services/site-settings";
 
 const mapsEmbedSrc = `https://www.google.com/maps?q=${site.contact.geo.lat},${site.contact.geo.lng}&z=16&output=embed`;
 
@@ -51,11 +52,21 @@ export default async function ContactPage({
     { label: t("eyebrow"), href: "/contact" },
   ]);
 
+  // Dashboard-managed values (SRS §22 Contact Information) override the
+  // hardcoded defaults when set, same merge-with-fallback pattern as
+  // Footer.tsx. WhatsApp, the maps link, and geo-coordinates have no
+  // equivalent field in the admin's Settings module yet, so those stay
+  // hardcoded.
+  const remote = await getSiteSettings();
+  const { email: fallbackEmail, phone: fallbackPhone } = site.contact;
+  const email = remote?.settings.contact.supportEmail || fallbackEmail;
+  const phone = remote?.settings.contact.phone || fallbackPhone;
+
   return (
     <>
       <JsonLd id="breadcrumbs-jsonld" data={breadcrumbs} />
-      <JsonLd id="organization-jsonld" data={organizationJsonLd()} />
-      <JsonLd id="local-business-jsonld" data={localBusinessJsonLd()} />
+      <JsonLd id="organization-jsonld" data={await organizationJsonLd()} />
+      <JsonLd id="local-business-jsonld" data={await localBusinessJsonLd()} />
       <NavigationBar />
       <main id="main-content" className="flex-1">
         <PageHero
@@ -78,12 +89,12 @@ export default async function ContactPage({
                   <li className="flex items-start gap-2">
                     <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-600" strokeWidth={1.75} />
                     <a
-                      href={`mailto:${site.contact.email}`}
-                      aria-label={`Email ${site.name} at ${site.contact.email}`}
+                      href={`mailto:${email}`}
+                      aria-label={`Email ${site.name} at ${email}`}
                       dir="ltr"
                       className="hover:text-primary-600"
                     >
-                      {site.contact.email}
+                      {email}
                     </a>
                   </li>
                   <li className="flex items-start gap-2">
@@ -102,12 +113,12 @@ export default async function ContactPage({
                   <li className="flex items-start gap-2">
                     <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-600" strokeWidth={1.75} />
                     <a
-                      href={`tel:${site.contact.phone.replace(/[^+\d]/g, "")}`}
-                      aria-label={`Call ${site.name} at ${site.contact.phone}`}
+                      href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                      aria-label={`Call ${site.name} at ${phone}`}
                       dir="ltr"
                       className="hover:text-primary-600"
                     >
-                      {site.contact.phone}
+                      {phone}
                     </a>
                   </li>
                   <li className="flex items-start gap-2">

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Globe, Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
@@ -76,13 +76,12 @@ export function LanguageSwitcher({ variant = "dark" }: LanguageSwitcherProps) {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex items-center gap-1.5 rounded-md px-2.5 py-2 text-sm font-semibold transition-colors duration-200 disabled:opacity-60 ${toneClasses}`}
+        className={`flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-semibold uppercase tracking-wide transition-colors duration-200 disabled:opacity-60 ${toneClasses}`}
       >
-        <Globe aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} />
-        <span>{t(locale)}</span>
+        <span>{locale}</span>
         <ChevronDown
           aria-hidden="true"
-          className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`h-3 w-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 

@@ -1,14 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { NavMegaItem, NavDropdownItem } from "@/types/content";
 import { hrefToLinkKey, headingToKey, promoToKey } from "@/lib/nav-i18n";
 
 const columnGridClass: Record<number, string> = {
   1: "grid gap-8 sm:grid-cols-1",
-  2: "grid gap-8 sm:grid-cols-2",
-  3: "grid gap-8 sm:grid-cols-3",
-  4: "grid gap-8 sm:grid-cols-4",
 };
 
 interface MegaMenuPanelProps {
@@ -47,6 +48,10 @@ export function MegaMenuPanel({ item, id, onLinkClick }: MegaMenuPanelProps) {
   }
 
   const promoKeys = item.promo ? promoToKey[item.promo.eyebrow] : undefined;
+  // Items with more than one heading-grouped column (Product's 6 pillars,
+  // Solutions' 3 groupings) render as a collapsible nested list instead of
+  // a wide multi-column grid — see NestedColumnList below.
+  const nested = item.columns.length > 1;
 
   return (
     // Centered within the nearest positioned ancestor (the <nav>, not this
@@ -65,35 +70,43 @@ export function MegaMenuPanel({ item, id, onLinkClick }: MegaMenuPanelProps) {
       id={id}
       role="menu"
       aria-label={label}
-      className="absolute inset-x-0 top-full mx-auto w-full max-w-[min(48rem,calc(100vw-2rem))] pt-2"
+      className={`absolute inset-x-0 top-full mx-auto w-full pt-2 ${
+        nested
+          ? item.promo
+            ? "max-w-[min(40rem,calc(100vw-2rem))]"
+            : "max-w-[min(22rem,calc(100vw-2rem))]"
+          : "max-w-[min(48rem,calc(100vw-2rem))]"
+      }`}
     >
       <div className="rounded-xl border border-neutral-200 bg-white dark:bg-neutral-100 p-6 shadow-card-hover">
-        <div
-          className={`grid gap-8 ${item.promo ? "grid-cols-1 lg:grid-cols-[2fr_1fr]" : "grid-cols-1"}`}
-        >
-          <div className={columnGridClass[item.columns.length] ?? columnGridClass[1]}>
-            {item.columns.map((column) => (
-              <div key={column.heading}>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                  {t(`megaMenu.${headingToKey[column.heading]}`)}
-                </p>
-                <ul className="space-y-1">
-                  {column.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        role="menuitem"
-                        onClick={onLinkClick}
-                        className="block rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-600"
-                      >
-                        {t(`links.${hrefToLinkKey[link.href]}`)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+        <div className={`grid gap-8 ${item.promo ? "grid-cols-1 lg:grid-cols-[2fr_1fr]" : "grid-cols-1"}`}>
+          {nested ? (
+            <NestedColumnList item={item} onLinkClick={onLinkClick} />
+          ) : (
+            <div className={columnGridClass[item.columns.length] ?? columnGridClass[1]}>
+              {item.columns.map((column) => (
+                <div key={column.heading}>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                    {t(`megaMenu.${headingToKey[column.heading]}`)}
+                  </p>
+                  <ul className="space-y-1">
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          role="menuitem"
+                          onClick={onLinkClick}
+                          className="block rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-600"
+                        >
+                          {t(`links.${hrefToLinkKey[link.href]}`)}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
           {item.promo && promoKeys ? (
             <Link
               href={item.promo.href}
@@ -111,13 +124,65 @@ export function MegaMenuPanel({ item, id, onLinkClick }: MegaMenuPanelProps) {
               <p className="relative text-xs font-semibold uppercase tracking-wide text-primary-300 dark:text-primary-600">
                 {t(`megaMenu.${promoKeys.eyebrow}`)}
               </p>
-              <p className="relative mt-1 text-sm font-semibold text-white">
-                {t(`megaMenu.${promoKeys.headline}`)}
-              </p>
+              <p className="relative mt-1 text-sm font-semibold text-white">{t(`megaMenu.${promoKeys.headline}`)}</p>
             </Link>
           ) : null}
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Multi-column mega items (Product's 6 pillars, Solutions' 3 groupings) used
+ * to render every column's links side by side — ~40 links visible at once
+ * for Product. Instead each column heading is its own collapsible section;
+ * only one is expanded at a time, and the first opens by default so the
+ * panel never looks empty on open.
+ */
+function NestedColumnList({ item, onLinkClick }: { item: NavMegaItem; onLinkClick: () => void }) {
+  const t = useTranslations("common");
+  const [openHeading, setOpenHeading] = useState<string | null>(item.columns[0]?.heading ?? null);
+
+  return (
+    <div className="divide-y divide-neutral-100">
+      {item.columns.map((column) => {
+        const isOpen = openHeading === column.heading;
+        const panelId = `submenu-${item.label}-${column.heading}`.replace(/\s+/g, "-").toLowerCase();
+        return (
+          <div key={column.heading}>
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={panelId}
+              onClick={() => setOpenHeading(isOpen ? null : column.heading)}
+              className="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-start text-sm font-semibold text-neutral-800 hover:bg-neutral-50 hover:text-primary-600"
+            >
+              {t(`megaMenu.${headingToKey[column.heading]}`)}
+              <ChevronDown
+                aria-hidden="true"
+                className={`h-4 w-4 flex-shrink-0 transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {isOpen ? (
+              <ul id={panelId} className="space-y-1 ps-3 pb-2">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      role="menuitem"
+                      onClick={onLinkClick}
+                      className="block rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-600"
+                    >
+                      {t(`links.${hrefToLinkKey[link.href]}`)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 interface CodeBlockProps {
   code: string;
   language?: string;
 }
 
-/** SRS Blog & Resource Platform: "Code Blocks" + "Copy to Clipboard". */
+/** SRS Blog & Resource Platform: "Code Blocks" + "Copy to Clipboard". Knowledge Center §21 "Code Copy" event fires on every use, sitewide, from this one shared component. */
 export function CodeBlock({ code, language = "json" }: CodeBlockProps) {
   const t = useTranslations("common.codeBlock");
   const [copied, setCopied] = useState(false);
@@ -17,6 +18,7 @@ export function CodeBlock({ code, language = "json" }: CodeBlockProps) {
   async function handleCopy() {
     await navigator.clipboard.writeText(code);
     setCopied(true);
+    trackEvent("code_copy", { language });
     setTimeout(() => setCopied(false), 2000);
   }
 

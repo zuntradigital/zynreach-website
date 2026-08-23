@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { routing } from "./src/i18n/routing";
 
 /**
  * SRS Section 19: HTTPS/HSTS, secure headers, CSP, XSS protection.
@@ -60,7 +61,76 @@ const securityHeaders = [
   },
 ];
 
+// Knowledge Center IA restructure: /resources/guides and /resources/webinars
+// moved to their own top-level URLs (/guides-templates, /webinars — see
+// Knowledge Center §8.1/§9.1's explicit "URL:" declarations, the more
+// specific and authoritative statement over the sitemap tree diagram
+// elsewhere in that same spec, which read as organizational nesting rather
+// than a literal path requirement), and the /resources hub itself was
+// replaced by /knowledge-center. routing.localePrefix is "always" (see
+// src/i18n/routing.ts), so every real URL on this site carries an /en or
+// /ar prefix — redirect sources need that prefix explicitly, a bare
+// "/resources/..." source would never match an actual request.
+const knowledgeCenterRedirects = [
+  { from: "/resources/guides", to: "/guides-templates" },
+  { from: "/resources/guides/:slug*", to: "/guides-templates/:slug*" },
+  { from: "/resources/webinars", to: "/webinars" },
+  { from: "/resources/webinars/:slug*", to: "/webinars/:slug*" },
+  { from: "/resources", to: "/knowledge-center" },
+  // These two were themselves live for a period under the (superseded)
+  // nested interpretation — preserved as their own redirect so no URL
+  // that was ever real goes broken, per the "old URLs must not become
+  // broken" rule.
+  { from: "/knowledge-center/guides-templates", to: "/guides-templates" },
+  { from: "/knowledge-center/guides-templates/:slug*", to: "/guides-templates/:slug*" },
+  { from: "/knowledge-center/webinars", to: "/webinars" },
+  { from: "/knowledge-center/webinars/:slug*", to: "/webinars/:slug*" },
+].flatMap(({ from, to }) =>
+  routing.locales.map((locale) => ({
+    source: `/${locale}${from}`,
+    destination: `/${locale}${to}`,
+    permanent: true,
+  }))
+);
+
+// Knowledge Center IA restructure: Customer Stories moved from /customers
+// (nested under the old Resources hub) to its own top-level /customer-stories
+// URL, now CMS-backed (see src/lib/services/customer-stories-content.ts).
+const customerStoriesRedirects = [
+  { from: "/customers", to: "/customer-stories" },
+  { from: "/customers/:slug*", to: "/customer-stories/:slug*" },
+].flatMap(({ from, to }) =>
+  routing.locales.map((locale) => ({
+    source: `/${locale}${from}`,
+    destination: `/${locale}${to}`,
+    permanent: true,
+  }))
+);
+
+// Developers section removed entirely (public site + dashboard) — every
+// legacy Developers/Documentation/API Reference URL now redirects to the
+// Knowledge Center rather than 404ing, covering both the original /docs*
+// paths and the short-lived /developers* paths from the now-removed
+// section.
+const developersRedirects = [
+  { from: "/docs/api", to: "/knowledge-center" },
+  { from: "/docs/api/:slug*", to: "/knowledge-center" },
+  { from: "/docs/:slug*", to: "/knowledge-center" },
+  { from: "/docs", to: "/knowledge-center" },
+  { from: "/developers/:slug*", to: "/knowledge-center" },
+  { from: "/developers", to: "/knowledge-center" },
+].flatMap(({ from, to }) =>
+  routing.locales.map((locale) => ({
+    source: `/${locale}${from}`,
+    destination: `/${locale}${to}`,
+    permanent: true,
+  }))
+);
+
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [...knowledgeCenterRedirects, ...customerStoriesRedirects, ...developersRedirects];
+  },
   async headers() {
     return [
       {
@@ -80,6 +150,17 @@ const nextConfig: NextConfig = {
           },
         ]
       : [],
+    // Next 16's image optimizer refuses to fetch from any host that
+    // resolves to a loopback/private IP (images.dangerouslyAllowLocalIP,
+    // default false) — a real SSRF guard, but it also blocks the very
+    // common local-dev setup where System B (this admin) runs on
+    // localhost and serves blog/media images from there. remotePatterns
+    // above already restricts *which* host/path is allowed; this only
+    // relaxes the separate "is that host a local IP" check, and only in
+    // development — production deployments serve media from System B's
+    // real (non-loopback) origin, where this guard is exactly the
+    // protection you want left in place.
+    dangerouslyAllowLocalIP: isDev,
   },
 };
 

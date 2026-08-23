@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Clock } from "lucide-react";
@@ -10,6 +11,7 @@ import { BlogCard, type BlogCardData } from "@/components/ui/BlogCard";
 import { CategoryFilterBar, type CategoryOption } from "@/components/ui/CategoryFilterBar";
 import { Pagination } from "@/components/ui/Pagination";
 import { LeadCaptureStrip } from "@/components/ui/LeadCaptureStrip";
+import { InlineSearchForm } from "@/components/ui/InlineSearchForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { blogPosts, blogCategories, getReadingTimeMinutes } from "@/lib/content/blog";
 import { getAuthor } from "@/lib/content/authors";
@@ -45,6 +47,7 @@ interface ResolvedPost extends BlogCardData {
   category: string;
   publishedDate: string;
   featured?: boolean;
+  tags: string[];
 }
 
 interface BlogIndexProps {
@@ -86,6 +89,9 @@ export default async function BlogIndexPage({ params, searchParams }: BlogIndexP
         minReadLabel: t("minRead", { count: getReadingTimeMinutes(post) }),
         publishedDate: post.publishedDate,
         featured: post.featured,
+        imageUrl: post.image,
+        imageAlt: post.imageAlt,
+        tags: post.tags,
       };
     });
     categoryOptions = Array.from(new Set(allPosts.map((p) => p.category))).map((c) => ({ key: c, label: c }));
@@ -104,6 +110,7 @@ export default async function BlogIndexPage({ params, searchParams }: BlogIndexP
         minReadLabel: t("minRead", { count: getReadingTimeMinutes(post) }),
         publishedDate: post.publishedDate,
         featured: post.featured,
+        tags: post.tags,
       };
     });
     categoryOptions = blogCategories.map((c) => ({ key: c, label: t(`categories.${c}` as Parameters<typeof t>[0]) }));
@@ -154,10 +161,21 @@ export default async function BlogIndexPage({ params, searchParams }: BlogIndexP
                     </span>
                   </div>
                 </div>
+                {featured.imageUrl ? (
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                    <Image src={featured.imageUrl} alt={featured.imageAlt ?? ""} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
+                  </div>
+                ) : null}
               </Link>
             </div>
           </section>
         ) : null}
+
+        <section className="bg-white dark:bg-neutral-100 py-10">
+          <div className="container-content max-w-2xl">
+            <InlineSearchForm placeholder={t("searchPlaceholder")} ariaLabel={t("searchLabel")} />
+          </div>
+        </section>
 
         <section className="bg-neutral-50 py-16">
           <div className="container-content">

@@ -51,12 +51,11 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
 
   const t = await getTranslations("industriesPage.detail");
   const tLinks = await getTranslations("common.links");
-  const tCap = await getTranslations("capabilityGrid");
 
   const cardKey = slugToCardKey[raw.slug] ?? "";
   const navLabel = tLinks(cardKey);
   const workflowSteps = t.raw(`${raw.slug}.workflowSteps`) as string[];
-  const calloutLabels = raw.capabilityCallouts.map((c) => tCap(`${hrefToLinkKey[c.href] ?? ""}.headline`));
+  const calloutLabels = raw.capabilityCallouts.map((c) => tLinks(hrefToLinkKey[c.href] ?? ""));
 
   const content: IndustryPageContent = {
     ...raw,

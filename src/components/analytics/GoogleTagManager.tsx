@@ -4,7 +4,12 @@ import { useSyncExternalStore } from "react";
 import Script from "next/script";
 
 const CONSENT_STORAGE_KEY = "zynreach-cookie-consent-v1";
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const ENV_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
+interface GoogleTagManagerProps {
+  /** Dashboard-managed override (SRS §22 analytics.gtmContainerId) — falls back to the build-time env var when unset. */
+  containerId?: string;
+}
 
 function subscribe(onChange: () => void) {
   window.addEventListener("storage", onChange);
@@ -39,14 +44,15 @@ function hasAnalyticsConsent(): boolean {
  * click, rather than adding a second consent-state bus alongside
  * CookieBanner's.
  */
-export function GoogleTagManager() {
+export function GoogleTagManager({ containerId }: GoogleTagManagerProps) {
   const consentGiven = useSyncExternalStore(subscribe, hasAnalyticsConsent, () => false);
+  const gtmId = containerId || ENV_GTM_ID;
 
-  if (!GTM_ID || !consentGiven) return null;
+  if (!gtmId || !consentGiven) return null;
 
   return (
     <Script id="gtm-loader" strategy="afterInteractive">
-      {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
+      {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`}
     </Script>
   );
 }

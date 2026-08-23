@@ -26,10 +26,10 @@ import type {
 } from "@/types/content";
 
 export const homeHero = {
-  eyebrow: "AI-native revenue operations",
-  headline: "One platform for AI-powered revenue growth",
+  eyebrow: "AI-powered enterprise growth & operations",
+  headline: "One Platform to Grow, Automate, and Run Your Business.",
   subhead:
-    "ZynReach unifies CRM, marketing automation, lead generation, workflow automation, and analytics — with AI built into every workflow, not bolted on.",
+    "ZynReach brings AI-powered growth, customer management, automation, operations, and business intelligence together in one unified enterprise platform.",
   ctaPrimary: { label: "Book a Demo", href: "/demo" },
   ctaSecondary: { label: "Start Free Trial", href: "/trial" },
 };

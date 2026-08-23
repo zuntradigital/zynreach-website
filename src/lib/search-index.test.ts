@@ -25,18 +25,10 @@ describe("searchContent", () => {
 });
 
 describe("getSearchIndex", () => {
-  it("includes every content category the SRS requires", () => {
+  it("includes every content category the site's search scope requires", () => {
     const categories = new Set(getSearchIndex().map((entry) => entry.category));
     expect(categories.has("Platform")).toBe(true);
-    expect(categories.has("Documentation")).toBe(true);
     expect(categories.has("Blog")).toBe(true);
     expect(categories.has("Customer Stories")).toBe(true);
-  });
-
-  it("ranks Documentation/API results before Blog for the same query term", () => {
-    const index = getSearchIndex();
-    const firstDocIndex = index.findIndex((e) => e.category === "Documentation");
-    const firstBlogIndex = index.findIndex((e) => e.category === "Blog");
-    expect(firstDocIndex).toBeLessThan(firstBlogIndex);
   });
 });

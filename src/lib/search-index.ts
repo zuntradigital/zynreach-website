@@ -6,14 +6,12 @@ import { industryPages } from "@/lib/content/industries";
 import { pricingPlans } from "@/lib/content/pricing";
 import { blogPosts } from "@/lib/content/blog";
 import { customerStories } from "@/lib/content/customer-stories";
-import { docArticles } from "@/lib/content/docs";
-import { apiEndpoints } from "@/lib/content/api-reference";
 
 export interface SearchEntry {
   title: string;
   description: string;
   href: string;
-  category: "Platform" | "Solutions" | "Industries" | "Pricing" | "Company" | "Blog" | "Documentation" | "Customer Stories";
+  category: "Platform" | "Solutions" | "Industries" | "Pricing" | "Company" | "Blog" | "Customer Stories";
 }
 
 /** Same shape as SearchEntry, but `category` holds the locale-translated display label rather than the English literal. */
@@ -72,34 +70,13 @@ export function getSearchIndex(): SearchEntry[] {
   const customerStoriesEntries: SearchEntry[] = customerStories.map((story) => ({
     title: `${story.customerName} customer story`,
     description: story.result,
-    href: `/customers/${story.slug}`,
+    href: `/customer-stories/${story.slug}`,
     category: "Customer Stories",
   }));
 
-  const docs: SearchEntry[] = docArticles.map((doc) => ({
-    title: doc.title,
-    description: doc.description,
-    href: `/docs/${doc.slug}`,
-    category: "Documentation",
-  }));
-
-  const api: SearchEntry[] = apiEndpoints.map((endpoint) => ({
-    title: `${endpoint.method} ${endpoint.path}`,
-    description: endpoint.summary,
-    href: `/docs/api/${endpoint.slug}`,
-    category: "Documentation",
-  }));
-
-  return [...docs, ...api, ...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
+  return [...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
 }
 
-/**
- * SRS 7.17: "Documentation and API Reference search results are weighted
- * above Blog results when the query matches a product/technical term."
- * Documentation/API entries are placed first in getSearchIndex(), and
- * filter() preserves that order, so technical results naturally rank
- * above Blog for any matching query.
- */
 export function searchContent(query: string): SearchEntry[];
 export function searchContent(query: string, index: LocalizedSearchEntry[]): LocalizedSearchEntry[];
 export function searchContent(
@@ -121,9 +98,7 @@ export function useLocalizedSearchIndex(): LocalizedSearchEntry[] {
   const tIndustries = useTranslations("industriesPage.detail");
   const tPricing = useTranslations("pricingPage.plans");
   const tBlog = useTranslations("blogPage.posts");
-  const tCustomers = useTranslations("customersPage.stories");
-  const tDocs = useTranslations("docsPage.articles");
-  const tApi = useTranslations("apiReferencePage.endpoints");
+  const tCustomers = useTranslations("customerStoriesPage.stories");
   const tCategories = useTranslations("searchPage.categories");
   const tCompany = useTranslations("searchPage.company");
   const tSearch = useTranslations("searchPage");
@@ -175,25 +150,11 @@ export function useLocalizedSearchIndex(): LocalizedSearchEntry[] {
   const customerStoriesEntries: SearchEntry[] = customerStories.map((story) => ({
     title: `${tCustomers(`${story.slug}.customerName` as Parameters<typeof tCustomers>[0])} ${tSearch("customerStorySuffix")}`,
     description: tCustomers(`${story.slug}.result` as Parameters<typeof tCustomers>[0]),
-    href: `/customers/${story.slug}`,
+    href: `/customer-stories/${story.slug}`,
     category: "Customer Stories",
   }));
 
-  const docs: SearchEntry[] = docArticles.map((doc) => ({
-    title: tDocs(`${doc.slug}.title` as Parameters<typeof tDocs>[0]),
-    description: tDocs(`${doc.slug}.description` as Parameters<typeof tDocs>[0]),
-    href: `/docs/${doc.slug}`,
-    category: "Documentation",
-  }));
-
-  const api: SearchEntry[] = apiEndpoints.map((endpoint) => ({
-    title: `${endpoint.method} ${endpoint.path}`,
-    description: tApi(`${endpoint.slug}.summary` as Parameters<typeof tApi>[0]),
-    href: `/docs/api/${endpoint.slug}`,
-    category: "Documentation",
-  }));
-
-  const localized = [...docs, ...api, ...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
+  const localized = [...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
 
   return localized.map(
     (entry): LocalizedSearchEntry => ({

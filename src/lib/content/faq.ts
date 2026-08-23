@@ -16,7 +16,7 @@ export const faqByCategory: Record<(typeof faqCategories)[number], FaqItem[]> = 
   Security: [
     { question: "Is ZynReach SOC 2 certified?", answer: "Yes, ZynReach maintains SOC 2 Type II certification. See our Security page for details." },
     { question: "Where is my data hosted?", answer: "Customer data is hosted in United States-based data centers by default; region-specific residency is available on Enterprise." },
-    { question: "Do you support SSO?", answer: "Yes, SSO and SAML-based authentication are available on Enterprise plans." },
+    { question: "Do you support SSO?", answer: "ZynReach uses email and password authentication with two-factor authentication (TOTP) required for administrator and Enterprise accounts, plus role-based and attribute-based access controls — see our Security page for details." },
   ],
   Support: [
     { question: "What support is included on each plan?", answer: "Starter includes community support, Growth includes priority support, and Enterprise includes a dedicated CSM." },

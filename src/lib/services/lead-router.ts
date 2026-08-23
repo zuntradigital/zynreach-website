@@ -19,13 +19,35 @@
 
 import { captureIntegrationCall } from "@/lib/monitoring";
 
-export type LeadSegment = "self-serve" | "enterprise" | "support" | "partnerships" | "press" | "careers";
+export type LeadSegment = "self-serve" | "enterprise" | "support" | "other" | "partnerships" | "press" | "careers";
 
 export interface LeadPayload {
   formId: string;
+  /** Internal routing bucket (which queue/notification this lead goes
+   * to) — not the SRS's "Source" field. Recorded in Submission.utm for
+   * reference, never written to Lead.source (see utmSource below). */
   segment: LeadSegment;
   fields: Record<string, string>;
+  /** SRS §20.2/§28.2's actual "Source" — captured from the visitor's
+   * utm_source query param (FR-WEB-009), not an internal classification.
+   * Written directly to Lead.source; falls back to "direct" when the
+   * visitor arrived with no UTM tag at all (the common case for direct
+   * navigation to e.g. /contact). */
   utmSource?: string;
+  /** SRS §20.2/§28.2's "Campaign" — the visitor's utm_campaign param. */
+  utmCampaign?: string;
+  /** Remaining SRS §20.2/§28.2 attribution fields — utm_medium/term/content,
+   * the first-touch landing page for this session, the external referrer,
+   * and the submitting device class. All optional/best-effort (client-
+   * supplied, per useUtmParams.ts), stored in Submission.utm alongside
+   * segment/source/campaign rather than as new Lead columns — same
+   * flexible-Json approach the schema already uses for this field. */
+  utmMedium?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  landingPage?: string;
+  referrer?: string;
+  device?: string;
 }
 
 export interface LeadRouteResult {
@@ -45,8 +67,19 @@ export async function routeLead(payload: LeadPayload): Promise<LeadRouteResult> 
         body: JSON.stringify({
           formId: payload.formId,
           payload: payload.fields,
-          source: payload.segment,
-          ...(payload.utmSource ? { utm: { source: payload.utmSource } } : {}),
+          source: payload.utmSource || "direct",
+          ...(payload.utmCampaign ? { campaign: payload.utmCampaign } : {}),
+          utm: {
+            segment: payload.segment,
+            ...(payload.utmSource ? { source: payload.utmSource } : {}),
+            ...(payload.utmCampaign ? { campaign: payload.utmCampaign } : {}),
+            ...(payload.utmMedium ? { medium: payload.utmMedium } : {}),
+            ...(payload.utmTerm ? { term: payload.utmTerm } : {}),
+            ...(payload.utmContent ? { content: payload.utmContent } : {}),
+            ...(payload.landingPage ? { landingPage: payload.landingPage } : {}),
+            ...(payload.referrer ? { referrer: payload.referrer } : {}),
+            ...(payload.device ? { device: payload.device } : {}),
+          },
         }),
       });
 

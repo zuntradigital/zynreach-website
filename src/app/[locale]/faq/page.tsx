@@ -7,9 +7,15 @@ import { PageHero } from "@/components/sections/PageHero";
 import { FaqTabs } from "@/components/sections/FaqTabs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { faqCategories } from "@/lib/content/faq";
+import { getPublishedFaqs } from "@/lib/services/faq-content";
 import { breadcrumbJsonLd, faqPageJsonLd } from "@/lib/structured-data";
 import { localizedAlternates, localizedUrl, openGraphDefaults } from "@/lib/seo";
 import type { FaqItem } from "@/types/content";
+
+// FAQ is CMS-backed and direct-save (see the admin PATCH handler's
+// docstring) — a content edit must be visible immediately, same
+// reasoning as Customer Stories' own revalidate = 0.
+export const revalidate = 0;
 
 export async function generateMetadata({
   params,
@@ -41,9 +47,12 @@ export default async function FaqPage({
     { label: "FAQ", href: "/faq" },
   ]);
 
-  const allFaqs = faqCategories.flatMap(
-    (category) => t.raw(`items.${category}`) as FaqItem[]
-  );
+  const liveFaqs = await getPublishedFaqs(locale);
+
+  const allFaqs: FaqItem[] =
+    liveFaqs && liveFaqs.length > 0
+      ? liveFaqs.map(({ question, answer }) => ({ question, answer }))
+      : faqCategories.flatMap((category) => t.raw(`items.${category}`) as FaqItem[]);
 
   return (
     <>
@@ -54,7 +63,7 @@ export default async function FaqPage({
         <PageHero eyebrow={t("eyebrow")} headline={t("headline")} subhead={t("subhead")} />
         <section className="bg-white dark:bg-neutral-100 py-16">
           <div className="container-content max-w-3xl">
-            <FaqTabs />
+            <FaqTabs liveFaqs={liveFaqs} />
           </div>
         </section>
       </main>

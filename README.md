@@ -14,16 +14,16 @@ This repository is **System A**: the public-facing marketing, education, and lea
 
 ```
 src/
-  app/[locale]/    Routes — every page is localized (en/ar)
-  app/api/         Route handlers for forms and integrations
-  components/      UI components, organized by layout/sections/forms/ui
-  lib/content/     Typed static content (fallback data per content type)
-  lib/services/    Business logic + integration boundaries (CRM, trial, careers, etc.)
-  i18n/            next-intl routing/navigation config
-  types/           Shared TypeScript types
-messages/          en.json / ar.json translation dictionaries
-e2e/               Playwright end-to-end + accessibility specs
-scripts/           One-off build/asset tooling (icon generation, i18n checks)
+  app/[locale]/       Routes — every page is localized (en/ar)
+  app/api/            Route handlers for forms and integrations
+  components/         UI components, organized by layout/sections/forms/ui
+  lib/content/         Typed static content (fallback data per content type)
+  lib/services/        Business logic + integration boundaries (CRM, trial, careers, etc.)
+  i18n/                next-intl routing/navigation config
+  types/               Shared TypeScript types
+messages/              en.json / ar.json translation dictionaries
+e2e/                   Playwright end-to-end + accessibility specs
+scripts/                One-off build/asset tooling (icon generation, i18n checks)
 ```
 
 Content types (pricing, blog, careers, resources, CMS pages, etc.) each have a typed interface in `src/types/content.ts` and a static data file in `src/lib/content/`. Where a System B integration exists, a service in `src/lib/services/` fetches live data and falls back to that static file automatically if System B is unreachable or unconfigured — no page or component needs to know which source it's using.
@@ -59,7 +59,6 @@ Key variables (see `.env.example` for the full list and context):
 | `npm run test:e2e` | End-to-end + accessibility tests (Playwright) |
 | `npm run lighthouse` | Lighthouse CI performance/accessibility/SEO gate |
 
-CI (`.github/workflows/ci.yml`) runs typecheck → lint → unit tests → build on every push/PR to `main`, then E2E/accessibility and Lighthouse checks in parallel.
 
 ## Notes for developers
 

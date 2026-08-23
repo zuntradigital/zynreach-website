@@ -22,6 +22,14 @@ export interface TrialSignupInput {
   fullName: string;
   companyName: string;
   workEmail: string;
+  utmSource?: string;
+  utmCampaign?: string;
+  utmMedium?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  landingPage?: string;
+  referrer?: string;
+  device?: string;
 }
 
 export interface TrialSignupResult {
@@ -47,6 +55,14 @@ export async function submitTrialSignup(input: TrialSignupInput): Promise<TrialS
     formId: "trial",
     segment: "self-serve",
     fields: { fullName: input.fullName, companyName: input.companyName, workEmail: input.workEmail },
+    utmSource: input.utmSource,
+    utmCampaign: input.utmCampaign,
+    utmMedium: input.utmMedium,
+    utmTerm: input.utmTerm,
+    utmContent: input.utmContent,
+    landingPage: input.landingPage,
+    referrer: input.referrer,
+    device: input.device,
   });
 
   return { accepted: true, requestId };

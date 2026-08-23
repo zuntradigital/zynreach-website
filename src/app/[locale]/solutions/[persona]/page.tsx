@@ -44,12 +44,11 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
   const t = await getTranslations("solutionsPage.detail");
   const tLinks = await getTranslations("common.links");
   const tCta = await getTranslations("common.cta");
-  const tCap = await getTranslations("capabilityGrid");
 
   const linkKey = hrefToLinkKey[`/solutions/${raw.slug}`] ?? "";
   const navLabel = tLinks(linkKey);
   const ctaLabelKey = raw.primaryCta.href === "/demo" ? "bookDemo" : "startFreeTrial";
-  const calloutLabels = raw.capabilityCallouts.map((c) => tCap(`${hrefToLinkKey[c.href] ?? ""}.headline`));
+  const calloutLabels = raw.capabilityCallouts.map((c) => tLinks(hrefToLinkKey[c.href] ?? ""));
 
   const content: SolutionPageContent = {
     ...raw,
@@ -63,6 +62,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
       label: calloutLabels[i],
       description: t(`${raw.slug}.callouts.${i}`),
     })),
+    howItWorks: t.raw(`${raw.slug}.howItWorks`) as { headline: string; description: string }[],
     storyNote: t("storyNote"),
   };
 

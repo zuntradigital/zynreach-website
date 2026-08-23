@@ -7,11 +7,12 @@ import { TextField } from "./TextField";
 import { SelectField } from "./SelectField";
 import { TextareaField } from "./TextareaField";
 import { Honeypot } from "./Honeypot";
-import { companySizeOptions, countryOptions } from "@/lib/content/form-options";
+import { companySizeOptions, countryOptions, industryOptions, roleOptions, primaryNeedOptions } from "@/lib/content/form-options";
 import { isNonEmpty, isValidPhone, isWorkEmail, isFreeEmailDomain } from "@/lib/validation";
 import { Button } from "@/components/ui/Button";
 import { trackConversion } from "@/lib/analytics";
 import { captureFormOutcome } from "@/lib/monitoring";
+import { useUtmParams } from "@/lib/hooks/useUtmParams";
 
 interface FormState {
   fullName: string;
@@ -20,7 +21,10 @@ interface FormState {
   companySize: string;
   phone: string;
   country: string;
-  goal: string;
+  industry: string;
+  role: string;
+  primaryNeed: string;
+  message: string;
 }
 
 const initialState: FormState = {
@@ -30,10 +34,13 @@ const initialState: FormState = {
   companySize: "",
   phone: "",
   country: "",
-  goal: "",
+  industry: "",
+  role: "",
+  primaryNeed: "",
+  message: "",
 };
 
-/** SRS Section 18.2: Book a Demo form — full field set, soft work-email warning, honeypot. */
+/** Knowledge Center / Corporate Website SRS §36: Book a Demo form — Name, Company, Work Email, Phone, Company Size, Industry, Role, Primary Need, Message. Soft work-email warning, honeypot. */
 export function DemoForm() {
   const t = useTranslations("demo.form");
   const localizedCompanySizeOptions = companySizeOptions.map((option) => ({
@@ -44,11 +51,24 @@ export function DemoForm() {
     ...option,
     label: t(`countryOptions.${option.value}` as Parameters<typeof t>[0]),
   }));
+  const localizedIndustryOptions = industryOptions.map((option) => ({
+    ...option,
+    label: t(`industryOptions.${option.value}` as Parameters<typeof t>[0]),
+  }));
+  const localizedRoleOptions = roleOptions.map((option) => ({
+    ...option,
+    label: t(`roleOptions.${option.value}` as Parameters<typeof t>[0]),
+  }));
+  const localizedPrimaryNeedOptions = primaryNeedOptions.map((option) => ({
+    ...option,
+    label: t(`primaryNeedOptions.${option.value}` as Parameters<typeof t>[0]),
+  }));
   const [form, setForm] = useState<FormState>(initialState);
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const utmParams = useUtmParams();
 
   function update<K extends keyof FormState>(key: K, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -66,6 +86,7 @@ export function DemoForm() {
     if (!isNonEmpty(form.companySize)) next.companySize = t("errors.companySizeRequired");
     if (!isNonEmpty(form.country)) next.country = t("errors.countryRequired");
     if (!isValidPhone(form.phone)) next.phone = t("errors.phoneInvalid");
+    if (!isNonEmpty(form.industry)) next.industry = t("errors.industryRequired");
     return next;
   }
 
@@ -80,7 +101,7 @@ export function DemoForm() {
       const response = await fetch("/api/demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_website: honeypot }),
+        body: JSON.stringify({ ...form, company_website: honeypot, ...utmParams }),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -173,12 +194,35 @@ export function DemoForm() {
         error={errors.country}
         required
       />
+      <SelectField
+        label={t("industry")}
+        name="industry"
+        value={form.industry}
+        onChange={(v) => update("industry", v)}
+        options={localizedIndustryOptions}
+        error={errors.industry}
+        required
+      />
+      <SelectField
+        label={t("role")}
+        name="role"
+        value={form.role}
+        onChange={(v) => update("role", v)}
+        options={localizedRoleOptions}
+      />
+      <SelectField
+        label={t("primaryNeed")}
+        name="primaryNeed"
+        value={form.primaryNeed}
+        onChange={(v) => update("primaryNeed", v)}
+        options={localizedPrimaryNeedOptions}
+      />
       <TextareaField
-        label={t("goal")}
-        name="goal"
-        value={form.goal}
-        onChange={(v) => update("goal", v)}
-        placeholder={t("goalPlaceholder")}
+        label={t("message")}
+        name="message"
+        value={form.message}
+        onChange={(v) => update("message", v)}
+        placeholder={t("messagePlaceholder")}
       />
 
       {status === "error" ? (

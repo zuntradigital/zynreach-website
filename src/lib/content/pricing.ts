@@ -51,7 +51,7 @@ export const pricingPlans: PricingPlan[] = [
     priceSuffix: "custom quote",
     featureList: [
       "Everything in Growth",
-      "SSO / SAML & advanced permissions",
+      "Two-factor authentication (TOTP) & advanced access controls",
       "Audit logs & data residency controls",
       "Dedicated CSM & onboarding",
       "Custom SLA",
@@ -69,7 +69,7 @@ export const comparisonMatrix: ComparisonRow[] = [
   { category: "Marketing", feature: "AI lead scoring", values: [false, true, true] },
   { category: "AI", feature: "AI Assistants", values: [false, true, true] },
   { category: "AI", feature: "Custom AI grounding", values: [false, false, true] },
-  { category: "Security", feature: "SSO / SAML", values: [false, false, true] },
+  { category: "Security", feature: "Advanced access controls (RBAC/ABAC)", values: [false, false, true] },
   { category: "Security", feature: "Audit logs", values: [false, false, true] },
   { category: "Support", feature: "Support level", values: ["Community", "Priority", "Dedicated CSM"] },
 ];

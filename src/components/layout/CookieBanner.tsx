@@ -18,7 +18,12 @@ function hasStoredConsent() {
   return window.localStorage.getItem(CONSENT_STORAGE_KEY) !== null;
 }
 
-export function CookieBanner() {
+interface CookieBannerProps {
+  /** Dashboard-managed override (SRS §22 consent.analyticsDefault) for the customize panel's initial toggle state. */
+  defaultAnalyticsEnabled?: boolean;
+}
+
+export function CookieBanner({ defaultAnalyticsEnabled = true }: CookieBannerProps) {
   const t = useTranslations("common.cookieBanner");
   const hasConsent = useSyncExternalStore(
     subscribeToStorage,
@@ -27,7 +32,7 @@ export function CookieBanner() {
   );
   const [dismissed, setDismissed] = useState(false);
   const [customizing, setCustomizing] = useState(false);
-  const [analyticsEnabled, setAnalyticsEnabled] = useState(true);
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(defaultAnalyticsEnabled);
   const bannerRef = useRef<HTMLDivElement>(null);
   const visible = !hasConsent && !dismissed;
 

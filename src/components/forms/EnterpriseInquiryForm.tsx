@@ -11,6 +11,7 @@ import { companySizeOptions, countryOptions } from "@/lib/content/form-options";
 import { isNonEmpty, isValidEmail } from "@/lib/validation";
 import { Button } from "@/components/ui/Button";
 import { captureFormOutcome } from "@/lib/monitoring";
+import { useUtmParams } from "@/lib/hooks/useUtmParams";
 
 interface FormState {
   fullName: string;
@@ -47,6 +48,7 @@ export function EnterpriseInquiryForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const utmParams = useUtmParams();
 
   function update<K extends keyof FormState>(key: K, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -73,7 +75,7 @@ export function EnterpriseInquiryForm() {
       const response = await fetch("/api/enterprise-inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_website: honeypot }),
+        body: JSON.stringify({ ...form, company_website: honeypot, ...utmParams }),
       });
       const data = await response.json();
       if (!response.ok) {

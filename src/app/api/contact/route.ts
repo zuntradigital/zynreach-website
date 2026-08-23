@@ -9,14 +9,25 @@ interface ContactRequestBody {
   reason?: string;
   message?: string;
   company_website?: string; // honeypot
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_medium?: string;
+  utm_term?: string;
+  utm_content?: string;
+  landing_page?: string;
+  referrer?: string;
+  device?: string;
 }
 
+// "other" used to fall into the same "support" segment as a real support
+// request, merging two different internal queues into one — it now gets
+// its own segment so a general inquiry doesn't land in the support queue.
 const REASON_TO_SEGMENT: Record<string, LeadSegment> = {
   sales: "self-serve",
   support: "support",
   partnerships: "partnerships",
   press: "press",
-  other: "support",
+  other: "other",
 };
 
 /** SRS Section 7.15: Contact form — "Reason for contact" routes to the correct internal queue. */
@@ -51,12 +62,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ errors }, { status: 400 });
   }
 
-  const segment = REASON_TO_SEGMENT[reason] ?? "support";
+  const segment = REASON_TO_SEGMENT[reason] ?? "other";
 
   const result = await routeLead({
     formId: "contact",
     segment,
     fields: { name, email, reason, message },
+    utmSource: body.utm_source,
+    utmCampaign: body.utm_campaign,
+    utmMedium: body.utm_medium,
+    utmTerm: body.utm_term,
+    utmContent: body.utm_content,
+    landingPage: body.landing_page,
+    referrer: body.referrer,
+    device: body.device,
   });
 
   return NextResponse.json(result, { status: 200 });

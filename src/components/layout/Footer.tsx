@@ -1,36 +1,68 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { LinkedInIcon, XIcon, YouTubeIcon, WhatsAppIcon } from "@/components/icons/SocialIcons";
 import { footerNav } from "@/lib/content/nav";
 import { hrefToLinkKey, headingToKey } from "@/lib/nav-i18n";
 import { site } from "@/lib/content/site";
+import { getSiteSettings } from "@/lib/services/site-settings";
 import { Logo } from "./Logo";
 import { FooterAccordionGroup } from "./FooterAccordionGroup";
 
-const linkColumns = [
-  { heading: "Company", links: footerNav.Company },
-  { heading: "Solutions", links: footerNav.Solutions },
-  { heading: "Resources", links: footerNav.Resources },
+const ALL_LINK_COLUMNS = [
+  { heading: "Company", links: footerNav.Company, settingsKey: "showCompanyColumn" as const },
+  { heading: "Solutions", links: footerNav.Solutions, settingsKey: "showSolutionsColumn" as const },
+  { heading: "Knowledge Center", links: footerNav["Knowledge Center"], settingsKey: "showResourcesColumn" as const },
 ];
 
 /** Secondary link groups kept accessible but visually minimal (bottom bar), not part of the reference's 5-column layout. Desktop/tablet only — see FooterAccordionGroup for the mobile equivalent. */
-const secondaryGroups = [
-  { heading: "Platform", links: footerNav.Platform },
-  { heading: "Industries", links: footerNav.Industries },
-  { heading: "Legal", links: footerNav.Legal },
+const ALL_SECONDARY_GROUPS = [
+  { heading: "Product", links: footerNav.Platform, settingsKey: "showPlatformColumn" as const },
+  { heading: "Industries", links: footerNav.Industries, settingsKey: "showIndustriesColumn" as const },
+  { heading: "Legal", links: footerNav.Legal, settingsKey: "showLegalColumn" as const },
 ];
 
-/** All six nav groups, unified for the mobile accordion — the desktop split between the primary grid and the secondary bar is a visual-density choice that doesn't apply once everything collapses to headers. */
-const allGroups = [...linkColumns, ...secondaryGroups];
+type FooterVisibility = Partial<Record<(typeof ALL_LINK_COLUMNS)[number]["settingsKey"] | (typeof ALL_SECONDARY_GROUPS)[number]["settingsKey"], boolean>>;
 
-export function Footer() {
-  const t = useTranslations("common");
-  const tContact = useTranslations("contact");
+/** Dashboard-managed column toggles (SRS §22 Footer Settings) — these
+ * fields have existed in Site Settings/the public settings payload since
+ * that module was built, but nothing on the website ever read them until
+ * now. Undefined/missing (not yet touched by an admin) defaults to
+ * visible, so behavior is unchanged until someone actively unchecks a
+ * column in the Dashboard. */
+function visibleGroups<T extends { settingsKey: keyof FooterVisibility }>(groups: T[], visibility: FooterVisibility): T[] {
+  return groups.filter((group) => visibility[group.settingsKey] !== false);
+}
+
+export async function Footer() {
+  const t = await getTranslations("common");
+  const tContact = await getTranslations("contact");
   const headingLabel = (heading: string) => {
     const key = headingToKey[heading];
     return key.startsWith("nav.") ? t(key) : t(`megaMenu.${key}`);
   };
+
+  // Dashboard-managed values (SRS §22 Contact Information / Social Links)
+  // override the hardcoded defaults when set, so a Settings change is
+  // actually reflected here — not just saved and displayed back in the
+  // Dashboard. Falls back to the existing hardcoded `site` values when
+  // System B isn't reachable or a field was never filled in, exactly like
+  // every other direct-save read path in this app degrades. WhatsApp,
+  // the maps link, and the printable address string have no equivalent
+  // field in the admin's Settings module yet, so those stay hardcoded.
+  const remote = await getSiteSettings();
+  const { email: fallbackEmail, phone: fallbackPhone } = site.contact;
+  const { linkedin: fallbackLinkedin, x: fallbackX, youtube: fallbackYoutube } = site.social;
+  const email = remote?.settings.contact.supportEmail || fallbackEmail;
+  const phone = remote?.settings.contact.phone || fallbackPhone;
+  const linkedin = remote?.settings.social.linkedinUrl || fallbackLinkedin;
+  const x = remote?.settings.social.twitterUrl || fallbackX;
+  const youtube = remote?.settings.social.youtubeUrl || fallbackYoutube;
+
+  const footerVisibility = (remote?.settings.footer ?? {}) as FooterVisibility;
+  const linkColumns = visibleGroups(ALL_LINK_COLUMNS, footerVisibility);
+  const secondaryGroups = visibleGroups(ALL_SECONDARY_GROUPS, footerVisibility);
+  const allGroups = [...linkColumns, ...secondaryGroups];
 
   return (
     <footer className="bg-footer text-neutral-300 dark:text-white/70">
@@ -56,21 +88,21 @@ export function Footer() {
           <p className="mt-3 max-w-xs text-sm leading-normal text-neutral-400 dark:text-white/55">{t("footer.poweredBy")}</p>
           <div className="mt-5 flex items-center gap-3">
             <a
-              href={site.social.linkedin}
+              href={linkedin}
               aria-label={t("footer.linkedin", { name: site.name })}
               className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
             >
               <LinkedInIcon className="h-5 w-5" aria-hidden="true" />
             </a>
             <a
-              href={site.social.x}
+              href={x}
               aria-label={t("footer.x", { name: site.name })}
               className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
             >
               <XIcon className="h-5 w-5" aria-hidden="true" />
             </a>
             <a
-              href={site.social.youtube}
+              href={youtube}
               aria-label={t("footer.youtube", { name: site.name })}
               className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
             >
@@ -96,12 +128,12 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-400" strokeWidth={1.75} />
                 <a
-                  href={`mailto:${site.contact.email}`}
-                  aria-label={t("footer.emailAria", { name: site.name, email: site.contact.email })}
+                  href={`mailto:${email}`}
+                  aria-label={t("footer.emailAria", { name: site.name, email: email })}
                   dir="ltr"
                   className="hover:text-white"
                 >
-                  {site.contact.email}
+                  {email}
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -120,12 +152,12 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-400" strokeWidth={1.75} />
                 <a
-                  href={`tel:${site.contact.phone.replace(/[^+\d]/g, "")}`}
-                  aria-label={t("footer.callAria", { name: site.name, number: site.contact.phone })}
+                  href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                  aria-label={t("footer.callAria", { name: site.name, number: phone })}
                   dir="ltr"
                   className="hover:text-white"
                 >
-                  {site.contact.phone}
+                  {phone}
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -151,21 +183,21 @@ export function Footer() {
             <p className="mt-3 max-w-xs text-sm leading-normal text-neutral-400 dark:text-white/55">{t("footer.poweredBy")}</p>
             <div className="mt-5 flex items-center gap-3">
               <a
-                href={site.social.linkedin}
+                href={linkedin}
                 aria-label={t("footer.linkedin", { name: site.name })}
                 className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
               >
                 <LinkedInIcon className="h-5 w-5" aria-hidden="true" />
               </a>
               <a
-                href={site.social.x}
+                href={x}
                 aria-label={t("footer.x", { name: site.name })}
                 className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
               >
                 <XIcon className="h-5 w-5" aria-hidden="true" />
               </a>
               <a
-                href={site.social.youtube}
+                href={youtube}
                 aria-label={t("footer.youtube", { name: site.name })}
                 className="text-neutral-400 hover:text-primary-400 dark:text-white/55 dark:hover:text-primary-600"
               >
@@ -199,12 +231,12 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-400" strokeWidth={1.75} />
                 <a
-                  href={`mailto:${site.contact.email}`}
-                  aria-label={t("footer.emailAria", { name: site.name, email: site.contact.email })}
+                  href={`mailto:${email}`}
+                  aria-label={t("footer.emailAria", { name: site.name, email: email })}
                   dir="ltr"
                   className="hover:text-white"
                 >
-                  {site.contact.email}
+                  {email}
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -223,12 +255,12 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-400" strokeWidth={1.75} />
                 <a
-                  href={`tel:${site.contact.phone.replace(/[^+\d]/g, "")}`}
-                  aria-label={t("footer.callAria", { name: site.name, number: site.contact.phone })}
+                  href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                  aria-label={t("footer.callAria", { name: site.name, number: phone })}
                   dir="ltr"
                   className="hover:text-white"
                 >
-                  {site.contact.phone}
+                  {phone}
                 </a>
               </li>
               <li className="flex items-start gap-2">

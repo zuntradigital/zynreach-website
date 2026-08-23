@@ -11,6 +11,14 @@ interface EnterpriseInquiryBody {
   country?: string;
   message?: string;
   company_website?: string; // honeypot
+  utm_source?: string;
+  utm_campaign?: string;
+  utm_medium?: string;
+  utm_term?: string;
+  utm_content?: string;
+  landing_page?: string;
+  referrer?: string;
+  device?: string;
 }
 
 /**
@@ -55,6 +63,14 @@ export async function POST(request: Request) {
     formId: "enterprise-inquiry",
     segment: "enterprise",
     fields: { fullName, workEmail, companyName, companySize, country, message: body.message?.trim() ?? "" },
+    utmSource: body.utm_source,
+    utmCampaign: body.utm_campaign,
+    utmMedium: body.utm_medium,
+    utmTerm: body.utm_term,
+    utmContent: body.utm_content,
+    landingPage: body.landing_page,
+    referrer: body.referrer,
+    device: body.device,
   });
 
   return NextResponse.json(result, { status: 200 });

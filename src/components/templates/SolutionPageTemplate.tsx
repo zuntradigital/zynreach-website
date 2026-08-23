@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { PageHero } from "@/components/sections/PageHero";
 import { BeforeAfter } from "@/components/sections/BeforeAfter";
 import { CapabilityCallouts } from "@/components/sections/CapabilityCallouts";
+import { HowItWorks } from "@/components/sections/HowItWorks";
 import { RelatedIntegrations } from "@/components/sections/RelatedIntegrations";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Button } from "@/components/ui/Button";
@@ -55,6 +56,7 @@ export function SolutionPageTemplate({ content, ctaAudienceLabel }: SolutionPage
         />
         <BeforeAfter before={content.before} after={content.after} />
         <CapabilityCallouts items={content.capabilityCallouts} />
+        <HowItWorks items={content.howItWorks} />
         <RelatedIntegrations categories={content.relatedIntegrations} />
 
         <section className="border-y border-neutral-200 bg-white dark:bg-neutral-100 py-14">

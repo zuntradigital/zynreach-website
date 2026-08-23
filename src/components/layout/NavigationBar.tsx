@@ -14,6 +14,7 @@ import { MegaMenuPanel } from "./MegaMenuPanel";
 import { MobileMenu } from "./MobileMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
+import { useVisiblePrimaryNav } from "./NavVisibilityProvider";
 
 const HOVER_INTENT_DELAY = 150;
 // Long enough to survive a diagonal mouse move through the gap between the
@@ -38,6 +39,7 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const pathname = usePathname();
+  const visiblePrimaryNav = useVisiblePrimaryNav(primaryNav);
 
   useEffect(() => {
     if (!transparentOnHero) return;
@@ -125,7 +127,7 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
         <Logo variant={isTransparent ? "light" : "dark"} animated />
 
         <ul className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          {primaryNav.map((item) => {
+          {visiblePrimaryNav.map((item) => {
             if (item.type === "link") {
               const active = isActive(item.href);
               return (
@@ -212,8 +214,10 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
           </button>
           <Link
             href={site.loginUrl}
-            className={`px-3 py-2 text-sm font-semibold transition-colors duration-200 ${
-              isTransparent ? "text-white/90 hover:text-primary-300" : "text-neutral-700 hover:text-primary-600"
+            className={`rounded-md border px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
+              isTransparent
+                ? "border-white/30 text-white/90 hover:border-white/60 hover:bg-white/10 hover:text-white"
+                : "border-neutral-300 text-neutral-700 hover:border-primary-300 hover:bg-primary-50 hover:text-primary-600"
             }`}
           >
             {t("nav.login")}

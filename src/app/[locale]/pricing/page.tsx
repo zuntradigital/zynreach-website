@@ -98,6 +98,7 @@ export default async function PricingPage({
       });
 
   const faqs = t.raw("faqs") as FaqItem[];
+  const framingLayers = t.raw("framing.layers") as { label: string; description: string }[];
 
   const breadcrumbs = await breadcrumbJsonLd(locale, [
     { label: "Home", href: "/" },
@@ -136,6 +137,21 @@ export default async function PricingPage({
         <section className="bg-white dark:bg-neutral-100 py-12 sm:py-16 lg:py-20">
           <div className="container-content">
             <PricingSection plans={plans} />
+          </div>
+        </section>
+
+        <section className="bg-white dark:bg-neutral-100 py-12 sm:py-16 lg:py-20">
+          <div className="container-content">
+            <SectionHeading eyebrow={t("framing.eyebrow")} headline={t("framing.headline")} align="center" className="mx-auto" />
+            <ol className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-6 sm:mt-10 sm:grid-cols-2 lg:grid-cols-5">
+              {framingLayers.map((layer, index) => (
+                <li key={layer.label} className="rounded-xl border border-neutral-200 p-5">
+                  <span className="text-xs font-semibold text-primary-600">{index + 1}</span>
+                  <p className="mt-1 text-sm font-semibold text-neutral-900">{layer.label}</p>
+                  <p className="mt-1.5 text-sm text-neutral-600">{layer.description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 

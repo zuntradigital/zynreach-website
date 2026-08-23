@@ -141,6 +141,7 @@ export interface SolutionPageContent {
   before: { label: string; body: string };
   after: { label: string; body: string };
   capabilityCallouts: { label: string; href: string; description: string }[];
+  howItWorks: { headline: string; description: string }[];
   storyNote: string;
   relatedIntegrations: string[];
 }
@@ -176,11 +177,24 @@ export interface LegalPageContent {
   sections: { id: string; heading: string; body: string[] }[];
 }
 
+/**
+ * A single inline run of text within a block, carrying character-level
+ * formatting (bold/italic/link) — the CMS Blog editor's Tiptap toolbar
+ * produces these; hand-authored/hardcoded content never does.
+ */
+export interface InlineSpan {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  href?: string;
+}
+
 export type ArticleBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; id: string; text: string }
-  | { type: "quote"; text: string }
-  | { type: "list"; items: string[] }
+  | { type: "paragraph"; text: string; content?: InlineSpan[] }
+  | { type: "heading"; id: string; text: string; level?: 1 | 2 | 3; content?: InlineSpan[] }
+  | { type: "quote"; text: string; content?: InlineSpan[] }
+  | { type: "list"; items: string[]; ordered?: boolean; itemsContent?: InlineSpan[][] }
+  | { type: "image"; url: string; alt: string }
   | { type: "code"; code: string; language?: string };
 
 export interface BlogAuthor {
@@ -203,6 +217,14 @@ export interface BlogPost {
   body: ArticleBlock[];
   relatedSlugs: string[];
   featured?: boolean;
+  /** Cover image — absent for hardcoded/fallback posts and any live post that hasn't set one yet. */
+  image?: string;
+  imageAlt?: string;
+  /** SEO overrides (SRS §19/§28.2 SEORecord) — absent falls back to title/excerpt/site defaults. */
+  seoTitle?: string;
+  seoDescription?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
 }
 
 /** Customer story content model (SRS Section 7.18). */
@@ -247,7 +269,14 @@ export interface Guide {
   slug: string;
   title: string;
   description: string;
-  format: "Guide" | "Template" | "Whitepaper";
+  format: "Guide" | "Template" | "Whitepaper" | "Checklist" | "Playbook";
+  gated?: boolean;
+  downloadUrl?: string;
+  /** Knowledge Center §7 Content Page fields. */
+  category?: string;
+  targetAudience?: string;
+  difficultyLevel?: "Beginner" | "Intermediate" | "Advanced";
+  relatedSlugs?: string[];
 }
 
 export interface Webinar {
@@ -257,6 +286,9 @@ export interface Webinar {
   date: string;
   speaker: string;
   gated: boolean;
+  featured?: boolean;
+  isOnDemand?: boolean;
+  category?: string;
 }
 
 export interface Integration {

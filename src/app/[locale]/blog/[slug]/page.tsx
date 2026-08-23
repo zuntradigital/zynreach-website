@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Clock } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { NavigationBar } from "@/components/layout/NavigationBar";
 import { MobileStickyCta } from "@/components/layout/MobileStickyCta";
 import { Footer } from "@/components/layout/Footer";
@@ -39,16 +41,20 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   if (live === "not-found") return {};
   if (live) {
     const url = `/blog/${live.post.slug}`;
+    const title = live.post.seoTitle ?? live.post.title;
+    const description = live.post.seoDescription ?? live.post.excerpt;
     return {
-      title: live.post.title,
-      description: live.post.excerpt,
-      alternates: localizedAlternates(locale, url),
+      title,
+      description,
+      alternates: { ...localizedAlternates(locale, url), ...(live.post.canonicalUrl ? { canonical: live.post.canonicalUrl } : {}) },
+      ...(live.post.noIndex ? { robots: { index: false, follow: true } } : {}),
       openGraph: {
         ...openGraphDefaults(locale, "article"),
-        title: live.post.title,
-        description: live.post.excerpt,
+        title,
+        description,
         url: localizedUrl(locale, url),
         publishedTime: live.post.publishedDate,
+        ...(live.post.image ? { images: [{ url: live.post.image }] } : {}),
       },
     };
   }
@@ -74,7 +80,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
-function toCardData(post: { slug: string; title: string; excerpt: string; category: string; authorName: string | null; body: ArticleBlock[] }, minReadLabel: (n: number) => string): BlogCardData {
+function toCardData(
+  post: { slug: string; title: string; excerpt: string; category: string; authorName: string | null; body: ArticleBlock[]; image?: string; imageAlt?: string },
+  minReadLabel: (n: number) => string
+): BlogCardData {
   const readingTimeMinutes = getReadingTimeMinutes({ body: post.body } as HardcodedBlogPost);
   return {
     slug: post.slug,
@@ -84,6 +93,8 @@ function toCardData(post: { slug: string; title: string; excerpt: string; catego
     authorName: post.authorName,
     readingTimeMinutes,
     minReadLabel: minReadLabel(readingTimeMinutes),
+    imageUrl: post.image,
+    imageAlt: post.imageAlt,
   };
 }
 
@@ -93,19 +104,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const tPage = await getTranslations("blogPage");
   const tLinks = await getTranslations("common.links");
+  const tCta = await getTranslations("common.cta");
   const minReadLabel = (n: number) => tPage("minRead", { count: n });
 
   const live = await getPublishedBlogPost(slug, locale);
   if (live === "not-found") notFound();
 
-  let post: { slug: string; title: string; excerpt: string; category: string; publishedDate: string; updatedDate?: string; body: ArticleBlock[] };
+  let post: {
+    slug: string;
+    title: string;
+    excerpt: string;
+    category: string;
+    publishedDate: string;
+    updatedDate?: string;
+    tags: string[];
+    body: ArticleBlock[];
+    image?: string;
+    imageAlt?: string;
+  };
   let author: { id: string; name: string; role: string; bio: string } | undefined;
   let relatedCards: BlogCardData[];
 
   if (live) {
     post = live.post;
     author = live.author ?? undefined;
-    relatedCards = live.relatedPosts.map((r) => toCardData({ slug: r.slug, title: r.title, excerpt: r.excerpt, category: r.category, authorName: null, body: r.body }, minReadLabel));
+    relatedCards = live.relatedPosts.map((r) =>
+      toCardData({ slug: r.slug, title: r.title, excerpt: r.excerpt, category: r.category, authorName: null, body: r.body, image: r.image, imageAlt: r.imageAlt }, minReadLabel)
+    );
   } else {
     const raw = getBlogPost(slug);
     if (!raw) notFound();
@@ -118,6 +143,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       category: tPage(`categories.${raw.category}` as Parameters<typeof tPage>[0]),
       publishedDate: raw.publishedDate,
       updatedDate: raw.updatedDate,
+      tags: raw.tags,
       body: t.raw("body") as ArticleBlock[],
     };
     const rawAuthor = getAuthor(raw.authorId);
@@ -174,10 +200,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           />
           <span className="mt-6 inline-block w-fit rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">{post.category}</span>
           <h1 className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">{post.title}</h1>
-          <div className="mt-4 flex items-center gap-3 text-sm text-neutral-500">
+          <p className="mt-3 max-w-2xl text-lg text-neutral-600">{post.excerpt}</p>
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-500">
             <span>{author?.name}</span>
             <span aria-hidden="true">·</span>
             <time dateTime={post.publishedDate}>{post.publishedDate}</time>
+            {post.updatedDate && post.updatedDate !== post.publishedDate ? (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>{tPage("lastUpdated", { date: post.updatedDate })}</span>
+              </>
+            ) : null}
             <span aria-hidden="true">·</span>
             <span className="flex items-center gap-1">
               <Clock aria-hidden="true" className="h-3.5 w-3.5" />
@@ -185,9 +218,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </span>
           </div>
 
+          {post.tags.length > 0 ? (
+            <ul className="mt-3 flex flex-wrap gap-2" aria-label={tPage("tagsLabel")}>
+              {post.tags.map((tag) => (
+                <li key={tag} className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
           <div className="mt-4">
             <ShareButtons url={url} title={post.title} />
           </div>
+
+          {post.image ? (
+            <div className="relative mt-8 aspect-[16/9] w-full max-w-3xl overflow-hidden rounded-2xl">
+              <Image src={post.image} alt={post.imageAlt ?? ""} fill sizes="(min-width: 1024px) 48rem, 100vw" className="object-cover" priority />
+            </div>
+          ) : null}
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_260px]">
             <ArticleBody blocks={post.body} />
@@ -197,6 +246,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {author ? <AuthorBioCard author={author} /> : null}
             </aside>
           </div>
+
+          <section className="mt-16 rounded-xl bg-footer px-8 py-10 sm:px-10">
+            <h2 className="max-w-xl text-2xl font-bold text-white">{tPage("productCtaHeadline")}</h2>
+            <p className="mt-2 max-w-lg text-neutral-400 dark:text-white/60">{tPage("productCtaBody")}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/demo"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary-600 px-5 text-sm font-semibold text-white hover:bg-primary-700"
+              >
+                {tCta("bookDemo")}
+              </Link>
+              <Link
+                href="/trial"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/30 px-5 text-sm font-semibold text-white hover:bg-white/10"
+              >
+                {tCta("startFreeTrial")}
+              </Link>
+            </div>
+          </section>
 
           {relatedCards.length > 0 ? (
             <section className="mt-16 border-t border-neutral-200 pt-12">
