@@ -7,9 +7,9 @@ module.exports = {
   ci: {
     collect: {
       startServerCommand: "npm run start",
-      startServerReadyPattern: "Ready in",
+      startServerReadyPattern: "Ready",
       startServerReadyTimeout: 60000,
-      url: ["http://localhost:3000/", "http://localhost:3000/pricing", "http://localhost:3000/blog"],
+      url: ["http://localhost:3000/en", "http://localhost:3000/en/pricing", "http://localhost:3000/en/blog"],
       numberOfRuns: 1,
       settings: {
         preset: "desktop",
