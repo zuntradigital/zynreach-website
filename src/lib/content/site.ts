@@ -1,6 +1,10 @@
 export const site = {
   name: "ZynReach",
   tagline: "AI-Powered Enterprise Growth & Operations Platform",
+  // This is the main domain. The ZynReach Admin/CMS Dashboard (System B,
+  // the separate zynreach-admin app) is deployed on a subdomain of this
+  // same domain (admin.zynreach.com), not on a domain of its own — see
+  // ZYNREACH_ADMIN_API_URL in .env.example.
   url: "https://www.zynreach.com",
   appUrl: "https://app.zynreach.com",
   loginUrl: "https://app.zynreach.com/login",

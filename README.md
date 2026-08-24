@@ -39,7 +39,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Copy `.env.example` to `.env.local` before running anything that touches an external integration. The app runs correctly with everything unset — every integration has a documented fallback — but real behavior (analytics, live System B content, etc.) requires the corresponding variable. **Never commit `.env.local`** or any file containing real values; only `.env.example` (placeholders only) should be tracked.
+Copy `.env.example` to `.env` before running anything that touches an external integration. The app runs correctly with everything unset — every integration has a documented fallback — but real behavior (analytics, live System B content, etc.) requires the corresponding variable. **Never commit `.env`** or any file containing real values; only `.env.example` (placeholders only) should be tracked.
 
 Key variables (see `.env.example` for the full list and context):
 - `NEXT_PUBLIC_GTM_ID` — Google Tag Manager container (analytics)
