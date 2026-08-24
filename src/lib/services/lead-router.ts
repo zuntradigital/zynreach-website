@@ -81,6 +81,10 @@ export async function routeLead(payload: LeadPayload): Promise<LeadRouteResult> 
             ...(payload.device ? { device: payload.device } : {}),
           },
         }),
+        // Fail fast rather than hanging the request if System B is
+        // unreachable — the catch block below already falls back to the
+        // dev-safe console sink.
+        signal: AbortSignal.timeout(5000),
       });
 
       if (res.ok) {

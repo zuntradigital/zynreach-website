@@ -45,6 +45,7 @@ export async function getPublishedCustomerStories(locale: string): Promise<LiveC
       // A content edit in the Dashboard must be visible immediately — see
       // the customer-stories pages' own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {
@@ -74,6 +75,7 @@ export async function getPublishedCustomerStory(locale: string, slug: string): P
     const res = await fetch(`${baseUrl}/api/public/customer-stories/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`, {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (res.status === 404) {

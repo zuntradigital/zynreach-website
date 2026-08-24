@@ -37,6 +37,10 @@ export async function getPublishedBlog(locale: string): Promise<BlogListContent 
       // take effect on the very next request, not after up to 60s of ISR
       // staleness — see the blog pages' own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      // Fail fast rather than hanging the request if System B is
+      // unreachable (e.g. DNS/network stall) — the catch block below
+      // already treats any rejection as a graceful degrade-to-null.
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {
@@ -75,6 +79,7 @@ export async function getPublishedBlogPost(slug: string, locale: string): Promis
     const res = await fetch(`${baseUrl}/api/public/blog/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`, {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

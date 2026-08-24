@@ -28,6 +28,7 @@ export async function getPublishedResources(locale: string): Promise<ResourcesCo
       // A content edit in the Dashboard must be visible immediately —
       // staleness — see the resources pages' own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

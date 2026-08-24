@@ -34,6 +34,7 @@ export async function getPublishedPricing(locale: string): Promise<PricingConten
       // must be visible on the next request, not after up to 60s of ISR
       // staleness — see the pricing page's own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

@@ -29,6 +29,7 @@ export async function getPublishedFaqs(locale: string): Promise<LiveFaqItem[] | 
       // A content edit in the Dashboard must be visible immediately, same
       // reasoning as customer-stories-content.ts's own revalidate: 0.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

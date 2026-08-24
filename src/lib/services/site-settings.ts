@@ -142,6 +142,7 @@ export async function getSiteSettings(): Promise<SiteSettingsPayload | null> {
       // without that blast radius; Settings values change far less often
       // than content does.
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

@@ -27,6 +27,10 @@ export async function getRedirects(): Promise<WebsiteRedirect[] | null> {
     const res = await fetch(`${baseUrl}/api/public/redirects`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
+      // Fail fast rather than hanging the request if System B is
+      // unreachable — this runs in proxy.ts on every request, so an
+      // unbounded fetch here would hang every page, not just one.
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

@@ -52,6 +52,10 @@ export async function submitCareerApplication(input: CareerApplicationInput): Pr
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
+        // Fail fast rather than hanging the request if System B is
+        // unreachable — the catch block below already falls back to the
+        // dev-safe console sink.
+        signal: AbortSignal.timeout(5000),
       });
 
       if (res.ok) {

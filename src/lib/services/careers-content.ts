@@ -30,6 +30,7 @@ export async function getPublishedCareers(locale: string): Promise<CareersConten
       // take effect on the very next request, not after up to 60s of ISR
       // staleness — see the careers pages' own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) {

@@ -45,6 +45,7 @@ export async function getPublishedWebinarDetail(locale: string, slug: string): P
       // A content edit in the Dashboard must be visible immediately — see
       // the webinar detail page's own `revalidate = 0` comment.
       next: { revalidate: 0 },
+      signal: AbortSignal.timeout(5000),
     });
 
     if (res.status === 404) {
