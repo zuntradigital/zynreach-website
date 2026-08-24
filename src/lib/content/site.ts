@@ -7,7 +7,10 @@ export const site = {
   // ZYNREACH_ADMIN_API_URL in .env.example.
   url: "https://www.zynreach.com",
   appUrl: "https://app.zynreach.com",
-  loginUrl: "https://app.zynreach.com/login",
+  // Points at System B (zynreach-admin)'s own login page, not appUrl —
+  // "Login" in the site nav is for staff signing into the CMS/Admin
+  // Dashboard, which lives on this subdomain (see the comment above).
+  loginUrl: "https://admin.zynreach.com/login",
   trialUrl: "https://app.zynreach.com/signup",
   description:
     "Unify CRM, marketing, AI automation, operations, and business intelligence in one enterprise platform. See why growing teams switch to ZynReach.",
