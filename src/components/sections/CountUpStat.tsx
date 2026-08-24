@@ -89,7 +89,12 @@ export function CountUpStat({ value }: CountUpStatProps) {
   const display = prefersReducedMotion ? target : animatedValue;
 
   return (
-    <span aria-label={value}>
+    // role="text" (the standard pattern for "one accessible name over
+    // visually-fragmented content") is required here: a bare <span> has no
+    // ARIA role, and aria-label is not a permitted attribute on an
+    // element with no role — axe-core's aria-prohibited-attr rule flags
+    // that combination.
+    <span role="text" aria-label={value}>
       <span aria-hidden="true" ref={ref} className={hasFinished ? "count-up-pop" : undefined}>
         {display}
         {suffix}

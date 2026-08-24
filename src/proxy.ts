@@ -58,8 +58,32 @@ function localeFromPathname(pathname: string): Locale {
   return (routing.locales as readonly string[]).includes(first) ? (first as Locale) : routing.defaultLocale;
 }
 
+function hasLocalePrefix(pathname: string): boolean {
+  return (routing.locales as readonly string[]).includes(pathname.split("/")[1]);
+}
+
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // routing.ts's own comment: "Root `/` must always redirect to the
+  // default locale... this only governs the unprefixed-root case" — with
+  // localePrefix: "always", every real route lives under /en/... or
+  // /ar/..., so ANY unprefixed path (not just bare "/") has no matching
+  // route and 404s without this. This was previously unhandled entirely:
+  // no next-intl createMiddleware() is wired up anywhere in this app (this
+  // hand-rolled proxy replaces it for Maintenance Mode/Redirects), so
+  // routing.ts's `localeDetection: false` had no effect and the
+  // unprefixed-root case fell straight through to a hard 404 — which is
+  // also why Playwright's webServer health check (an HTTP GET to the bare
+  // origin) never saw a ready response: Playwright's `url` readiness probe
+  // only accepts 2xx/3xx/400-403 (see @playwright/test's own `url` option
+  // doc), and 404 isn't one of them, so it retried until it timed out.
+  if (!hasLocalePrefix(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${routing.defaultLocale}${pathname === "/" ? "" : pathname}`;
+    return NextResponse.redirect(url, 307);
+  }
+
   const locale = localeFromPathname(pathname);
 
   if (pathname === `/${locale}/maintenance`) {

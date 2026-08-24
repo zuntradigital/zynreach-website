@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Site search", () => {
   test("opens from the nav, returns results, and navigates on selection", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en");
     await page.getByRole("button", { name: "Search" }).click();
     const dialog = page.getByRole("dialog", { name: "Site search" });
     await expect(dialog).toBeVisible();
@@ -15,13 +15,13 @@ test.describe("Site search", () => {
   });
 
   test("shows a no-results state with suggestions for a nonsense query", async ({ page }) => {
-    await page.goto("/search?q=zzzznonexistentqueryzzzz");
+    await page.goto("/en/search?q=zzzznonexistentqueryzzzz");
     await expect(page.getByText(/No results for/)).toBeVisible();
-    await expect(page.getByRole("link", { name: "Platform" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Product" })).toBeVisible();
   });
 
   test("deep-linked query pre-fills and filters results", async ({ page }) => {
-    await page.goto("/search?q=CRM");
+    await page.goto("/en/search?q=CRM");
     await expect(page.getByRole("textbox")).toHaveValue("CRM");
     await expect(page.getByText(/result/)).toBeVisible();
   });

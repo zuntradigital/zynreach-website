@@ -38,6 +38,16 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
   const navRef = useRef<HTMLElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  // A native mouse click fires mousedown -> focus -> mouseup -> click, in
+  // that order — so by the time a trigger's onClick runs, its own focus
+  // event (handleFocus, below) has already unconditionally opened the
+  // menu, and `isOpen` in the click closure reflects that already-open
+  // state. Toggling off `isOpen` at that point closes the menu the same
+  // click just opened. Capturing the pre-interaction state on mousedown
+  // (which fires before focus) gives onClick the state as it stood
+  // *before* this click, so the toggle only closes an already-open menu
+  // when this trigger is clicked a second time, not the first.
+  const wasOpenOnMouseDown = useRef(false);
   const pathname = usePathname();
   const visiblePrimaryNav = useVisiblePrimaryNav(primaryNav);
 
@@ -178,7 +188,10 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
                   type="button"
                   aria-expanded={isOpen}
                   aria-controls={menuId}
-                  onClick={() => setOpenMenu(isOpen ? null : item.label)}
+                  onMouseDown={() => {
+                    wasOpenOnMouseDown.current = isOpen;
+                  }}
+                  onClick={() => setOpenMenu(wasOpenOnMouseDown.current ? null : item.label)}
                   className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold transition-colors duration-200 ${
                     isTransparent
                       ? "text-white/90 hover:text-primary-300"
