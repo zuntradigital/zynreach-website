@@ -14,6 +14,7 @@ import { MegaMenuPanel } from "./MegaMenuPanel";
 import { MobileMenu } from "./MobileMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
+import { NotificationBell } from "./NotificationBell";
 import { useVisiblePrimaryNav } from "./NavVisibilityProvider";
 
 const HOVER_INTENT_DELAY = 150;
@@ -215,6 +216,7 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageSwitcher variant={isTransparent ? "light" : "dark"} />
           <ThemeToggle variant={isTransparent ? "light" : "dark"} />
+          <NotificationBell variant={isTransparent ? "light" : "dark"} />
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
@@ -251,6 +253,7 @@ export function NavigationBar({ transparentOnHero = false }: NavigationBarProps)
           >
             <Search aria-hidden="true" className="h-5 w-5" strokeWidth={1.75} />
           </button>
+          <NotificationBell variant={isTransparent ? "light" : "dark"} />
           <button
             type="button"
             className={`inline-flex h-[2.75rem] w-[2.75rem] touch-manipulation items-center justify-center rounded-md ${

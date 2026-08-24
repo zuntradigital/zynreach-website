@@ -3873,6 +3873,50 @@
       "notVeteran": "لست من قدامى المحاربين"
     }
   },
+  "notificationsUnsubscribePage": {
+    "eyebrow": "الإشعارات",
+    "headline": "إلغاء الاشتراك",
+    "loading": "جارٍ إلغاء الاشتراك…",
+    "success": "تم إلغاء اشتراكك ولن تتلقى إشعارات بريدية أخرى.",
+    "error": "حدث خطأ ما. يرجى تجربة الرابط مرة أخرى.",
+    "missingToken": "رابط إلغاء الاشتراك هذا لا يحتوي على رمز صالح."
+  },
+  "notificationsCenter": {
+    "bellLabel": "الإشعارات",
+    "panelLabel": "لوحة الإشعارات",
+    "historyTitle": "آخر التحديثات",
+    "loading": "جارٍ التحميل…",
+    "empty": "لا توجد تحديثات بعد.",
+    "categoryBlog": "المدونة",
+    "categoryWebinars": "الندوات عبر الإنترنت",
+    "preferencesTitle": "أبلغني عن",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "you@company.com",
+    "subscribe": "اشتراك",
+    "saving": "جارٍ الحفظ…",
+    "saveError": "تعذّر الحفظ. تحقق من بريدك الإلكتروني وحاول مرة أخرى.",
+    "subscribedAs": "مشترك عبر {email}",
+    "unsubscribe": "إلغاء الاشتراك",
+    "pushLabel": "إشعارات الدفع"
+  },
+  "marketplacePage": {
+    "eyebrow": "متجر ZynReach",
+    "headline": "اعثر على الأدوات المناسبة لخطتك",
+    "subhead": "تصفّح جميع مجموعات وأدوات ZynReach، وصفِّها حسب ما تتضمنه خطتك، وابدأ خلال دقائق.",
+    "searchPlaceholder": "ابحث عن أداة",
+    "suiteFilterLabel": "تصفية حسب المجموعة",
+    "allSuites": "كل المجموعات",
+    "planFilterLabel": "إظهار الأدوات المتضمنة في",
+    "planStarter": "Starter",
+    "planGrowth": "Growth",
+    "planEnterprise": "Enterprise",
+    "planBadgePrefix": "متضمّن في",
+    "featuredBadge": "مميّز",
+    "installCta": "تثبيت",
+    "viewDetailsCta": "عرض التفاصيل",
+    "resultCount": "{count} أداة",
+    "emptyState": "لا توجد أدوات مطابقة لبحثك وتصفيتك."
+  },
   "faqPage": {
     "headline": "الأسئلة الشائعة",
     "subhead": "إجابات عن الأسئلة الشائعة حول المنتج والتسعير والأمان والدعم.",

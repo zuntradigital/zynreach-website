@@ -35,6 +35,13 @@ export const hrefToLinkKey: Record<string, string> = {
   "/platform/subscription-billing": "subscriptionBilling",
   "/platform/notifications": "notifications",
   "/platform/marketplace": "marketplace",
+  // The Product mega menu's "Marketplace" entry points to the working
+  // catalog at /marketplace (not the /platform/marketplace capability
+  // marketing page) — see nav.ts's own comment. Same translation key
+  // (the label text is identical either way), a second href entry
+  // because MegaMenuPanel/Footer/MobileMenu all look this map up by the
+  // exact href nav.ts gives them.
+  "/marketplace": "marketplace",
   "/platform/plugin-sdk": "pluginSdk",
   "/platform/organization-management": "organizationManagement",
   "/platform/branch-management": "branchManagement",

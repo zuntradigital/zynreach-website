@@ -67,7 +67,11 @@ export const primaryNav: NavItem[] = [
         heading: "Enterprise Platform",
         links: [
           { label: "Integrations", href: "/integrations" },
-          { label: "Marketplace", href: "/platform/marketplace" },
+          // Points at the working ZynReach Marketplace catalog
+          // (search/filter/plan entitlements), not the generic
+          // /platform/marketplace capability marketing page — see
+          // nav-i18n.ts's matching hrefToLinkKey entry.
+          { label: "Marketplace", href: "/marketplace" },
           { label: "Plugin SDK", href: "/platform/plugin-sdk" },
           { label: "Organization Management", href: "/platform/organization-management" },
           { label: "Branch Management", href: "/platform/branch-management" },

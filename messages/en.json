@@ -3873,6 +3873,50 @@
       "notVeteran": "I am not a veteran"
     }
   },
+  "notificationsUnsubscribePage": {
+    "eyebrow": "Notifications",
+    "headline": "Unsubscribe",
+    "loading": "Unsubscribing…",
+    "success": "You've been unsubscribed and won't receive further email notifications.",
+    "error": "Something went wrong. Please try the link again.",
+    "missingToken": "This unsubscribe link is missing its token."
+  },
+  "notificationsCenter": {
+    "bellLabel": "Notifications",
+    "panelLabel": "Notifications panel",
+    "historyTitle": "Recent updates",
+    "loading": "Loading…",
+    "empty": "No updates yet.",
+    "categoryBlog": "Blog",
+    "categoryWebinars": "Webinars",
+    "preferencesTitle": "Get notified about",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@company.com",
+    "subscribe": "Subscribe",
+    "saving": "Saving…",
+    "saveError": "Couldn't save. Check your email and try again.",
+    "subscribedAs": "Subscribed as {email}",
+    "unsubscribe": "Unsubscribe",
+    "pushLabel": "Push notifications"
+  },
+  "marketplacePage": {
+    "eyebrow": "ZynReach Marketplace",
+    "headline": "Find the right tools for your plan",
+    "subhead": "Browse every ZynReach suite and tool, filter by what your plan includes, and get started in minutes.",
+    "searchPlaceholder": "Search tools",
+    "suiteFilterLabel": "Filter by suite",
+    "allSuites": "All suites",
+    "planFilterLabel": "Show tools included in",
+    "planStarter": "Starter",
+    "planGrowth": "Growth",
+    "planEnterprise": "Enterprise",
+    "planBadgePrefix": "Included in",
+    "featuredBadge": "Featured",
+    "installCta": "Install",
+    "viewDetailsCta": "View details",
+    "resultCount": "{count} tools",
+    "emptyState": "No tools match your search and filters."
+  },
   "faqPage": {
     "headline": "Frequently asked questions",
     "subhead": "Answers to common questions about product, pricing, security, and support.",
