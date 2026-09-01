@@ -83,10 +83,7 @@ export const hrefToLinkKey: Record<string, string> = {
   "/security": "security",
   "/compliance": "compliance",
   "/partners": "partners",
-  "/legal/privacy": "privacyPolicy",
-  "/legal/terms": "termsOfService",
-  "/legal/cookies": "cookiePolicy",
-  "/legal/dpa": "dpa",
+  "/legal": "legalCenter",
 };
 
 export const topNavKey: Record<string, string> = {

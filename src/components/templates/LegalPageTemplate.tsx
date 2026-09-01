@@ -16,11 +16,12 @@ export async function LegalPageTemplate({ content }: LegalPageTemplateProps) {
 
   const title = t("title");
   const navLabel = t("navLabel");
-  const translatedSections = t.raw("sections") as { heading: string; body: string[] }[];
+  const translatedSections = t.raw("sections") as { heading: string; body: string[]; list?: string[] }[];
   const sections = content.sections.map((section, index) => ({
     ...section,
     heading: translatedSections[index].heading,
     body: translatedSections[index].body,
+    list: translatedSections[index].list,
   }));
 
   return (
@@ -64,6 +65,13 @@ export async function LegalPageTemplate({ content }: LegalPageTemplateProps) {
                         {paragraph}
                       </p>
                     ))}
+                    {section.list && section.list.length > 0 ? (
+                      <ul className="list-disc space-y-1.5 ps-5 text-sm leading-normal text-neutral-600">
+                        {section.list.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </div>
                 </section>
               ))}

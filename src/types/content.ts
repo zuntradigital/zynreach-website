@@ -174,7 +174,14 @@ export interface LegalPageContent {
   title: string;
   effectiveDate: string;
   version: string;
-  sections: { id: string; heading: string; body: string[] }[];
+  /**
+   * `list` is optional per section — most of the site's original 4 legal
+   * pages are flowing prose only; the Legal/Security Center policy set
+   * added later enumerates obligations clause-by-clause, so a bullet list
+   * renders under the section's prose when present rather than forcing
+   * every enumerated legal point into a single run-on paragraph.
+   */
+  sections: { id: string; heading: string; body: string[]; list?: string[] }[];
 }
 
 /**

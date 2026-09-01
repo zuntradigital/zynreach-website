@@ -22,7 +22,13 @@ export interface CareerApplicationInput {
   resume: File;
   eeo?: {
     gender?: string;
-    veteranStatus?: string;
+    // Sent under the historical "veteranStatus" wire name — the receiving
+    // Prisma column (CareerApplication.veteranStatus) is kept as-is to
+    // avoid a migration + existing-row backfill, matching this codebase's
+    // documented convention for CareerApplication.resumeUrl. The field is
+    // Egypt's Military Service status, not the US EEO veteran concept —
+    // see the website's militaryService options for the real values.
+    militaryService?: string;
   };
 }
 
@@ -45,7 +51,7 @@ export async function submitCareerApplication(input: CareerApplicationInput): Pr
       formData.set("email", input.email);
       if (input.portfolioUrl) formData.set("portfolioUrl", input.portfolioUrl);
       if (input.eeo?.gender) formData.set("gender", input.eeo.gender);
-      if (input.eeo?.veteranStatus) formData.set("veteranStatus", input.eeo.veteranStatus);
+      if (input.eeo?.militaryService) formData.set("veteranStatus", input.eeo.militaryService);
       formData.set("resume", input.resume, input.resume.name);
 
       const res = await fetch(`${baseUrl}/api/admin/leads/career-application`, {

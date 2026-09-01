@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   const email = String(formData.get("email") ?? "").trim();
   const portfolioUrl = String(formData.get("portfolioUrl") ?? "").trim();
   const gender = String(formData.get("gender") ?? "").trim();
-  const veteranStatus = String(formData.get("veteranStatus") ?? "").trim();
+  const militaryService = String(formData.get("militaryService") ?? "").trim();
   const resume = formData.get("resume");
 
   const errors: Record<string, string> = {};
@@ -56,7 +56,9 @@ export async function POST(request: Request) {
     email,
     portfolioUrl: portfolioUrl || undefined,
     resume: resume as File,
-    eeo: { gender: gender || undefined, veteranStatus: veteranStatus || undefined },
+    // eeo.militaryService is forwarded to the admin backend under the
+    // historical "veteranStatus" wire name — see career-application.ts.
+    eeo: { gender: gender || undefined, militaryService: militaryService || undefined },
   });
 
   return NextResponse.json(result, { status: 200 });

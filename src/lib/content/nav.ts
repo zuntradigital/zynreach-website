@@ -153,6 +153,7 @@ export const primaryNav: NavItem[] = [
           { label: "Customer Stories", href: "/customer-stories" },
           { label: "Guides & Templates", href: "/guides-templates" },
           { label: "Webinars", href: "/webinars" },
+          { label: "FAQ", href: "/faq" },
         ],
       },
     ],
@@ -172,6 +173,7 @@ export const primaryNav: NavItem[] = [
       { label: "Contact", href: "/contact" },
       { label: "Security", href: "/security" },
       { label: "Compliance", href: "/compliance" },
+      { label: "Legal Center", href: "/legal" },
       { label: "Partners", href: "/partners" },
     ],
   },
@@ -217,10 +219,5 @@ export const footerNav = {
     { label: "Compliance", href: "/compliance" },
     { label: "Partners", href: "/partners" },
   ],
-  Legal: [
-    { label: "Privacy Policy", href: "/legal/privacy" },
-    { label: "Terms of Service", href: "/legal/terms" },
-    { label: "Cookie Policy", href: "/legal/cookies" },
-    { label: "DPA", href: "/legal/dpa" },
-  ],
+  Legal: [{ label: "Legal Center", href: "/legal" }],
 } satisfies Record<string, { label: string; href: string }[]>;

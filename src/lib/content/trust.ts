@@ -11,12 +11,6 @@ export const certifications = [
   { name: "GDPR-ready", description: "Data processing practices designed around GDPR's lawful-basis and data-subject-rights requirements." },
 ];
 
-export const dataProtectionPoints = [
-  { headline: "Encryption in transit and at rest", description: "All data is encrypted in transit via TLS and at rest using industry-standard encryption." },
-  { headline: "Least-privilege access", description: "Internal access to customer data is scoped by role and logged." },
-  { headline: "Regular security testing", description: "Ongoing vulnerability scanning and periodic third-party security assessments." },
-];
-
 export interface SubProcessor {
   name: string;
   purpose: string;

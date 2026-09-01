@@ -27,17 +27,19 @@ export function CareerApplicationForm({ jobId, jobTitle }: CareerApplicationForm
     { value: "woman", label: t("eeoOptions.woman") },
     { value: "non-binary", label: t("eeoOptions.nonBinary") },
   ];
-  const veteranOptions = [
-    { value: "prefer-not-to-say", label: t("veteranOptions.preferNotToSay") },
-    { value: "veteran", label: t("veteranOptions.veteran") },
-    { value: "not-veteran", label: t("veteranOptions.notVeteran") },
+  const militaryServiceOptions = [
+    { value: "not-served", label: t("militaryServiceOptions.notServed") },
+    { value: "completed", label: t("militaryServiceOptions.completed") },
+    { value: "exempted", label: t("militaryServiceOptions.exempted") },
+    { value: "deferred", label: t("militaryServiceOptions.deferred") },
+    { value: "not-applicable", label: t("militaryServiceOptions.notApplicable") },
   ];
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [portfolioUrl, setPortfolioUrl] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [gender, setGender] = useState("");
-  const [veteranStatus, setVeteranStatus] = useState("");
+  const [militaryService, setMilitaryService] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<{ fullName?: string; email?: string; resume?: string }>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -73,7 +75,7 @@ export function CareerApplicationForm({ jobId, jobTitle }: CareerApplicationForm
       formData.set("email", email);
       formData.set("portfolioUrl", portfolioUrl);
       formData.set("gender", gender);
-      formData.set("veteranStatus", veteranStatus);
+      formData.set("militaryService", militaryService);
       formData.set("company_website", honeypot);
       if (resumeFile) formData.set("resume", resumeFile);
 
@@ -137,11 +139,11 @@ export function CareerApplicationForm({ jobId, jobTitle }: CareerApplicationForm
         <div className="mt-3 space-y-4">
           <SelectField label={t("gender")} name="gender" value={gender} onChange={setGender} options={eeoOptions} />
           <SelectField
-            label={t("veteranStatus")}
-            name="veteranStatus"
-            value={veteranStatus}
-            onChange={setVeteranStatus}
-            options={veteranOptions}
+            label={t("militaryService")}
+            name="militaryService"
+            value={militaryService}
+            onChange={setMilitaryService}
+            options={militaryServiceOptions}
           />
         </div>
       </fieldset>
