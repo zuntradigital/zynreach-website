@@ -4,17 +4,22 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { captureError } from "@/lib/monitoring";
+import { captureError, isChunkLoadError, recoverFromChunkLoadError } from "@/lib/monitoring";
 
 /**
  * SRS 30.6 "Monitoring & Logging" + directive "Error boundaries": catches
  * render/runtime errors within a route segment so a single broken page
  * doesn't take down navigation to the rest of the site.
+ *
+ * A ChunkLoadError specifically gets a silent full-page reload instead of
+ * this fallback UI — see recoverFromChunkLoadError's doc comment — since
+ * `reset()` alone can never fix a missing static asset.
  */
 export default function ErrorBoundary({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations("common.error");
   useEffect(() => {
     captureError(error, { route: typeof window !== "undefined" ? window.location.pathname : undefined, digest: error.digest });
+    if (isChunkLoadError(error)) recoverFromChunkLoadError();
   }, [error]);
 
   return (

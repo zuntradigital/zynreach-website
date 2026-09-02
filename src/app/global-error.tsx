@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { captureError } from "@/lib/monitoring";
+import { captureError, isChunkLoadError, recoverFromChunkLoadError } from "@/lib/monitoring";
 
 /**
  * SRS 30.6: catches errors thrown by the root layout itself (outside the
@@ -9,10 +9,18 @@ import { captureError } from "@/lib/monitoring";
  * Next.js App Router convention, and cannot use the shared design system
  * components since the layout that provides fonts/globals may itself be
  * the thing that failed.
+ *
+ * A ChunkLoadError here (the root layout's own bundle failed to load a
+ * chunk — the most common real-world trigger for this boundary, e.g. from
+ * a multi-instance deploy serving mismatched build artifacts) gets a
+ * silent full-page reload instead of this fallback markup — see
+ * recoverFromChunkLoadError's doc comment for why `reset()` alone can't
+ * fix it.
  */
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     captureError(error, { route: "root-layout", digest: error.digest });
+    if (isChunkLoadError(error)) recoverFromChunkLoadError();
   }, [error]);
 
   return (

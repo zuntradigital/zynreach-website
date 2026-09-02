@@ -40,6 +40,40 @@ const themeInitScript = `
 })();
 `;
 
+// A failed <link>/<script> load for a /_next/static/ asset (e.g. a chunk
+// 404 from a production deploy where multiple app instances were built
+// independently — see monitoring.ts's isChunkLoadError doc comment for
+// the full explanation) fires a plain resource "error" Event that never
+// bubbles and never becomes a catchable JS exception, so React's own
+// error boundaries (app/[locale]/error.tsx, app/global-error.tsx) can't
+// see it when only a stylesheet fails while the JS bundle hydrates fine.
+// This inline, pre-hydration listener catches that case at the browser
+// level instead. Shares the exact "zr_chunk_error_reload_attempted"
+// sessionStorage key used by monitoring.ts's recoverFromChunkLoadError so
+// the two independent detection paths (this one, and the JS-exception one
+// those error boundaries use) count as the same single per-tab attempt
+// rather than each triggering their own reload.
+const chunkErrorRecoveryScript = `
+(function () {
+  try {
+    var KEY = "zr_chunk_error_reload_attempted";
+    window.addEventListener(
+      "error",
+      function (event) {
+        var target = event.target;
+        if (!target || (target.tagName !== "LINK" && target.tagName !== "SCRIPT")) return;
+        var url = target.tagName === "LINK" ? target.href : target.src;
+        if (!url || url.indexOf("/_next/static/") === -1) return;
+        if (window.sessionStorage.getItem(KEY)) return;
+        window.sessionStorage.setItem(KEY, "1");
+        window.location.reload();
+      },
+      true
+    );
+  } catch (e) {}
+})();
+`;
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -150,6 +184,11 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     >
       <head>
         <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script
+          id="chunk-error-recovery-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: chunkErrorRecoveryScript }}
+        />
       </head>
       <body className="min-h-full flex flex-col">
         <JsonLd id="organization-jsonld" data={await organizationJsonLd()} />
