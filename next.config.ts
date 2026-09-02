@@ -1,6 +1,78 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { execSync } from "node:child_process";
 import { routing } from "./src/i18n/routing";
+
+/**
+ * Root cause of the intermittent production chunk 404s (client sees
+ * "Failed to load chunk .../<hash>.js from module ..." / MIME-type errors
+ * / the global-error boundary): with `deploymentId` unset, every
+ * `next build` invocation gets its own random, independent build ID and
+ * its own independently-hashed chunk filenames — even from the exact same
+ * source commit. The moment more than one server process/instance is
+ * running this app (Hostinger's Node.js App panel, a PM2 cluster, or the
+ * brief window during a redeploy where the old process is still serving
+ * traffic while a new `next build` is writing over `.next/static/*`), a
+ * single page load's parallel asset requests can land on different
+ * backend processes — each expecting a chunk manifest only ITS OWN build
+ * produced. A request for a chunk that exists in build A's manifest,
+ * served against build B's `.next/static`, 404s. This is Next's own
+ * documented "version skew" failure mode (see
+ * node_modules/next/dist/docs/01-app/02-guides/self-hosting.md, "Build
+ * Cache" / "Deployment identifier" / "Version Skew" sections) — it is not
+ * a bug in any page or component, and no amount of client-side
+ * retry/reload logic fixes its cause, only its symptom.
+ *
+ * The real fix has two parts:
+ *  1. `deploymentId` below, pinned to the actual source commit, so that
+ *     if the deployment process ever does end up re-running `next build`
+ *     per instance/stage from the SAME commit (rather than building once
+ *     and sharing that output — the deployment-process fix this alone
+ *     does not replace), every one of those independent builds still
+ *     agrees on the same deployment tag, and Next's own client runtime
+ *     can detect a REAL mismatch (an old client talking to a genuinely
+ *     newer deployment after a rollout) and force a full reload instead
+ *     of a broken partial one.
+ *
+ *     `generateBuildId` is deliberately NOT also set: verified against
+ *     this exact Next 16.2.12 install's own source
+ *     (node_modules/next/dist/build/index.js, `getBuildId`) that once
+ *     `config.deploymentId` is present, Next intentionally ignores
+ *     `generateBuildId` entirely and writes a fixed placeholder string to
+ *     `.next/BUILD_ID` instead — "Skew protection is enabled and
+ *     NEXT_NAV_DEPLOYMENT_ID_HEADER will be used instead" (that file's own
+ *     comment). `deploymentId` fully supersedes `generateBuildId`'s role
+ *     here; setting both would just leave `generateBuildId` as dead code
+ *     Next never calls.
+ *  2. Deploy correctly: build once per release and start every
+ *     process/worker from that one already-built `.next` output — see
+ *     ecosystem.config.js and scripts/deploy.sh in this repo, which
+ *     implement the atomic build-then-swap pattern self-hosting.md's
+ *     "Build Cache" section calls for ("The same build should be used to
+ *     boot up multiple containers").
+ *
+ * Resolution order: an explicit NEXT_DEPLOYMENT_ID (set by
+ * scripts/deploy.sh, or by hand for a manual deploy) wins; otherwise the
+ * current git commit SHA, since this repo is deployed from a git
+ * checkout (see scripts/deploy.sh) and every build from the same commit
+ * must produce the same identifier; otherwise a per-process-start
+ * timestamp — worse than a real commit-derived ID (two independently
+ * started processes from the same commit would disagree), but still
+ * infinitely better than leaving deploymentId unset, which is what
+ * actively causes the bug being fixed here.
+ */
+function resolveBuildIdentifier(): string {
+  if (process.env.NEXT_DEPLOYMENT_ID) return process.env.NEXT_DEPLOYMENT_ID;
+  try {
+    return execSync("git rev-parse HEAD", { cwd: __dirname, stdio: ["ignore", "pipe", "ignore"] })
+      .toString()
+      .trim();
+  } catch {
+    return `fallback-${Date.now()}`;
+  }
+}
+
+const buildIdentifier = resolveBuildIdentifier();
 
 /**
  * SRS Section 19: HTTPS/HSTS, secure headers, CSP, XSS protection.
@@ -128,6 +200,7 @@ const developersRedirects = [
 );
 
 const nextConfig: NextConfig = {
+  deploymentId: buildIdentifier,
   async redirects() {
     return [...knowledgeCenterRedirects, ...customerStoriesRedirects, ...developersRedirects];
   },
