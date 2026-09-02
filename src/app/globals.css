@@ -550,16 +550,18 @@ html[data-theme="dark"] {
   /*
    * Home Hero growth-tiers artwork ambient motion (HeroVisual.tsx): a
    * one-shot entrance, a slow continuous float once settled, two
-   * independently-phased ambient colour glows behind the artwork, a
-   * diagonal shine sweep masked to the artwork's own alpha channel (see
-   * the inline mask-image in HeroVisual.tsx — this keeps the sweep from
-   * ever crossing the transparent space around the illustration), and two
-   * small ambient sparks drifting near the growth arrow. Every keyframe
-   * here animates transform/opacity/filter only (compositor-only, no
-   * CLS) and is covered by the sitewide prefers-reduced-motion rule
-   * above — no per-animation motion-safe gating needed. The artwork is
-   * never rotated/tilted (no static rotate class, no mouse-driven tilt)
-   * — it always reads as straight.
+   * independently-phased ambient gold glows behind the artwork (matching
+   * the black-and-gold artwork's own palette and the site's primary gold
+   * tokens), a diagonal shine sweep masked to the artwork's own alpha
+   * channel (see the inline mask-image in HeroVisual.tsx — this keeps the
+   * sweep from ever crossing the transparent space around the
+   * illustration), and two small ambient sparks near the arrow tip and
+   * the enterprise tower. Every keyframe here animates
+   * transform/opacity/filter only (compositor-only, no CLS) and is
+   * covered by the sitewide prefers-reduced-motion rule above — no
+   * per-animation motion-safe gating needed. The artwork is never
+   * rotated/tilted (no static rotate class, no mouse-driven tilt) — it
+   * always reads as straight.
    */
   @keyframes hero-growth-intro {
     from {
@@ -709,14 +711,14 @@ html[data-theme="dark"] {
   }
 
   .hero-growth-spark-a {
-    top: 38%;
-    left: 22%;
+    top: 45%;
+    left: 24%;
     animation: hero-growth-spark-drift-a 4200ms ease-in-out 1600ms infinite;
   }
 
   .hero-growth-spark-b {
-    top: 12%;
-    right: 22%;
+    top: 4%;
+    right: 35%;
     animation: hero-growth-spark-drift-b 5100ms ease-in-out 2400ms infinite;
   }
 }
