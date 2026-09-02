@@ -1,72 +1,75 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { LayoutDashboard, Users, Sparkles, Workflow, BarChart3, Settings2 } from "lucide-react";
-
-const TILES = [
-  { key: "dashboard", Icon: LayoutDashboard },
-  { key: "crm", Icon: Users },
-  { key: "ai", Icon: Sparkles },
-  { key: "automation", Icon: Workflow },
-  { key: "analytics", Icon: BarChart3 },
-  { key: "operations", Icon: Settings2 },
-] as const;
 
 /**
- * Home Hero Product Visualization (SRS "Product Mockup containing:
- * Dashboard, CRM, AI, Automation, Analytics, Operations"). A stylized
- * browser-window mockup rather than a real product screenshot — this repo
- * has no actual ZynReach app screens to capture, so the mockup represents
- * the six pillars as labeled tiles instead of fabricating fake UI detail
- * that would misrepresent the real product.
+ * Home Hero visual: the "growth tiers" illustration (Starter → Professional
+ * → Business → Enterprise rising as steps, with a climbing growth arrow) —
+ * a supplied, pre-rendered artwork rather than a generated mockup, so it is
+ * shipped as a single `next/image` asset (`public/images/hero/growth-tiers.png`)
+ * rather than being recreated in markup. The image carries its own baked-in
+ * English tier labels, so it is intentionally not mirrored under RTL
+ * (`dir="rtl"`) — flipping it would render that text backwards — while the
+ * surrounding grid column order still reflows correctly for Arabic because
+ * `Hero.tsx`'s two-column grid has no hardcoded left/right positioning.
  *
- * Ambient motion: an outer wrapper floats up/down (CSS,
- * .hero-dashboard-float) and the glow behind it breathes independently
- * (.hero-dashboard-glow). The six tiles fade/rise in with a staggered
- * delay on first paint. The panel itself is never rotated/tilted — no
- * static rotate class, no mouse-driven 3D tilt — so it always reads as
- * perfectly straight. Every animation here is covered by the sitewide
- * prefers-reduced-motion rule in globals.css (collapses to an instant,
- * static resting state).
+ * Motion, all compositor-only (transform/opacity/filter — no layout
+ * properties, so nothing here can cause CLS) and covered by the sitewide
+ * prefers-reduced-motion rule in globals.css (collapses every animation
+ * below to a single instant frame, no per-effect gating needed):
+ *  - one-shot entrance: the whole visual fades/scales/rises in on first paint;
+ *  - hero-growth-float: a slow, continuous vertical bob once settled;
+ *  - hero-growth-glow-a / -b: two independently-phased ambient colour blobs
+ *    breathing behind the artwork (cool blue/teal + warm gold/violet),
+ *    echoing the Starter→Enterprise colour progression in the image itself;
+ *  - hero-growth-shine: a diagonal light sweep masked to the artwork's own
+ *    alpha channel (via mask-image), so the "catching the light" pass only
+ *    crosses the actual illustration, never the transparent space around it;
+ *  - hero-growth-spark-a / -b: two small ambient sparkle points drifting
+ *    near the ascending arrow, reinforcing the "still climbing" motion.
  */
 export async function HeroVisual() {
   const t = await getTranslations("home.hero.visual");
+  const imageSrc = "/images/hero/growth-tiers.png";
 
   return (
-    <div role="img" aria-label={t("ariaLabel")} className="relative mx-auto w-full max-w-md">
+    <div className="hero-growth-visual relative mx-auto w-full max-w-md">
       <div
         aria-hidden="true"
-        className="hero-dashboard-glow absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(230,198,122,0.45)_0%,rgba(200,155,60,0.16)_45%,transparent_72%)] blur-2xl"
+        className="hero-growth-glow-a absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(37,150,190,0.35)_0%,rgba(16,163,127,0.18)_45%,transparent_72%)] blur-2xl"
+      />
+      <div
+        aria-hidden="true"
+        className="hero-growth-glow-b absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(230,198,122,0.4)_0%,rgba(124,77,199,0.16)_45%,transparent_72%)] blur-2xl"
       />
 
-      <div className="hero-dashboard-float">
-        <div className="relative rounded-2xl border border-neutral-200 bg-white dark:bg-neutral-100 shadow-[0_30px_80px_rgba(200,155,60,0.25)]">
-          <div className="flex items-center gap-2 rounded-t-2xl border-b border-neutral-100 bg-neutral-50 px-4 py-3">
-            <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-error/60" />
-            <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-warning/60" />
-            <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-success/60" />
-            <span aria-hidden="true" className="ms-2 truncate rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-medium text-neutral-500">
-              app.zynreach.com
-            </span>
-          </div>
+      <div className="hero-growth-float relative">
+        <span aria-hidden="true" className="hero-growth-spark hero-growth-spark-a" />
+        <span aria-hidden="true" className="hero-growth-spark hero-growth-spark-b" />
 
-          <div className="grid grid-cols-2 gap-3 p-4 sm:gap-4 sm:p-5">
-            {TILES.map(({ key, Icon }, index) => (
-              <div
-                key={key}
-                className="hero-dashboard-tile rounded-xl border border-neutral-100 bg-neutral-50 p-3 sm:p-4"
-                style={{ animationDelay: `${200 + index * 90}ms` }}
-              >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50">
-                  <Icon aria-hidden="true" className="h-4 w-4 text-primary-600" strokeWidth={1.75} />
-                </div>
-                <p className="mt-2.5 text-xs font-semibold text-neutral-800 sm:text-sm">{t(`tiles.${key}`)}</p>
-                <div className="mt-2 flex items-end gap-0.5" aria-hidden="true">
-                  {[40, 65, 50, 80, 60].map((height, i) => (
-                    <span key={i} className="w-1.5 rounded-full bg-primary-200" style={{ height: `${height * 0.14}px` }} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="relative">
+          <Image
+            src={imageSrc}
+            alt={t("ariaLabel")}
+            width={1312}
+            height={1199}
+            priority
+            sizes="(min-width: 1024px) 28rem, (min-width: 640px) 26rem, 85vw"
+            className="relative z-10 h-auto w-full select-none"
+          />
+          <div
+            aria-hidden="true"
+            className="hero-growth-shine absolute inset-0 z-20"
+            style={{
+              WebkitMaskImage: `url(${imageSrc})`,
+              maskImage: `url(${imageSrc})`,
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
         </div>
       </div>
     </div>

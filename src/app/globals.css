@@ -548,16 +548,35 @@ html[data-theme="dark"] {
   }
 
   /*
-   * Home Hero dashboard mockup ambient motion (HeroVisual.tsx): a slow
-   * vertical float for the whole mockup, a soft golden glow behind it
-   * that breathes in scale + opacity, and a light on-load stagger for the
-   * six inner tiles. All three animate transform/opacity only
-   * (compositor-only, no CLS) and are covered by the sitewide
-   * prefers-reduced-motion rule above — no per-animation motion-safe
-   * gating needed. The panel itself is never rotated/tilted (no static
-   * rotate class, no mouse-driven tilt) — it always reads as straight.
+   * Home Hero growth-tiers artwork ambient motion (HeroVisual.tsx): a
+   * one-shot entrance, a slow continuous float once settled, two
+   * independently-phased ambient colour glows behind the artwork, a
+   * diagonal shine sweep masked to the artwork's own alpha channel (see
+   * the inline mask-image in HeroVisual.tsx — this keeps the sweep from
+   * ever crossing the transparent space around the illustration), and two
+   * small ambient sparks drifting near the growth arrow. Every keyframe
+   * here animates transform/opacity/filter only (compositor-only, no
+   * CLS) and is covered by the sitewide prefers-reduced-motion rule
+   * above — no per-animation motion-safe gating needed. The artwork is
+   * never rotated/tilted (no static rotate class, no mouse-driven tilt)
+   * — it always reads as straight.
    */
-  @keyframes hero-dashboard-float {
+  @keyframes hero-growth-intro {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .hero-growth-visual {
+    animation: hero-growth-intro 750ms var(--ease-out-default) both;
+  }
+
+  @keyframes hero-growth-float {
     0%,
     100% {
       transform: translateY(0);
@@ -567,47 +586,137 @@ html[data-theme="dark"] {
     }
   }
 
-  .hero-dashboard-float {
-    animation: hero-dashboard-float 6500ms ease-in-out infinite;
+  .hero-growth-float {
+    animation: hero-growth-float 7000ms ease-in-out 750ms infinite;
   }
 
-  @keyframes hero-dashboard-glow-pulse {
+  @keyframes hero-growth-glow-pulse-a {
     0%,
     100% {
-      opacity: 0.7;
-      transform: scale(1);
+      opacity: 0.55;
+      transform: scale(1) translate(-4%, 2%);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.08) translate(-2%, -1%);
+    }
+  }
+
+  @keyframes hero-growth-glow-pulse-b {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: scale(1.04) translate(3%, -2%);
     }
     50% {
       opacity: 1;
-      transform: scale(1.05);
+      transform: scale(0.97) translate(1%, 1%);
     }
   }
 
-  .hero-dashboard-glow {
-    animation: hero-dashboard-glow-pulse 5000ms ease-in-out infinite;
+  .hero-growth-glow-a {
+    animation: hero-growth-glow-pulse-a 6200ms ease-in-out infinite;
+  }
+
+  .hero-growth-glow-b {
+    animation: hero-growth-glow-pulse-b 7400ms ease-in-out 400ms infinite;
   }
 
   /*
-   * On-load stagger for the six dashboard tiles: each tile fades and
-   * rises in slightly, offset by a per-tile animation-delay set inline
-   * from the tile's index (see HeroVisual.tsx) rather than :nth-child
-   * here, since the delay math (base delay + index * step) is simpler to
-   * keep next to the array it's derived from. `both` holds the 0%
-   * (invisible) state before the delay elapses and the 100% (settled)
-   * state after, so tiles never flash at full opacity before their turn.
+   * Shine sweep: a blurred, blended diagonal streak that crosses the
+   * artwork every ~8s and rests the remainder of the cycle. Positioned
+   * via the mask-image on the wrapper element, so only pixels the
+   * illustration itself occupies ever catch the light.
    */
-  @keyframes hero-dashboard-tile-in {
-    from {
+  @keyframes hero-growth-shine-sweep {
+    0%,
+    12%,
+    100% {
+      transform: translateX(-140%) skewX(-16deg);
       opacity: 0;
-      transform: translateY(10px);
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    2% {
+      opacity: 0.5;
+    }
+    11% {
+      transform: translateX(240%) skewX(-16deg);
+      opacity: 0;
     }
   }
 
-  .hero-dashboard-tile {
-    animation: hero-dashboard-tile-in 550ms var(--ease-out-default) both;
+  .hero-growth-shine {
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-growth-shine::after {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    width: 35%;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.65) 48%,
+      rgba(230, 198, 122, 0.55) 52%,
+      transparent 80%
+    );
+    filter: blur(5px);
+    animation: hero-growth-shine-sweep 8000ms ease-in-out 1400ms infinite;
+  }
+
+  @keyframes hero-growth-spark-drift-a {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.6);
+    }
+    35% {
+      opacity: 0.9;
+    }
+    65% {
+      opacity: 0.6;
+      transform: translate(-6px, -14px) scale(1);
+    }
+    90% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes hero-growth-spark-drift-b {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.5);
+    }
+    45% {
+      opacity: 0.8;
+      transform: translate(5px, -10px) scale(0.9);
+    }
+    80% {
+      opacity: 0.3;
+    }
+  }
+
+  .hero-growth-spark {
+    position: absolute;
+    z-index: 30;
+    height: 6px;
+    width: 6px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(230, 198, 122, 0.6) 55%, transparent 75%);
+    filter: blur(0.5px);
+  }
+
+  .hero-growth-spark-a {
+    top: 38%;
+    left: 22%;
+    animation: hero-growth-spark-drift-a 4200ms ease-in-out 1600ms infinite;
+  }
+
+  .hero-growth-spark-b {
+    top: 12%;
+    right: 22%;
+    animation: hero-growth-spark-drift-b 5100ms ease-in-out 2400ms infinite;
   }
 }
