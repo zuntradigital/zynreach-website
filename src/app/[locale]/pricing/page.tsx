@@ -27,14 +27,17 @@ export const revalidate = 0;
 
 /** Row order matches comparisonMatrix in src/lib/content/pricing.ts exactly — see pricingPage.comparisonRows in messages/*.json. */
 const comparisonRowKeys = [
-  "activityLogging",
+  "crmContact360",
   "aiDealScoring",
-  "customPipelineStages",
-  "automationWorkflows",
+  "marketingAutomation",
   "aiLeadScoring",
+  "businessData",
   "aiAssistants",
-  "customAiGrounding",
+  "aiAgents",
+  "workflowAutomation",
+  "advancedPermissions",
   "ssoSaml",
+  "apiWebhooks",
   "auditLogs",
   "supportLevel",
 ];

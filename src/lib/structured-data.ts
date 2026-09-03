@@ -245,7 +245,7 @@ export function productOffersJsonLd(plans: PricingPlan[]) {
         "@type": "Offer",
         name: plan.name,
         price: plan.monthlyPrice,
-        priceCurrency: "USD",
+        priceCurrency: plan.currency ?? "USD",
         url: `${site.url}/pricing`,
       })),
   };

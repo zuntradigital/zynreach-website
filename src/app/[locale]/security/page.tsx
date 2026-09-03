@@ -282,6 +282,7 @@ export default async function SecurityPage({
               {t("finalCta.button")}
             </Button>
             <p className="mt-4 text-sm text-white/50">{t("finalCta.caption")}</p>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-white/80">{t("finalCta.closingStatement")}</p>
           </div>
         </section>
       </main>

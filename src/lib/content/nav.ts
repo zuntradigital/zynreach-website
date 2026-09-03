@@ -172,7 +172,6 @@ export const primaryNav: NavItem[] = [
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
       { label: "Security", href: "/security" },
-      { label: "Compliance", href: "/compliance" },
       { label: "Legal Center", href: "/legal" },
       { label: "Partners", href: "/partners" },
     ],

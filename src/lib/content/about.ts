@@ -5,13 +5,6 @@
  * not claims about real individuals.
  */
 
-export const companyTimeline = [
-  { year: "Year 1", headline: "Founded", description: "ZynReach started with a simple premise: revenue teams shouldn't need five disconnected tools." },
-  { year: "Year 2", headline: "Platform unified", description: "CRM, marketing automation, and workflow automation shipped on one shared data model." },
-  { year: "Year 3", headline: "AI Assistants launched", description: "Native AI assistants shipped inside every workflow, not as a separate add-on." },
-  { year: "Today", headline: "Growing with our customers", description: "Expanding from SMB into mid-market and enterprise, one persona at a time." },
-];
-
 export const leadershipTeam = [
   { name: "Leadership placeholder", role: "Chief Executive Officer" },
   { name: "Leadership placeholder", role: "Chief Technology Officer" },

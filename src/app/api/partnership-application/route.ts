@@ -9,7 +9,12 @@ interface PartnershipRequestBody {
   workEmail?: string;
   website?: string;
   partnershipType?: string;
+  businessType?: string;
+  customerType?: string;
+  customerBase?: string;
   message?: string;
+  collaborationInterest?: string;
+  consent?: boolean;
   company_website?: string; // honeypot
   utm_source?: string;
   utm_campaign?: string;
@@ -48,6 +53,7 @@ export async function POST(request: Request) {
   if (!isNonEmpty(contactName)) errors.contactName = "Contact name is required.";
   if (!isValidEmail(workEmail)) errors.workEmail = "Enter a valid email address.";
   if (!isNonEmpty(partnershipType)) errors.partnershipType = "Select a partnership type.";
+  if (!body.consent) errors.consent = "Consent is required.";
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ errors }, { status: 400 });
@@ -56,7 +62,18 @@ export async function POST(request: Request) {
   const result = await routeLead({
     formId: "partnership-application",
     segment: "partnerships",
-    fields: { companyName, contactName, workEmail, website: body.website?.trim() ?? "", partnershipType, message: body.message?.trim() ?? "" },
+    fields: {
+      companyName,
+      contactName,
+      workEmail,
+      website: body.website?.trim() ?? "",
+      partnershipType,
+      businessType: body.businessType?.trim() ?? "",
+      customerType: body.customerType?.trim() ?? "",
+      customerBase: body.customerBase?.trim() ?? "",
+      message: body.message?.trim() ?? "",
+      collaborationInterest: body.collaborationInterest?.trim() ?? "",
+    },
     utmSource: body.utm_source,
     utmCampaign: body.utm_campaign,
     utmMedium: body.utm_medium,

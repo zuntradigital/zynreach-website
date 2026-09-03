@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { capabilityPages } from "@/lib/content/capabilities";
+import { productExperiencePages } from "@/lib/content/product-pages";
 import { solutionPages } from "@/lib/content/solutions";
 import { industryPages } from "@/lib/content/industries";
 import { pricingPlans } from "@/lib/content/pricing";
@@ -30,6 +31,22 @@ export function getSearchIndex(): SearchEntry[] {
     href: `/platform/${page.slug}`,
     category: "Platform",
   }));
+
+  // productExperiencePages (marketing-automation, lead-generation, sales-pipeline,
+  // contact-360, crm, campaigns, business-data) are skeleton+content-split like
+  // Contact 360 (see product-pages.ts) — no English fallback text lives on the TS
+  // skeleton itself, so this non-locale-aware index (test-only; the live UI always
+  // uses useLocalizedSearchIndex below) mirrors the "company" entries' pattern of a
+  // literal EN string, sourced from messages/en.json's productPages.<slug>.hero.
+  const productExperienceEntries: SearchEntry[] = [
+    { title: "Turn every interaction into a smart step in the customer journey.", description: "Build automated marketing journeys that respond to real customer behavior, personalize content, score leads, and route qualified opportunities to sales — from a single data model.", href: "/platform/marketing-automation", category: "Platform" },
+    { title: "Turn every spark of interest into a qualified, sales-ready lead.", description: "Capture prospective customers from every touchpoint, understand their intent, enrich their data, score their fit, and route them automatically to the right rep — all inside ZynReach's unified system.", href: "/platform/lead-generation", category: "Platform" },
+    { title: "Every deal is clear. Every step is calculated. Every opportunity is closer to closing.", description: "Manage your deals from first opportunity to close through a live Pipeline that connects stages, activity, tasks, follow-ups, and forecasting in one place — with intelligence that tells your team what needs attention now.", href: "/platform/sales-pipeline", category: "Platform" },
+    { title: "Everything you need to know about a customer. In one place.", description: "Bring a customer's data, history, interactions, deals, campaigns, tasks, and conversations together in one unified record that gives every team full context before any conversation or decision.", href: "/platform/contact-360", category: "Platform" },
+    { title: "Every customer relationship. Every opportunity. Every next step — in one place.", description: "ZynReach CRM manages the full customer and revenue lifecycle — contacts, pipeline, activities, automation, and intelligence in one platform.", href: "/platform/crm", category: "Platform" },
+    { title: "Build your campaigns, launch them across channels, and measure their impact on revenue.", description: "Create, launch, and manage multichannel campaigns from ZynReach, with a shared audience, live analytics, and measured impact on leads, pipeline, and revenue.", href: "/platform/campaigns", category: "Platform" },
+    { title: "Turn market data into real sales opportunities.", description: "Discover the companies and people who match your target audience, verify their data, enrich your records, and build ready-to-work lists.", href: "/platform/business-data", category: "Platform" },
+  ];
 
   const solutions: SearchEntry[] = solutionPages.map((page) => ({
     title: page.meta.h1,
@@ -74,7 +91,7 @@ export function getSearchIndex(): SearchEntry[] {
     category: "Customer Stories",
   }));
 
-  return [...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
+  return [...platform, ...productExperienceEntries, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
 }
 
 export function searchContent(query: string): SearchEntry[];
@@ -94,6 +111,7 @@ export function searchContent(
 /** Client-safe hook building a locale-aware search index by translating each entry's title/description. */
 export function useLocalizedSearchIndex(): LocalizedSearchEntry[] {
   const tPlatform = useTranslations("platformPage.detail");
+  const tProductPages = useTranslations("productPages");
   const tSolutions = useTranslations("solutionsPage.detail");
   const tIndustries = useTranslations("industriesPage.detail");
   const tPricing = useTranslations("pricingPage.plans");
@@ -107,6 +125,13 @@ export function useLocalizedSearchIndex(): LocalizedSearchEntry[] {
   const platform: SearchEntry[] = capabilityPages.map((page) => ({
     title: tPlatform(`${page.slug}.hero.headline` as Parameters<typeof tPlatform>[0]),
     description: tPlatform(`${page.slug}.hero.subhead` as Parameters<typeof tPlatform>[0]),
+    href: `/platform/${page.slug}`,
+    category: "Platform",
+  }));
+
+  const productExperience: SearchEntry[] = productExperiencePages.map((page) => ({
+    title: tProductPages(`${page.slug}.hero.headline` as Parameters<typeof tProductPages>[0]),
+    description: tProductPages(`${page.slug}.hero.subhead` as Parameters<typeof tProductPages>[0]),
     href: `/platform/${page.slug}`,
     category: "Platform",
   }));
@@ -154,7 +179,7 @@ export function useLocalizedSearchIndex(): LocalizedSearchEntry[] {
     category: "Customer Stories",
   }));
 
-  const localized = [...platform, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
+  const localized = [...platform, ...productExperience, ...solutions, ...industries, ...pricing, ...company, ...customerStoriesEntries, ...blog];
 
   return localized.map(
     (entry): LocalizedSearchEntry => ({
