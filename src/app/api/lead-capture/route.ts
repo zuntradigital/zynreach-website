@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { isNonEmpty, isWorkEmail } from "@/lib/validation";
 import { routeLead } from "@/lib/services/lead-router";
+import { isRateLimited, getClientKey } from "@/lib/rate-limit";
 
 interface LeadCaptureRequestBody {
   name?: string;
@@ -10,6 +11,7 @@ interface LeadCaptureRequestBody {
   companySize?: string;
   source?: string;
   consent?: boolean;
+  company_website?: string; // honeypot
   utm_source?: string;
   utm_campaign?: string;
   utm_medium?: string;
@@ -39,11 +41,19 @@ const DOWNLOAD_SOURCE_PATTERN = /guide|webinar|whitepaper|documentation|security
  * stale/bypassed client can't skip it.
  */
 export async function POST(request: Request) {
+  if (isRateLimited(`lead-capture:${getClientKey(request)}`)) {
+    return NextResponse.json({ error: "Too many requests. Please try again in a minute." }, { status: 429 });
+  }
+
   let body: LeadCaptureRequestBody;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  if (isNonEmpty(body.company_website ?? "")) {
+    return NextResponse.json({ success: true }, { status: 200 });
   }
 
   const name = body.name?.trim() ?? "";

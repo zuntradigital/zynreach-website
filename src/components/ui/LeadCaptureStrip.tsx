@@ -8,6 +8,7 @@ import { trackConversion, trackEvent } from "@/lib/analytics";
 import { captureFormOutcome } from "@/lib/monitoring";
 import { useUtmParams } from "@/lib/hooks/useUtmParams";
 import { companySizeOptions } from "@/lib/content/form-options";
+import { Honeypot } from "@/components/forms/Honeypot";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -38,6 +39,7 @@ export function LeadCaptureStrip({ headline, source, collectBusinessDetails = fa
   const [jobTitle, setJobTitle] = useState("");
   const [companySize, setCompanySize] = useState("");
   const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; workEmail?: string; company?: string; jobTitle?: string; consent?: string }>({});
   const utmParams = useUtmParams();
@@ -79,6 +81,7 @@ export function LeadCaptureStrip({ headline, source, collectBusinessDetails = fa
           workEmail,
           source,
           consent,
+          company_website: honeypot,
           ...(collectBusinessDetails ? { company, jobTitle, companySize: companySize || undefined } : {}),
           ...utmParams,
         }),
@@ -108,6 +111,7 @@ export function LeadCaptureStrip({ headline, source, collectBusinessDetails = fa
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col flex-wrap gap-3 sm:flex-row sm:items-start">
+      <Honeypot value={honeypot} onChange={setHoneypot} />
       <div className="flex-1">
         <label htmlFor={nameId} className="sr-only">
           {t("nameLabel")}

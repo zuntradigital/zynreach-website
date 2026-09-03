@@ -41,7 +41,7 @@ export async function generateMetadata({
   };
 }
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 9;
 
 interface ResolvedPost extends BlogCardData {
   category: string;
